@@ -1,0 +1,352 @@
+[
+  {
+    "question_id": 1,
+    "question": "What kinds of configuration knobs can RapidFire AI vary beyond ordinary hyperparameters?",
+    "reference_answer": "RapidFire AI generalizes hyperparameter sweep ideas to many types of config knobs. Beyond regular hyperparameters, it can vary base model architectures, prompt schemes, LoRA adapters, optimizers for training, and RAG choices such as data chunking, embeddings, retrieval, reranking, generation, prompt schemes, and other user-defined knobs.",
+    "source_evidence": [
+      {
+        "file": "configs.rst",
+        "lines": [
+          9,
+          13
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 2,
+    "question": "What inputs does Range() accept, and how are values drawn from it?",
+    "reference_answer": "Range() accepts a start value, an end value, and a dtype that is either \"int\" or \"float\". The documentation states that, as of this writing, Range() performs uniform sampling within the given interval.",
+    "source_evidence": [
+      {
+        "file": "configs.rst",
+        "lines": [
+          33,
+          47
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 3,
+    "question": "Why does the documentation recommend explicitly ending one experiment before starting another?",
+    "reference_answer": "The documentation recommends explicitly ending a previous experiment before starting a new one so users remain aware of code or config changes across experiments. It also notes that if a Jupyter kernel restarts or is interrupted, rerunning the constructor cell can reconnect to and continue the existing experiment unless it was explicitly ended.",
+    "source_evidence": [
+      {
+        "file": "experiment.rst",
+        "lines": [
+          56,
+          63
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 4,
+    "question": "What forms can the param_config argument to run_fit() take?",
+    "reference_answer": "The param_config argument to run_fit() can be a single config dictionary, a list of config dictionaries, a config group generator output such as RFGridSearch() or RFRandomSearch(), or a list mixing configs and config group generator outputs.",
+    "source_evidence": [
+      {
+        "file": "experiment.rst",
+        "lines": [
+          116,
+          120
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 5,
+    "question": "How does run_evals() interpret num_shards relative to run_fit()'s num_chunks?",
+    "reference_answer": "For run_evals(), num_shards is identical in purpose to run_fit()'s num_chunks. It balances the degree of concurrency for cross-config comparisons against minor swapping overhead, and the docs again recommend at least 4 so results update for all runs on one fourth of the data at a time.",
+    "source_evidence": [
+      {
+        "file": "experiment.rst",
+        "lines": [
+          186,
+          189
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 6,
+    "question": "Which RAG pipeline stages are represented by RFLangChainRagSpec?",
+    "reference_answer": "RFLangChainRagSpec wraps LangChain APIs for the pre-generator stages of a RAG pipeline. It specifies data loading, chunking, embedding, indexing, retrieval, and reranking, with many of these stages being optional.",
+    "source_evidence": [
+      {
+        "file": "ragspecs.rst",
+        "lines": [
+          4,
+          6
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 7,
+    "question": "What is the difference between RFLangChainRagSpec's Document Preprocessing and Query Processing stages?",
+    "reference_answer": "Document Preprocessing workers operate in parallel over the base data to produce preprocessed data stored in a vector store. Query Processing workers operate over eval examples by embedding queries, retrieving relevant chunks, reranking them, constructing context, and generating outputs.",
+    "source_evidence": [
+      {
+        "file": "ragspecs.rst",
+        "lines": [
+          21,
+          25
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 8,
+    "question": "What vector store modes does RFLangChainRagSpec define, and when is each used?",
+    "reference_answer": "RFLangChainRagSpec defines create, read, and update modes. Create mode builds a new vector store when a document loader is provided without pre-existing index or collection names. Read mode opens a pre-existing index or collection when no document loader is provided. Update mode adds new documents to an existing index or collection when both a document loader and pre-existing names are provided.",
+    "source_evidence": [
+      {
+        "file": "ragspecs.rst",
+        "lines": [
+          61,
+          65
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 9,
+    "question": "How does FAISS differ from Pinecone in RapidFire AI's vector store configuration?",
+    "reference_answer": "FAISS uses a flat L2 index by default and is an in-memory store, so it only supports create mode and does not have pre-existing indexes. Pinecone supports create, read, and update workflows with pre-existing index and namespace pairs required for read or update mode.",
+    "source_evidence": [
+      {
+        "file": "ragspecs.rst",
+        "lines": [
+          69,
+          88
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 10,
+    "question": "What options control get_context() output and reranking behavior?",
+    "reference_answer": "get_context() accepts batch_queries plus two options: use_reranker and serialize. use_reranker controls whether a configured reranker is applied and defaults to true. serialize controls whether retrieved documents are returned as formatted strings or raw Document objects, and also defaults to true.",
+    "source_evidence": [
+      {
+        "file": "ragspecs.rst",
+        "lines": [
+          161,
+          175
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 11,
+    "question": "What does RFPromptManager wrap, and what task does it perform for few-shot prompting?",
+    "reference_answer": "RFPromptManager wraps LangChain APIs for dynamic few-shot example selection. It uses semantic similarity-based example selection to construct prompts with the examples most relevant to each input query.",
+    "source_evidence": [
+      {
+        "file": "promptothers.rst",
+        "lines": [
+          7,
+          12
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 12,
+    "question": "In the FiQA preprocessing example, how are retrieved document IDs preserved for evaluation?",
+    "reference_answer": "The FiQA preprocessing example retrieves unserialized documents with rag.get_context(..., serialize=False), then extracts the corpus_id metadata field from each retrieved Document. It stores those IDs in retrieved_documents while separately serializing the retrieved documents for prompt construction.",
+    "source_evidence": [
+      {
+        "file": "evalsfunctions.rst",
+        "lines": [
+          38,
+          77
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 13,
+    "question": "How does the multimodal preprocessing example add image information to generator prompts?",
+    "reference_answer": "The multimodal preprocessing example retrieves unserialized documents, extracts base64 image strings from each document's image_data metadata field, serializes text context separately, and builds user prompt content containing both a text block and image_url blocks for non-empty base64 images.",
+    "source_evidence": [
+      {
+        "file": "evalsfunctions.rst",
+        "lines": [
+          116,
+          157
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 14,
+    "question": "What output schema is expected from eval.compute_metrics_fn?",
+    "reference_answer": "eval.compute_metrics_fn should return a dictionary whose keys are metric names. Each metric maps to another dictionary that must contain the reserved key \"value\" with that metric's value over the batch.",
+    "source_evidence": [
+      {
+        "file": "evalsfunctions.rst",
+        "lines": [
+          220,
+          234
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 15,
+    "question": "How does the sample create_model function choose which Hugging Face model class to instantiate?",
+    "reference_answer": "The sample create_model function reads model_name, model_type, and model_kwargs from model_config. It uses AutoModelForCausalLM for causal_lm, AutoModelForSeq2SeqLM for seq2seq_lm, AutoModelForMaskedLM for masked_lm, allows custom loading logic for custom, and defaults to causal LM otherwise; it then loads the tokenizer with AutoTokenizer.from_pretrained().",
+    "source_evidence": [
+      {
+        "file": "fitfunctions.rst",
+        "lines": [
+          34,
+          59
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 16,
+    "question": "What should a formatting function return for fine-tuning data?",
+    "reference_answer": "A formatting function prepares each dataset row into the prompt and completion format expected by the model. It should return a dictionary with prompt and completion keys, each containing lists of chat messages with role and content fields.",
+    "source_evidence": [
+      {
+        "file": "fitfunctions.rst",
+        "lines": [
+          113,
+          153
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 17,
+    "question": "What return values are allowed from a GRPO reward function?",
+    "reference_answer": "Every reward function should return a list of floats, one per completion. It may also return None for examples where the reward function is not applicable, which is useful for multi-task training.",
+    "source_evidence": [
+      {
+        "file": "fitfunctions.rst",
+        "lines": [
+          232,
+          234
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 18,
+    "question": "How does RFLoraConfig extend Hugging Face PEFT's LoraConfig for RapidFire experiments?",
+    "reference_answer": "RFLoraConfig is a wrapper around Hugging Face PEFT's LoraConfig. The key difference is that individual arguments can be List-valued or Range-valued so they can define a base set of knob combinations for a config group.",
+    "source_evidence": [
+      {
+        "file": "models.rst",
+        "lines": [
+          13,
+          20
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 19,
+    "question": "What responsibilities does RFModelConfig unify?",
+    "reference_answer": "RFModelConfig abstracts and unifies multiple Hugging Face APIs for model-related specifications. It brings together model loading, training configurations, LoRA settings, adapter structures, formatting and metrics functions, and generation specifics in one RapidFire API class.",
+    "source_evidence": [
+      {
+        "file": "models.rst",
+        "lines": [
+          74,
+          83
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 20,
+    "question": "Which two RFSFTConfig arguments use List values in the trainer example?",
+    "reference_answer": "The trainer example uses List([2e-4, 1e-5]) for learning_rate and List([\"linear\", \"cosine\"]) for lr_scheduler_type. The surrounding settings, such as batch sizes, epoch count, logging steps, eval strategy, eval steps, fp16, and save strategy, are shown as fixed values in that example.",
+    "source_evidence": [
+      {
+        "file": "trainers.rst",
+        "lines": [
+          42,
+          55
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 21,
+    "question": "How do the larger and lite FSDP examples differ in their FSDP parameter offloading setting?",
+    "reference_answer": "Both SFT FSDP examples use full_shard auto_wrap with transformer-based wrapping. The larger tutorial example sets offload_params to False, while the lite tutorial example sets offload_params to True.",
+    "source_evidence": [
+      {
+        "file": "trainers.rst",
+        "lines": [
+          65,
+          97
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 22,
+    "question": "Which DPO parameter is varied with a List in the DPO trainer example?",
+    "reference_answer": "The DPO trainer example varies beta with List([0.1, 0.001]). The rest of the shown base_dpo_config includes settings such as model_adapter_name, ref_adapter_name, max prompt and completion lengths, batch size, optimizer, scheduler, and save strategy.",
+    "source_evidence": [
+      {
+        "file": "trainers.rst",
+        "lines": [
+          121,
+          143
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 23,
+    "question": "What model_config keys does RFvLLMModelConfig recommend listing for self-hosted generation?",
+    "reference_answer": "RFvLLMModelConfig recommends listing model, dtype, distributed_executor_backend, and max_model_len in model_config. The distributed executor backend can be ray or multiprocessing, with only multiprocessing supported for now, and max_model_len is automatically derived from the model config if unspecified.",
+    "source_evidence": [
+      {
+        "file": "generators.rst",
+        "lines": [
+          23,
+          28
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 24,
+    "question": "What happens to confidence intervals as RapidFire AI processes more shards during online aggregation?",
+    "reference_answer": "As more shards are processed, the confidence intervals narrow and converge to zero when the full dataset has been processed. At that point, the metrics become exact point estimates over the full dataset.",
+    "source_evidence": [
+      {
+        "file": "onlineagg.rst",
+        "lines": [
+          51,
+          54
+        ]
+      }
+    ]
+  },
+  {
+    "question_id": 25,
+    "question": "In RapidFire AI's online aggregation impact example, how does the runtime compare against traditional batch evals?",
+    "reference_answer": "The example compares 16 RAG configs on 400 queries split into 8 shards at 10 seconds per query on one machine. Traditional batch evals take 17.8 hours, while RapidFire AI's IC Ops workflow takes 3.8 hours by stopping weak configs early, adding variants, and continuing only the best config. The documented result is a 4.7x runtime cut, with token spend on closed-model APIs redirected toward more productive configs.",
+    "source_evidence": [
+      {
+        "file": "onlineagg.rst",
+        "lines": [
+          203,
+          224
+        ]
+      }
+    ]
+  }
+]

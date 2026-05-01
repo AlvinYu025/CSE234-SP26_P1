@@ -1,0 +1,24 @@
+{
+  "chunk_tokens": 320,
+  "chunk_overlap": 70,
+  "retriever": "similarity",
+  "top_k": 5,
+  "fetch_k": 12,
+  "lambda_mult": 0.72,
+  "rerank": "lexical",
+  "rerank_top_n": 5,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "analyzer": "word",
+  "max_context_tokens": 1700,
+  "max_answer_sentences": 5,
+  "symbol_boost": 0.02,
+  "title_boost": 0.12,
+  "glossary_symbol_penalty": 0.02,
+  "source_expand_lines": 0,
+  "related_sources": false,
+  "max_related_sources": 5,
+  "name": "c04_similarity_320_70_k5_lexical"
+}

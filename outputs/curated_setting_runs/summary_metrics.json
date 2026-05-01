@@ -1,0 +1,207 @@
+[
+  {
+    "run": "c01_similarity_180_30_k3",
+    "method": "small word-TF-IDF similarity baseline, top-3, no rerank",
+    "n_answers": 25,
+    "retrieval": {
+      "F1@5": 0.548,
+      "Precision@5": 0.4,
+      "Recall@5": 0.96,
+      "Retrieval Score": 0.636
+    },
+    "generation": {
+      "Correctness (pass rate)": 0.92,
+      "Faithfulness (pass rate)": 0.96,
+      "Completeness (raw, 0-5)": 4.44,
+      "Completeness (normalized)": 0.8880000000000001,
+      "Partial Generation Score": 0.9226666666666666,
+      "Partial Generation Score note": "Mean of 3 normalized released metrics. The leaderboard Generation Score averages all 5 normalized metrics (the 3 released + 2 hidden binary)."
+    },
+    "retrieval_misses": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "generation_weak_cases": [
+      2,
+      3,
+      15,
+      22,
+      25
+    ]
+  },
+  {
+    "run": "c04_similarity_320_70_k5_lexical",
+    "method": "larger word-TF-IDF chunks with lexical rerank, high-recall setting",
+    "n_answers": 25,
+    "retrieval": {
+      "F1@5": 0.4213333333333334,
+      "Precision@5": 0.28,
+      "Recall@5": 0.92,
+      "Retrieval Score": 0.5404444444444444
+    },
+    "generation": {
+      "Correctness (pass rate)": 0.88,
+      "Faithfulness (pass rate)": 0.96,
+      "Completeness (raw, 0-5)": 4.4,
+      "Completeness (normalized)": 0.8800000000000001,
+      "Partial Generation Score": 0.9066666666666666,
+      "Partial Generation Score note": "Mean of 3 normalized released metrics. The leaderboard Generation Score averages all 5 normalized metrics (the 3 released + 2 hidden binary)."
+    },
+    "retrieval_misses": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "generation_weak_cases": [
+      1,
+      3,
+      10,
+      16,
+      22
+    ]
+  },
+  {
+    "run": "c07_mmr_260_55_fetch20_lexical",
+    "method": "MMR retrieval with lexical rerank, most diverse retrieval strategy",
+    "n_answers": 25,
+    "retrieval": {
+      "F1@5": 0.33599999999999997,
+      "Precision@5": 0.2020000000000001,
+      "Recall@5": 1.0,
+      "Retrieval Score": 0.5126666666666667
+    },
+    "generation": {
+      "Correctness (pass rate)": 0.96,
+      "Faithfulness (pass rate)": 0.96,
+      "Completeness (raw, 0-5)": 4.52,
+      "Completeness (normalized)": 0.9039999999999999,
+      "Partial Generation Score": 0.9413333333333332,
+      "Partial Generation Score note": "Mean of 3 normalized released metrics. The leaderboard Generation Score averages all 5 normalized metrics (the 3 released + 2 hidden binary)."
+    },
+    "retrieval_misses": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "generation_weak_cases": [
+      13,
+      21,
+      22
+    ]
+  },
+  {
+    "run": "c08_similarity_char_260_55_k5",
+    "method": "char ngram TF-IDF with lexical rerank",
+    "n_answers": 25,
+    "retrieval": {
+      "F1@5": 0.4814285714285714,
+      "Precision@5": 0.3280000000000001,
+      "Recall@5": 1.0,
+      "Retrieval Score": 0.6031428571428572
+    },
+    "generation": {
+      "Correctness (pass rate)": 1.0,
+      "Faithfulness (pass rate)": 1.0,
+      "Completeness (raw, 0-5)": 4.8,
+      "Completeness (normalized)": 0.96,
+      "Partial Generation Score": 0.9866666666666667,
+      "Partial Generation Score note": "Mean of 3 normalized released metrics. The leaderboard Generation Score averages all 5 normalized metrics (the 3 released + 2 hidden binary)."
+    },
+    "retrieval_misses": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "generation_weak_cases": [
+      22
+    ]
+  }
+]
