@@ -1,0 +1,265 @@
+{
+  "dense_configs": {
+    "D01": {
+      "name": "dense_320_64_similarity_k5_rerank3",
+      "chunk_size": 320,
+      "chunk_overlap": 64,
+      "search_cfg": {
+        "type": "similarity",
+        "k": 5
+      },
+      "reranker_top_n": 3
+    },
+    "D02": {
+      "name": "dense_320_64_similarity_k5_rerank5",
+      "chunk_size": 320,
+      "chunk_overlap": 64,
+      "search_cfg": {
+        "type": "similarity",
+        "k": 5
+      },
+      "reranker_top_n": 5
+    },
+    "D03": {
+      "name": "dense_320_64_similarity_k8_rerank3",
+      "chunk_size": 320,
+      "chunk_overlap": 64,
+      "search_cfg": {
+        "type": "similarity",
+        "k": 8
+      },
+      "reranker_top_n": 3
+    },
+    "D04": {
+      "name": "dense_320_64_similarity_k8_rerank5",
+      "chunk_size": 320,
+      "chunk_overlap": 64,
+      "search_cfg": {
+        "type": "similarity",
+        "k": 8
+      },
+      "reranker_top_n": 5
+    },
+    "D05": {
+      "name": "dense_320_64_mmr_k8_fetch20_lam07_rerank3",
+      "chunk_size": 320,
+      "chunk_overlap": 64,
+      "search_cfg": {
+        "type": "mmr",
+        "k": 8,
+        "fetch_k": 20,
+        "lambda_mult": 0.7
+      },
+      "reranker_top_n": 3
+    },
+    "D06": {
+      "name": "dense_320_64_mmr_k8_fetch20_lam07_rerank5",
+      "chunk_size": 320,
+      "chunk_overlap": 64,
+      "search_cfg": {
+        "type": "mmr",
+        "k": 8,
+        "fetch_k": 20,
+        "lambda_mult": 0.7
+      },
+      "reranker_top_n": 5
+    },
+    "D07": {
+      "name": "dense_512_96_similarity_k5_rerank3",
+      "chunk_size": 512,
+      "chunk_overlap": 96,
+      "search_cfg": {
+        "type": "similarity",
+        "k": 5
+      },
+      "reranker_top_n": 3
+    },
+    "D08": {
+      "name": "dense_512_96_similarity_k5_rerank5",
+      "chunk_size": 512,
+      "chunk_overlap": 96,
+      "search_cfg": {
+        "type": "similarity",
+        "k": 5
+      },
+      "reranker_top_n": 5
+    },
+    "D09": {
+      "name": "dense_512_96_similarity_k8_rerank3",
+      "chunk_size": 512,
+      "chunk_overlap": 96,
+      "search_cfg": {
+        "type": "similarity",
+        "k": 8
+      },
+      "reranker_top_n": 3
+    },
+    "D10": {
+      "name": "dense_512_96_similarity_k8_rerank5",
+      "chunk_size": 512,
+      "chunk_overlap": 96,
+      "search_cfg": {
+        "type": "similarity",
+        "k": 8
+      },
+      "reranker_top_n": 5
+    },
+    "D11": {
+      "name": "dense_512_96_mmr_k8_fetch20_lam07_rerank3",
+      "chunk_size": 512,
+      "chunk_overlap": 96,
+      "search_cfg": {
+        "type": "mmr",
+        "k": 8,
+        "fetch_k": 20,
+        "lambda_mult": 0.7
+      },
+      "reranker_top_n": 3
+    },
+    "D12": {
+      "name": "dense_512_96_mmr_k8_fetch20_lam07_rerank5",
+      "chunk_size": 512,
+      "chunk_overlap": 96,
+      "search_cfg": {
+        "type": "mmr",
+        "k": 8,
+        "fetch_k": 20,
+        "lambda_mult": 0.7
+      },
+      "reranker_top_n": 5
+    }
+  },
+  "tfidf_configs": {
+    "T01": {
+      "name": "tfidf_320_64_k1_no_title_no_related_expand0",
+      "chunk_tokens": 320,
+      "chunk_overlap": 64,
+      "top_k": 1,
+      "use_title_boost": false,
+      "related_sources": false,
+      "source_expand_lines": 0,
+      "context_expand_lines": 20
+    },
+    "T02": {
+      "name": "tfidf_420_80_k1_no_title_no_related_expand0",
+      "chunk_tokens": 420,
+      "chunk_overlap": 80,
+      "top_k": 1,
+      "use_title_boost": false,
+      "related_sources": false,
+      "source_expand_lines": 0,
+      "context_expand_lines": 20
+    },
+    "T03": {
+      "name": "tfidf_512_96_k1_no_title_no_related_expand0",
+      "chunk_tokens": 512,
+      "chunk_overlap": 96,
+      "top_k": 1,
+      "use_title_boost": false,
+      "related_sources": false,
+      "source_expand_lines": 0,
+      "context_expand_lines": 20
+    },
+    "T04": {
+      "name": "tfidf_320_64_k1_title_no_related_expand0",
+      "chunk_tokens": 320,
+      "chunk_overlap": 64,
+      "top_k": 1,
+      "use_title_boost": true,
+      "related_sources": false,
+      "source_expand_lines": 0,
+      "context_expand_lines": 20
+    },
+    "T05": {
+      "name": "tfidf_420_80_k1_title_no_related_expand0",
+      "chunk_tokens": 420,
+      "chunk_overlap": 80,
+      "top_k": 1,
+      "use_title_boost": true,
+      "related_sources": false,
+      "source_expand_lines": 0,
+      "context_expand_lines": 20
+    },
+    "T06": {
+      "name": "tfidf_512_96_k1_title_no_related_expand0",
+      "chunk_tokens": 512,
+      "chunk_overlap": 96,
+      "top_k": 1,
+      "use_title_boost": true,
+      "related_sources": false,
+      "source_expand_lines": 0,
+      "context_expand_lines": 20
+    },
+    "T07": {
+      "name": "tfidf_320_64_k1_title_related_expand0",
+      "chunk_tokens": 320,
+      "chunk_overlap": 64,
+      "top_k": 1,
+      "use_title_boost": true,
+      "related_sources": true,
+      "source_expand_lines": 0,
+      "context_expand_lines": 20
+    },
+    "T08": {
+      "name": "tfidf_420_80_k1_title_related_expand0",
+      "chunk_tokens": 420,
+      "chunk_overlap": 80,
+      "top_k": 1,
+      "use_title_boost": true,
+      "related_sources": true,
+      "source_expand_lines": 0,
+      "context_expand_lines": 20
+    },
+    "T09": {
+      "name": "tfidf_512_96_k1_title_related_expand0",
+      "chunk_tokens": 512,
+      "chunk_overlap": 96,
+      "top_k": 1,
+      "use_title_boost": true,
+      "related_sources": true,
+      "source_expand_lines": 0,
+      "context_expand_lines": 20
+    },
+    "T10": {
+      "name": "tfidf_420_80_k1_title_related_expand5",
+      "chunk_tokens": 420,
+      "chunk_overlap": 80,
+      "top_k": 1,
+      "use_title_boost": true,
+      "related_sources": true,
+      "source_expand_lines": 5,
+      "context_expand_lines": 20
+    },
+    "T11": {
+      "name": "tfidf_420_80_k1_title_related_expand10",
+      "chunk_tokens": 420,
+      "chunk_overlap": 80,
+      "top_k": 1,
+      "use_title_boost": true,
+      "related_sources": true,
+      "source_expand_lines": 10,
+      "context_expand_lines": 20
+    },
+    "T12": {
+      "name": "tfidf_420_80_k3_title_related_expand5",
+      "chunk_tokens": 420,
+      "chunk_overlap": 80,
+      "top_k": 3,
+      "use_title_boost": true,
+      "related_sources": true,
+      "source_expand_lines": 5,
+      "context_expand_lines": 20
+    },
+    "T13": {
+      "name": "tfidf_420_80_k5_title_related_expand5",
+      "chunk_tokens": 420,
+      "chunk_overlap": 80,
+      "top_k": 5,
+      "use_title_boost": true,
+      "related_sources": true,
+      "source_expand_lines": 5,
+      "context_expand_lines": 20
+    }
+  },
+  "metric_note": "Metrics use Metrics/project1_eval.py. Generation_Score_3_released uses only correctness, faithfulness, and completeness/5. Partial_Overall_Score = 0.5 * Retrieval Score + 0.5 * Generation_Score_3_released. Hidden metrics are unavailable."
+}

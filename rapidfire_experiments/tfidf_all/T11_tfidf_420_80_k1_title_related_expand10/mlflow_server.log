@@ -1,0 +1,24 @@
+Registry store URI not provided. Using backend store URI.
+[MLflow] Security middleware enabled with default settings (localhost-only). To allow connections from other hosts, use --host 0.0.0.0 and configure --allowed-hosts and --cors-allowed-origins.
+2026/05/02 00:00:34 INFO:     Uvicorn running on http://127.0.0.1:8852 (Press CTRL+C to quit)
+2026/05/02 00:00:34 INFO:     Started parent process [75084]
+2026/05/02 00:00:38 INFO:     Started server process [75087]
+2026/05/02 00:00:38 INFO:     Waiting for application startup.
+2026/05/02 00:00:38 INFO:     Application startup complete.
+2026/05/02 00:00:38 INFO:     Started server process [75088]
+2026/05/02 00:00:38 INFO:     Waiting for application startup.
+2026/05/02 00:00:38 INFO:     Application startup complete.
+2026/05/02 00:00:39 INFO:     Started server process [75089]
+2026/05/02 00:00:39 INFO:     Waiting for application startup.
+2026/05/02 00:00:39 INFO:     Application startup complete.
+2026/05/02 00:00:39 INFO:     Started server process [75090]
+2026/05/02 00:00:39 INFO:     Waiting for application startup.
+2026/05/02 00:00:39 INFO:     Application startup complete.
+2026/05/02 00:00:39 INFO:     127.0.0.1:44142 - "GET /health HTTP/1.1" 200 OK
+2026/05/02 00:00:44 INFO mlflow.server.jobs.utils: Registered online_scoring_scheduler periodic task (runs every 1 minute)
+2026/05/02 00:00:51 INFO:     127.0.0.1:34160 - "POST /api/2.0/mlflow/experiments/create HTTP/1.1" 200 OK
+2026/05/02 00:00:51 INFO:     127.0.0.1:34160 - "GET /api/2.0/mlflow/experiments/get-by-name?experiment_name=project1-tfidf-T11 HTTP/1.1" 200 OK
+2026/05/02 00:00:51 INFO:     127.0.0.1:34160 - "POST /api/2.0/mlflow/runs/create HTTP/1.1" 200 OK
+2026/05/02 00:00:51 INFO:     127.0.0.1:34160 - "POST /api/2.0/mlflow/runs/log-parameter HTTP/1.1" 200 OK
+2026/05/02 00:01:03 INFO:     127.0.0.1:48250 - "GET /api/2.0/mlflow/experiments/get-by-name?experiment_name=project1-tfidf-T11 HTTP/1.1" 200 OK
+2026/05/02 00:01:03 INFO:     127.0.0.1:48264 - "GET /api/2.0/mlflow/experiments/get-by-name?experiment_name=project1-tfidf-T11 HTTP/1.1" 200 OK

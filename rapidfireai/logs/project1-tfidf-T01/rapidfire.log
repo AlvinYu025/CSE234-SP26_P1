@@ -1,0 +1,373 @@
+2026-05-01 23:28:05 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T01:Experiment] Experiment project1-tfidf-T01 created with Experiment ID: 1 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T01_tfidf_320_64_k1_no_title_no_related_expand0/project1-tfidf-T01
+2026-05-01 23:28:21 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T01:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:28:21 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T01:Experiment] Creating MLflow experiment: project1-tfidf-T01
+2026-05-01 23:28:22 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T01:Experiment] Initialized MetricLogger experiment: 1
+2026-05-01 23:28:22 | Experiment | INFO | experiment.py:230 | [project1-tfidf-T01:Experiment] Starting new dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:28:22 | Experiment | INFO | dispatcher.py:1121 | [project1-tfidf-T01:Experiment] Started interactive control dispatcher on http://127.0.0.1:8851
+2026-05-01 23:28:22 | Experiment | INFO | dispatcher.py:1122 | [project1-tfidf-T01:Experiment] Use dispatcher API to dynamically stop/resume/delete/clone pipelines
+2026-05-01 23:28:22 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T01:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:28:22 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T01:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:28:22 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T01:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:28:22 | Controller | INFO | controller.py:895 | [project1-tfidf-T01:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:28:22 | Controller | INFO | controller.py:900 | [project1-tfidf-T01:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:28:22 | Controller | INFO | controller.py:306 | [project1-tfidf-T01:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:28:22 | Controller | INFO | controller.py:920 | [project1-tfidf-T01:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:28:22 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T01:Experiment] Created MLflow run: f08e2ec2358f462983f796411be69146, 1
+2026-05-01 23:28:22 | Controller | INFO | controller.py:931 | [project1-tfidf-T01:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:28:22 | Controller | INFO | controller.py:1118 | [project1-tfidf-T01:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:28:22 | Controller | INFO | controller.py:1124 | [project1-tfidf-T01:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:28:23 | Controller | INFO | controller.py:1422 | [project1-tfidf-T01:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:28:35 | QueryProcessingActor-0 | INFO | query_actor.py:165 | [project1-tfidf-T01:QueryProcessingActor-0] Initializing new inference engine (config hash: bb635b45)
+2026-05-01 23:29:16 | Controller | INFO | controller.py:1299 | [project1-tfidf-T01:Controller] Pipeline 1 completed shard 0 (1 batches, 39.14s)
+2026-05-01 23:29:16 | Controller | INFO | controller.py:1422 | [project1-tfidf-T01:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:29:16 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-tfidf-T01:QueryProcessingActor-0] Reusing existing inference engine (config hash: bb635b45)
+2026-05-01 23:29:52 | Controller | INFO | controller.py:1299 | [project1-tfidf-T01:Controller] Pipeline 1 completed shard 1 (1 batches, 34.62s)
+2026-05-01 23:29:52 | Controller | INFO | controller.py:1422 | [project1-tfidf-T01:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:29:52 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-tfidf-T01:QueryProcessingActor-0] Reusing existing inference engine (config hash: bb635b45)
+2026-05-01 23:30:27 | Controller | INFO | controller.py:1299 | [project1-tfidf-T01:Controller] Pipeline 1 completed shard 2 (1 batches, 33.12s)
+2026-05-01 23:30:27 | Controller | INFO | controller.py:1422 | [project1-tfidf-T01:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-01 23:30:27 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-tfidf-T01:QueryProcessingActor-0] Reusing existing inference engine (config hash: bb635b45)
+2026-05-01 23:31:04 | Controller | INFO | controller.py:1192 | [project1-tfidf-T01:Controller] Pipeline 1 completed all 4 shards
+2026-05-01 23:31:06 | Controller | INFO | controller.py:1299 | [project1-tfidf-T01:Controller] Pipeline 1 completed shard 3 (1 batches, 37.13s)
+2026-05-01 23:31:06 | Controller | INFO | controller.py:1386 | [project1-tfidf-T01:Controller] All pipelines completed all shards!
+2026-05-01 23:31:06 | Controller | INFO | controller.py:695 | [project1-tfidf-T01:Controller] Computing final metrics for all pipelines...
+2026-05-01 23:31:07 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T01:Experiment] Ending run: f08e2ec2358f462983f796411be69146, 1 in rf_mlflow
+2026-05-01 23:31:08 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T01:Experiment] Run f08e2ec2358f462983f796411be69146 is not the active run, no local context to clear
+2026-05-01 23:31:08 | Controller | INFO | controller.py:853 | [project1-tfidf-T01:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-01 23:31:08 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T01:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-01 23:31:08 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T01:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-01 23:31:08 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T01:ExperimentUtils] Experiment project1-tfidf-T01 ended
+2026-05-01 23:31:10 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T01:Experiment] All actors shut down
+2026-05-01 23:31:10 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T01:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-01 23:31:21 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T02:Experiment] Experiment project1-tfidf-T02 created with Experiment ID: 2 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T02_tfidf_420_80_k1_no_title_no_related_expand0/project1-tfidf-T02
+2026-05-01 23:31:33 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T02:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:31:33 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T02:Experiment] Creating MLflow experiment: project1-tfidf-T02
+2026-05-01 23:31:33 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T02:Experiment] Initialized MetricLogger experiment: 2
+2026-05-01 23:31:33 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T02:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:31:33 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T02:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:31:33 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T02:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:31:33 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T02:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:31:34 | Controller | INFO | controller.py:895 | [project1-tfidf-T02:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:31:34 | Controller | INFO | controller.py:900 | [project1-tfidf-T02:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:31:34 | Controller | INFO | controller.py:306 | [project1-tfidf-T02:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:31:34 | Controller | INFO | controller.py:920 | [project1-tfidf-T02:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:31:34 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T02:Experiment] Created MLflow run: 474ec33872e34e1782ecc59d20c2e109, 1
+2026-05-01 23:31:34 | Controller | INFO | controller.py:931 | [project1-tfidf-T02:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:31:34 | Controller | INFO | controller.py:1118 | [project1-tfidf-T02:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:31:34 | Controller | INFO | controller.py:1124 | [project1-tfidf-T02:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:31:34 | Controller | INFO | controller.py:1422 | [project1-tfidf-T02:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:32:31 | Controller | INFO | controller.py:1299 | [project1-tfidf-T02:Controller] Pipeline 1 completed shard 0 (1 batches, 44.15s)
+2026-05-01 23:32:31 | Controller | INFO | controller.py:1422 | [project1-tfidf-T02:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:33:07 | Controller | INFO | controller.py:1299 | [project1-tfidf-T02:Controller] Pipeline 1 completed shard 1 (1 batches, 34.12s)
+2026-05-01 23:33:07 | Controller | INFO | controller.py:1422 | [project1-tfidf-T02:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:33:43 | Controller | INFO | controller.py:1299 | [project1-tfidf-T02:Controller] Pipeline 1 completed shard 2 (1 batches, 34.12s)
+2026-05-01 23:33:43 | Controller | INFO | controller.py:1422 | [project1-tfidf-T02:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-01 23:34:17 | Controller | INFO | controller.py:1192 | [project1-tfidf-T02:Controller] Pipeline 1 completed all 4 shards
+2026-05-01 23:34:19 | Controller | INFO | controller.py:1299 | [project1-tfidf-T02:Controller] Pipeline 1 completed shard 3 (1 batches, 34.63s)
+2026-05-01 23:34:19 | Controller | INFO | controller.py:1386 | [project1-tfidf-T02:Controller] All pipelines completed all shards!
+2026-05-01 23:34:19 | Controller | INFO | controller.py:695 | [project1-tfidf-T02:Controller] Computing final metrics for all pipelines...
+2026-05-01 23:34:20 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T02:Experiment] Ending run: 474ec33872e34e1782ecc59d20c2e109, 1 in rf_mlflow
+2026-05-01 23:34:20 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T02:Experiment] Run 474ec33872e34e1782ecc59d20c2e109 is not the active run, no local context to clear
+2026-05-01 23:34:20 | Controller | INFO | controller.py:853 | [project1-tfidf-T02:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-01 23:34:20 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T02:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-01 23:34:20 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T02:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-01 23:34:20 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T02:ExperimentUtils] Experiment project1-tfidf-T02 ended
+2026-05-01 23:34:23 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T02:Experiment] All actors shut down
+2026-05-01 23:34:23 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T02:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-01 23:34:34 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T03:Experiment] Experiment project1-tfidf-T03 created with Experiment ID: 3 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T03_tfidf_512_96_k1_no_title_no_related_expand0/project1-tfidf-T03
+2026-05-01 23:34:45 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T03:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:34:45 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T03:Experiment] Creating MLflow experiment: project1-tfidf-T03
+2026-05-01 23:34:45 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T03:Experiment] Initialized MetricLogger experiment: 3
+2026-05-01 23:34:45 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T03:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:34:45 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T03:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:34:45 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T03:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:34:45 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T03:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:34:46 | Controller | INFO | controller.py:895 | [project1-tfidf-T03:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:34:46 | Controller | INFO | controller.py:900 | [project1-tfidf-T03:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:34:46 | Controller | INFO | controller.py:306 | [project1-tfidf-T03:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:34:46 | Controller | INFO | controller.py:920 | [project1-tfidf-T03:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:34:46 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T03:Experiment] Created MLflow run: f29c29060a874ffd84f2c982014c3b96, 1
+2026-05-01 23:34:46 | Controller | INFO | controller.py:931 | [project1-tfidf-T03:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:34:46 | Controller | INFO | controller.py:1118 | [project1-tfidf-T03:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:34:46 | Controller | INFO | controller.py:1124 | [project1-tfidf-T03:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:34:46 | Controller | INFO | controller.py:1422 | [project1-tfidf-T03:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:35:40 | Controller | INFO | controller.py:1299 | [project1-tfidf-T03:Controller] Pipeline 1 completed shard 0 (1 batches, 40.63s)
+2026-05-01 23:35:40 | Controller | INFO | controller.py:1422 | [project1-tfidf-T03:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:36:35 | Controller | INFO | controller.py:1299 | [project1-tfidf-T03:Controller] Pipeline 1 completed shard 1 (1 batches, 53.17s)
+2026-05-01 23:36:35 | Controller | INFO | controller.py:1422 | [project1-tfidf-T03:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:37:12 | Controller | INFO | controller.py:1299 | [project1-tfidf-T03:Controller] Pipeline 1 completed shard 2 (1 batches, 35.12s)
+2026-05-01 23:37:12 | Controller | INFO | controller.py:1422 | [project1-tfidf-T03:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-01 23:37:44 | Controller | INFO | controller.py:1192 | [project1-tfidf-T03:Controller] Pipeline 1 completed all 4 shards
+2026-05-01 23:37:45 | Controller | INFO | controller.py:1299 | [project1-tfidf-T03:Controller] Pipeline 1 completed shard 3 (1 batches, 32.12s)
+2026-05-01 23:37:45 | Controller | INFO | controller.py:1386 | [project1-tfidf-T03:Controller] All pipelines completed all shards!
+2026-05-01 23:37:45 | Controller | INFO | controller.py:695 | [project1-tfidf-T03:Controller] Computing final metrics for all pipelines...
+2026-05-01 23:37:47 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T03:Experiment] Ending run: f29c29060a874ffd84f2c982014c3b96, 1 in rf_mlflow
+2026-05-01 23:37:47 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T03:Experiment] Run f29c29060a874ffd84f2c982014c3b96 is not the active run, no local context to clear
+2026-05-01 23:37:47 | Controller | INFO | controller.py:853 | [project1-tfidf-T03:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-01 23:37:47 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T03:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-01 23:37:47 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T03:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-01 23:37:47 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T03:ExperimentUtils] Experiment project1-tfidf-T03 ended
+2026-05-01 23:37:49 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T03:Experiment] All actors shut down
+2026-05-01 23:37:49 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T03:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-01 23:37:59 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T04:Experiment] Experiment project1-tfidf-T04 created with Experiment ID: 4 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T04_tfidf_320_64_k1_title_no_related_expand0/project1-tfidf-T04
+2026-05-01 23:38:11 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T04:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:38:11 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T04:Experiment] Creating MLflow experiment: project1-tfidf-T04
+2026-05-01 23:38:11 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T04:Experiment] Initialized MetricLogger experiment: 4
+2026-05-01 23:38:11 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T04:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:38:11 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T04:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:38:11 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T04:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:38:11 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T04:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:38:12 | Controller | INFO | controller.py:895 | [project1-tfidf-T04:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:38:12 | Controller | INFO | controller.py:900 | [project1-tfidf-T04:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:38:12 | Controller | INFO | controller.py:306 | [project1-tfidf-T04:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:38:12 | Controller | INFO | controller.py:920 | [project1-tfidf-T04:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:38:12 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T04:Experiment] Created MLflow run: b7668e4660444c57bbf952b994a6bc75, 1
+2026-05-01 23:38:12 | Controller | INFO | controller.py:931 | [project1-tfidf-T04:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:38:12 | Controller | INFO | controller.py:1118 | [project1-tfidf-T04:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:38:12 | Controller | INFO | controller.py:1124 | [project1-tfidf-T04:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:38:12 | Controller | INFO | controller.py:1422 | [project1-tfidf-T04:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:39:05 | Controller | INFO | controller.py:1299 | [project1-tfidf-T04:Controller] Pipeline 1 completed shard 0 (1 batches, 39.14s)
+2026-05-01 23:39:05 | Controller | INFO | controller.py:1422 | [project1-tfidf-T04:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:40:06 | Controller | INFO | controller.py:1299 | [project1-tfidf-T04:Controller] Pipeline 1 completed shard 1 (1 batches, 59.71s)
+2026-05-01 23:40:06 | Controller | INFO | controller.py:1422 | [project1-tfidf-T04:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:40:44 | Controller | INFO | controller.py:1299 | [project1-tfidf-T04:Controller] Pipeline 1 completed shard 2 (1 batches, 35.63s)
+2026-05-01 23:40:44 | Controller | INFO | controller.py:1422 | [project1-tfidf-T04:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-01 23:41:14 | Controller | INFO | controller.py:1192 | [project1-tfidf-T04:Controller] Pipeline 1 completed all 4 shards
+2026-05-01 23:41:16 | Controller | INFO | controller.py:1299 | [project1-tfidf-T04:Controller] Pipeline 1 completed shard 3 (1 batches, 30.61s)
+2026-05-01 23:41:16 | Controller | INFO | controller.py:1386 | [project1-tfidf-T04:Controller] All pipelines completed all shards!
+2026-05-01 23:41:16 | Controller | INFO | controller.py:695 | [project1-tfidf-T04:Controller] Computing final metrics for all pipelines...
+2026-05-01 23:41:17 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T04:Experiment] Ending run: b7668e4660444c57bbf952b994a6bc75, 1 in rf_mlflow
+2026-05-01 23:41:17 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T04:Experiment] Run b7668e4660444c57bbf952b994a6bc75 is not the active run, no local context to clear
+2026-05-01 23:41:17 | Controller | INFO | controller.py:853 | [project1-tfidf-T04:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-01 23:41:18 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T04:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-01 23:41:18 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T04:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-01 23:41:18 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T04:ExperimentUtils] Experiment project1-tfidf-T04 ended
+2026-05-01 23:41:20 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T04:Experiment] All actors shut down
+2026-05-01 23:41:20 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T04:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-01 23:41:31 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T05:Experiment] Experiment project1-tfidf-T05 created with Experiment ID: 5 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T05_tfidf_420_80_k1_title_no_related_expand0/project1-tfidf-T05
+2026-05-01 23:41:42 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T05:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:41:42 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T05:Experiment] Creating MLflow experiment: project1-tfidf-T05
+2026-05-01 23:41:42 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T05:Experiment] Initialized MetricLogger experiment: 5
+2026-05-01 23:41:42 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T05:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:41:42 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T05:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:41:42 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T05:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:41:42 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T05:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:41:43 | Controller | INFO | controller.py:895 | [project1-tfidf-T05:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:41:43 | Controller | INFO | controller.py:900 | [project1-tfidf-T05:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:41:43 | Controller | INFO | controller.py:306 | [project1-tfidf-T05:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:41:43 | Controller | INFO | controller.py:920 | [project1-tfidf-T05:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:41:43 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T05:Experiment] Created MLflow run: 8e4e53e07dff499db0dfc102de2f7e1f, 1
+2026-05-01 23:41:43 | Controller | INFO | controller.py:931 | [project1-tfidf-T05:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:41:43 | Controller | INFO | controller.py:1118 | [project1-tfidf-T05:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:41:43 | Controller | INFO | controller.py:1124 | [project1-tfidf-T05:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:41:43 | Controller | INFO | controller.py:1422 | [project1-tfidf-T05:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:42:40 | Controller | INFO | controller.py:1299 | [project1-tfidf-T05:Controller] Pipeline 1 completed shard 0 (1 batches, 43.69s)
+2026-05-01 23:42:40 | Controller | INFO | controller.py:1422 | [project1-tfidf-T05:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:43:20 | Controller | INFO | controller.py:1299 | [project1-tfidf-T05:Controller] Pipeline 1 completed shard 1 (1 batches, 38.14s)
+2026-05-01 23:43:20 | Controller | INFO | controller.py:1422 | [project1-tfidf-T05:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:43:56 | Controller | INFO | controller.py:1299 | [project1-tfidf-T05:Controller] Pipeline 1 completed shard 2 (1 batches, 34.62s)
+2026-05-01 23:43:56 | Controller | INFO | controller.py:1422 | [project1-tfidf-T05:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-01 23:44:28 | Controller | INFO | controller.py:1192 | [project1-tfidf-T05:Controller] Pipeline 1 completed all 4 shards
+2026-05-01 23:44:30 | Controller | INFO | controller.py:1299 | [project1-tfidf-T05:Controller] Pipeline 1 completed shard 3 (1 batches, 32.11s)
+2026-05-01 23:44:30 | Controller | INFO | controller.py:1386 | [project1-tfidf-T05:Controller] All pipelines completed all shards!
+2026-05-01 23:44:30 | Controller | INFO | controller.py:695 | [project1-tfidf-T05:Controller] Computing final metrics for all pipelines...
+2026-05-01 23:44:31 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T05:Experiment] Ending run: 8e4e53e07dff499db0dfc102de2f7e1f, 1 in rf_mlflow
+2026-05-01 23:44:32 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T05:Experiment] Run 8e4e53e07dff499db0dfc102de2f7e1f is not the active run, no local context to clear
+2026-05-01 23:44:32 | Controller | INFO | controller.py:853 | [project1-tfidf-T05:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-01 23:44:32 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T05:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-01 23:44:32 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T05:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-01 23:44:32 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T05:ExperimentUtils] Experiment project1-tfidf-T05 ended
+2026-05-01 23:44:34 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T05:Experiment] All actors shut down
+2026-05-01 23:44:34 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T05:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-01 23:44:45 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T06:Experiment] Experiment project1-tfidf-T06 created with Experiment ID: 6 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T06_tfidf_512_96_k1_title_no_related_expand0/project1-tfidf-T06
+2026-05-01 23:44:57 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T06:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:44:57 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T06:Experiment] Creating MLflow experiment: project1-tfidf-T06
+2026-05-01 23:44:57 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T06:Experiment] Initialized MetricLogger experiment: 6
+2026-05-01 23:44:57 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T06:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:44:57 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T06:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:44:57 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T06:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:44:57 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T06:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:44:58 | Controller | INFO | controller.py:895 | [project1-tfidf-T06:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:44:58 | Controller | INFO | controller.py:900 | [project1-tfidf-T06:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:44:58 | Controller | INFO | controller.py:306 | [project1-tfidf-T06:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:44:58 | Controller | INFO | controller.py:920 | [project1-tfidf-T06:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:44:58 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T06:Experiment] Created MLflow run: 5504cac54d984d2e93eb37fa54ddd3b6, 1
+2026-05-01 23:44:58 | Controller | INFO | controller.py:931 | [project1-tfidf-T06:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:44:58 | Controller | INFO | controller.py:1118 | [project1-tfidf-T06:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:44:58 | Controller | INFO | controller.py:1124 | [project1-tfidf-T06:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:44:58 | Controller | INFO | controller.py:1422 | [project1-tfidf-T06:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:45:56 | Controller | INFO | controller.py:1299 | [project1-tfidf-T06:Controller] Pipeline 1 completed shard 0 (1 batches, 44.16s)
+2026-05-01 23:45:56 | Controller | INFO | controller.py:1422 | [project1-tfidf-T06:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:46:35 | Controller | INFO | controller.py:1299 | [project1-tfidf-T06:Controller] Pipeline 1 completed shard 1 (1 batches, 37.63s)
+2026-05-01 23:46:35 | Controller | INFO | controller.py:1422 | [project1-tfidf-T06:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:47:08 | Controller | INFO | controller.py:1299 | [project1-tfidf-T06:Controller] Pipeline 1 completed shard 2 (1 batches, 31.61s)
+2026-05-01 23:47:08 | Controller | INFO | controller.py:1422 | [project1-tfidf-T06:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-01 23:47:42 | Controller | INFO | controller.py:1192 | [project1-tfidf-T06:Controller] Pipeline 1 completed all 4 shards
+2026-05-01 23:47:43 | Controller | INFO | controller.py:1299 | [project1-tfidf-T06:Controller] Pipeline 1 completed shard 3 (1 batches, 33.62s)
+2026-05-01 23:47:43 | Controller | INFO | controller.py:1386 | [project1-tfidf-T06:Controller] All pipelines completed all shards!
+2026-05-01 23:47:43 | Controller | INFO | controller.py:695 | [project1-tfidf-T06:Controller] Computing final metrics for all pipelines...
+2026-05-01 23:47:45 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T06:Experiment] Ending run: 5504cac54d984d2e93eb37fa54ddd3b6, 1 in rf_mlflow
+2026-05-01 23:47:45 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T06:Experiment] Run 5504cac54d984d2e93eb37fa54ddd3b6 is not the active run, no local context to clear
+2026-05-01 23:47:45 | Controller | INFO | controller.py:853 | [project1-tfidf-T06:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-01 23:47:45 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T06:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-01 23:47:45 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T06:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-01 23:47:45 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T06:ExperimentUtils] Experiment project1-tfidf-T06 ended
+2026-05-01 23:47:47 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T06:Experiment] All actors shut down
+2026-05-01 23:47:47 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T06:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-01 23:47:59 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T07:Experiment] Experiment project1-tfidf-T07 created with Experiment ID: 7 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T07_tfidf_320_64_k1_title_related_expand0/project1-tfidf-T07
+2026-05-01 23:48:10 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T07:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:48:10 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T07:Experiment] Creating MLflow experiment: project1-tfidf-T07
+2026-05-01 23:48:10 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T07:Experiment] Initialized MetricLogger experiment: 7
+2026-05-01 23:48:10 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T07:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:48:10 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T07:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:48:10 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T07:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:48:10 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T07:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:48:11 | Controller | INFO | controller.py:895 | [project1-tfidf-T07:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:48:11 | Controller | INFO | controller.py:900 | [project1-tfidf-T07:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:48:11 | Controller | INFO | controller.py:306 | [project1-tfidf-T07:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:48:11 | Controller | INFO | controller.py:920 | [project1-tfidf-T07:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:48:11 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T07:Experiment] Created MLflow run: d9c0e11a96884e10b97d24e778c0affc, 1
+2026-05-01 23:48:11 | Controller | INFO | controller.py:931 | [project1-tfidf-T07:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:48:11 | Controller | INFO | controller.py:1118 | [project1-tfidf-T07:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:48:11 | Controller | INFO | controller.py:1124 | [project1-tfidf-T07:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:48:11 | Controller | INFO | controller.py:1422 | [project1-tfidf-T07:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:49:01 | Controller | INFO | controller.py:1299 | [project1-tfidf-T07:Controller] Pipeline 1 completed shard 0 (1 batches, 36.64s)
+2026-05-01 23:49:01 | Controller | INFO | controller.py:1422 | [project1-tfidf-T07:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:49:42 | Controller | INFO | controller.py:1299 | [project1-tfidf-T07:Controller] Pipeline 1 completed shard 1 (1 batches, 38.64s)
+2026-05-01 23:49:42 | Controller | INFO | controller.py:1422 | [project1-tfidf-T07:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:50:15 | Controller | INFO | controller.py:1299 | [project1-tfidf-T07:Controller] Pipeline 1 completed shard 2 (1 batches, 31.61s)
+2026-05-01 23:50:15 | Controller | INFO | controller.py:1422 | [project1-tfidf-T07:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-01 23:50:47 | Controller | INFO | controller.py:1192 | [project1-tfidf-T07:Controller] Pipeline 1 completed all 4 shards
+2026-05-01 23:50:49 | Controller | INFO | controller.py:1299 | [project1-tfidf-T07:Controller] Pipeline 1 completed shard 3 (1 batches, 32.12s)
+2026-05-01 23:50:49 | Controller | INFO | controller.py:1386 | [project1-tfidf-T07:Controller] All pipelines completed all shards!
+2026-05-01 23:50:49 | Controller | INFO | controller.py:695 | [project1-tfidf-T07:Controller] Computing final metrics for all pipelines...
+2026-05-01 23:50:50 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T07:Experiment] Ending run: d9c0e11a96884e10b97d24e778c0affc, 1 in rf_mlflow
+2026-05-01 23:50:50 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T07:Experiment] Run d9c0e11a96884e10b97d24e778c0affc is not the active run, no local context to clear
+2026-05-01 23:50:50 | Controller | INFO | controller.py:853 | [project1-tfidf-T07:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-01 23:50:50 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T07:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-01 23:50:50 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T07:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-01 23:50:50 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T07:ExperimentUtils] Experiment project1-tfidf-T07 ended
+2026-05-01 23:50:53 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T07:Experiment] All actors shut down
+2026-05-01 23:50:53 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T07:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-01 23:51:03 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T08:Experiment] Experiment project1-tfidf-T08 created with Experiment ID: 8 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T08_tfidf_420_80_k1_title_related_expand0/project1-tfidf-T08
+2026-05-01 23:51:15 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T08:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:51:15 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T08:Experiment] Creating MLflow experiment: project1-tfidf-T08
+2026-05-01 23:51:15 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T08:Experiment] Initialized MetricLogger experiment: 8
+2026-05-01 23:51:15 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T08:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:51:15 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T08:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:51:15 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T08:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:51:15 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T08:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:51:16 | Controller | INFO | controller.py:895 | [project1-tfidf-T08:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:51:16 | Controller | INFO | controller.py:900 | [project1-tfidf-T08:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:51:16 | Controller | INFO | controller.py:306 | [project1-tfidf-T08:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:51:16 | Controller | INFO | controller.py:920 | [project1-tfidf-T08:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:51:16 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T08:Experiment] Created MLflow run: a7a30adcdb1c488ea3dea06fca163a4e, 1
+2026-05-01 23:51:16 | Controller | INFO | controller.py:931 | [project1-tfidf-T08:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:51:16 | Controller | INFO | controller.py:1118 | [project1-tfidf-T08:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:51:16 | Controller | INFO | controller.py:1124 | [project1-tfidf-T08:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:51:16 | Controller | INFO | controller.py:1422 | [project1-tfidf-T08:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:52:10 | Controller | INFO | controller.py:1299 | [project1-tfidf-T08:Controller] Pipeline 1 completed shard 0 (1 batches, 40.64s)
+2026-05-01 23:52:10 | Controller | INFO | controller.py:1422 | [project1-tfidf-T08:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:52:47 | Controller | INFO | controller.py:1299 | [project1-tfidf-T08:Controller] Pipeline 1 completed shard 1 (1 batches, 35.63s)
+2026-05-01 23:52:47 | Controller | INFO | controller.py:1422 | [project1-tfidf-T08:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:53:23 | Controller | INFO | controller.py:1299 | [project1-tfidf-T08:Controller] Pipeline 1 completed shard 2 (1 batches, 34.62s)
+2026-05-01 23:53:23 | Controller | INFO | controller.py:1422 | [project1-tfidf-T08:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-01 23:53:59 | Controller | INFO | controller.py:1192 | [project1-tfidf-T08:Controller] Pipeline 1 completed all 4 shards
+2026-05-01 23:54:01 | Controller | INFO | controller.py:1299 | [project1-tfidf-T08:Controller] Pipeline 1 completed shard 3 (1 batches, 35.63s)
+2026-05-01 23:54:01 | Controller | INFO | controller.py:1386 | [project1-tfidf-T08:Controller] All pipelines completed all shards!
+2026-05-01 23:54:01 | Controller | INFO | controller.py:695 | [project1-tfidf-T08:Controller] Computing final metrics for all pipelines...
+2026-05-01 23:54:02 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T08:Experiment] Ending run: a7a30adcdb1c488ea3dea06fca163a4e, 1 in rf_mlflow
+2026-05-01 23:54:02 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T08:Experiment] Run a7a30adcdb1c488ea3dea06fca163a4e is not the active run, no local context to clear
+2026-05-01 23:54:02 | Controller | INFO | controller.py:853 | [project1-tfidf-T08:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-01 23:54:02 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T08:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-01 23:54:02 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T08:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-01 23:54:02 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T08:ExperimentUtils] Experiment project1-tfidf-T08 ended
+2026-05-01 23:54:05 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T08:Experiment] All actors shut down
+2026-05-01 23:54:05 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T08:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-01 23:54:16 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T09:Experiment] Experiment project1-tfidf-T09 created with Experiment ID: 9 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T09_tfidf_512_96_k1_title_related_expand0/project1-tfidf-T09
+2026-05-01 23:54:29 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T09:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:54:29 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T09:Experiment] Creating MLflow experiment: project1-tfidf-T09
+2026-05-01 23:54:29 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T09:Experiment] Initialized MetricLogger experiment: 9
+2026-05-01 23:54:29 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T09:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:54:29 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T09:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:54:29 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T09:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:54:29 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T09:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:54:30 | Controller | INFO | controller.py:895 | [project1-tfidf-T09:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:54:30 | Controller | INFO | controller.py:900 | [project1-tfidf-T09:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:54:30 | Controller | INFO | controller.py:306 | [project1-tfidf-T09:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:54:30 | Controller | INFO | controller.py:920 | [project1-tfidf-T09:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:54:30 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T09:Experiment] Created MLflow run: 3aeb5805eb5648fb91ae7412dcca050d, 1
+2026-05-01 23:54:30 | Controller | INFO | controller.py:931 | [project1-tfidf-T09:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:54:30 | Controller | INFO | controller.py:1118 | [project1-tfidf-T09:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:54:30 | Controller | INFO | controller.py:1124 | [project1-tfidf-T09:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:54:30 | Controller | INFO | controller.py:1422 | [project1-tfidf-T09:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:55:24 | Controller | INFO | controller.py:1299 | [project1-tfidf-T09:Controller] Pipeline 1 completed shard 0 (1 batches, 41.15s)
+2026-05-01 23:55:24 | Controller | INFO | controller.py:1422 | [project1-tfidf-T09:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:56:01 | Controller | INFO | controller.py:1299 | [project1-tfidf-T09:Controller] Pipeline 1 completed shard 1 (1 batches, 35.63s)
+2026-05-01 23:56:01 | Controller | INFO | controller.py:1422 | [project1-tfidf-T09:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:56:36 | Controller | INFO | controller.py:1299 | [project1-tfidf-T09:Controller] Pipeline 1 completed shard 2 (1 batches, 32.62s)
+2026-05-01 23:56:36 | Controller | INFO | controller.py:1422 | [project1-tfidf-T09:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-01 23:57:08 | Controller | INFO | controller.py:1192 | [project1-tfidf-T09:Controller] Pipeline 1 completed all 4 shards
+2026-05-01 23:57:10 | Controller | INFO | controller.py:1299 | [project1-tfidf-T09:Controller] Pipeline 1 completed shard 3 (1 batches, 32.61s)
+2026-05-01 23:57:10 | Controller | INFO | controller.py:1386 | [project1-tfidf-T09:Controller] All pipelines completed all shards!
+2026-05-01 23:57:10 | Controller | INFO | controller.py:695 | [project1-tfidf-T09:Controller] Computing final metrics for all pipelines...
+2026-05-01 23:57:11 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T09:Experiment] Ending run: 3aeb5805eb5648fb91ae7412dcca050d, 1 in rf_mlflow
+2026-05-01 23:57:11 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T09:Experiment] Run 3aeb5805eb5648fb91ae7412dcca050d is not the active run, no local context to clear
+2026-05-01 23:57:11 | Controller | INFO | controller.py:853 | [project1-tfidf-T09:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-01 23:57:11 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T09:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-01 23:57:11 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T09:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-01 23:57:11 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T09:ExperimentUtils] Experiment project1-tfidf-T09 ended
+2026-05-01 23:57:14 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T09:Experiment] All actors shut down
+2026-05-01 23:57:14 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T09:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-01 23:57:24 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T10:Experiment] Experiment project1-tfidf-T10 created with Experiment ID: 10 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T10_tfidf_420_80_k1_title_related_expand5/project1-tfidf-T10
+2026-05-01 23:57:36 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T10:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-01 23:57:36 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T10:Experiment] Creating MLflow experiment: project1-tfidf-T10
+2026-05-01 23:57:36 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T10:Experiment] Initialized MetricLogger experiment: 10
+2026-05-01 23:57:36 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T10:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-01 23:57:36 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T10:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-01 23:57:36 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T10:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-01 23:57:36 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T10:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-01 23:57:36 | Controller | INFO | controller.py:895 | [project1-tfidf-T10:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-01 23:57:36 | Controller | INFO | controller.py:900 | [project1-tfidf-T10:Controller] Received 1 pipeline configuration(s)
+2026-05-01 23:57:36 | Controller | INFO | controller.py:306 | [project1-tfidf-T10:Controller] No RAG contexts found in pipeline configs
+2026-05-01 23:57:37 | Controller | INFO | controller.py:920 | [project1-tfidf-T10:Controller] Created 2 query processing actors (generic pool)
+2026-05-01 23:57:37 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T10:Experiment] Created MLflow run: e8ee6bb4de4b47a8845e07141b1676de, 1
+2026-05-01 23:57:37 | Controller | INFO | controller.py:931 | [project1-tfidf-T10:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-01 23:57:37 | Controller | INFO | controller.py:1118 | [project1-tfidf-T10:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-01 23:57:37 | Controller | INFO | controller.py:1124 | [project1-tfidf-T10:Controller] Starting multi-pipeline inference scheduling...
+2026-05-01 23:57:37 | Controller | INFO | controller.py:1422 | [project1-tfidf-T10:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)
+2026-05-01 23:58:31 | Controller | INFO | controller.py:1299 | [project1-tfidf-T10:Controller] Pipeline 1 completed shard 0 (1 batches, 40.14s)
+2026-05-01 23:58:31 | Controller | INFO | controller.py:1422 | [project1-tfidf-T10:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (1 batches)
+2026-05-01 23:59:11 | Controller | INFO | controller.py:1299 | [project1-tfidf-T10:Controller] Pipeline 1 completed shard 1 (1 batches, 38.14s)
+2026-05-01 23:59:11 | Controller | INFO | controller.py:1422 | [project1-tfidf-T10:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (1 batches)
+2026-05-01 23:59:48 | Controller | INFO | controller.py:1299 | [project1-tfidf-T10:Controller] Pipeline 1 completed shard 2 (1 batches, 36.14s)
+2026-05-01 23:59:48 | Controller | INFO | controller.py:1422 | [project1-tfidf-T10:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (1 batches)
+2026-05-02 00:00:22 | Controller | INFO | controller.py:1192 | [project1-tfidf-T10:Controller] Pipeline 1 completed all 4 shards
+2026-05-02 00:00:24 | Controller | INFO | controller.py:1299 | [project1-tfidf-T10:Controller] Pipeline 1 completed shard 3 (1 batches, 33.63s)
+2026-05-02 00:00:24 | Controller | INFO | controller.py:1386 | [project1-tfidf-T10:Controller] All pipelines completed all shards!
+2026-05-02 00:00:24 | Controller | INFO | controller.py:695 | [project1-tfidf-T10:Controller] Computing final metrics for all pipelines...
+2026-05-02 00:00:25 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-tfidf-T10:Experiment] Ending run: e8ee6bb4de4b47a8845e07141b1676de, 1 in rf_mlflow
+2026-05-02 00:00:25 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-tfidf-T10:Experiment] Run e8ee6bb4de4b47a8845e07141b1676de is not the active run, no local context to clear
+2026-05-02 00:00:25 | Controller | INFO | controller.py:853 | [project1-tfidf-T10:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-02 00:00:25 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-tfidf-T10:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-02 00:00:25 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-tfidf-T10:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-02 00:00:25 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-tfidf-T10:ExperimentUtils] Experiment project1-tfidf-T10 ended
+2026-05-02 00:00:28 | Experiment | INFO | experiment.py:574 | [project1-tfidf-T10:Experiment] All actors shut down
+2026-05-02 00:00:28 | Experiment | INFO | experiment.py:575 | [project1-tfidf-T10:Experiment] Dispatcher will automatically shut down (daemon thread)
+2026-05-02 00:00:39 | Experiment | INFO | experiment.py:165 | [project1-tfidf-T11:Experiment] Experiment project1-tfidf-T11 created with Experiment ID: 11 at /home/fey006/Project1/rapidfire_experiments/tfidf_all/T11_tfidf_420_80_k1_title_related_expand10/project1-tfidf-T11
+2026-05-02 00:00:50 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-tfidf-T11:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-02 00:00:50 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-tfidf-T11:Experiment] Creating MLflow experiment: project1-tfidf-T11
+2026-05-02 00:00:51 | Experiment | INFO | experiment.py:210 | [project1-tfidf-T11:Experiment] Initialized MetricLogger experiment: 11
+2026-05-02 00:00:51 | Experiment | INFO | experiment.py:226 | [project1-tfidf-T11:Experiment] Using existing dispatcher/api server at 127.0.0.1:8851.
+2026-05-02 00:00:51 | Experiment | WARNING | experiment.py:381 | [project1-tfidf-T11:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-02 00:00:51 | Experiment | INFO | experiment.py:383 | [project1-tfidf-T11:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-02 00:00:51 | Experiment | INFO | experiment.py:392 | [project1-tfidf-T11:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-02 00:00:51 | Controller | INFO | controller.py:895 | [project1-tfidf-T11:Controller] Dataset sharded into 4 shard(s). Shard sizes: [7, 6, 6, 6]
+2026-05-02 00:00:51 | Controller | INFO | controller.py:900 | [project1-tfidf-T11:Controller] Received 1 pipeline configuration(s)
+2026-05-02 00:00:51 | Controller | INFO | controller.py:306 | [project1-tfidf-T11:Controller] No RAG contexts found in pipeline configs
+2026-05-02 00:00:51 | Controller | INFO | controller.py:920 | [project1-tfidf-T11:Controller] Created 2 query processing actors (generic pool)
+2026-05-02 00:00:51 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-tfidf-T11:Experiment] Created MLflow run: 701914c327e74b11abb6eebdfad90001, 1
+2026-05-02 00:00:51 | Controller | INFO | controller.py:931 | [project1-tfidf-T11:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-02 00:00:51 | Controller | INFO | controller.py:1118 | [project1-tfidf-T11:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-02 00:00:51 | Controller | INFO | controller.py:1124 | [project1-tfidf-T11:Controller] Starting multi-pipeline inference scheduling...
+2026-05-02 00:00:51 | Controller | INFO | controller.py:1422 | [project1-tfidf-T11:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (1 batches)

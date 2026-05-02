@@ -1,0 +1,4 @@
+2026-05-01 23:51:28 | QueryProcessingActor-0 | INFO | query_actor.py:165 | [project1-tfidf-T08:QueryProcessingActor-0] Initializing new inference engine (config hash: fb202caa)
+2026-05-01 23:52:10 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-tfidf-T08:QueryProcessingActor-0] Reusing existing inference engine (config hash: fb202caa)
+2026-05-01 23:52:47 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-tfidf-T08:QueryProcessingActor-0] Reusing existing inference engine (config hash: fb202caa)
+2026-05-01 23:53:23 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-tfidf-T08:QueryProcessingActor-0] Reusing existing inference engine (config hash: fb202caa)

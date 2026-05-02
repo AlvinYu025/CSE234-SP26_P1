@@ -1,0 +1,40 @@
+2026-05-01 22:34:35 | DocProcessingActor | INFO | doc_actor.py:59 | [project1-dense-D05:DocProcessingActor] DocProcessingActor initialized
+2026-05-01 22:34:36 | DocProcessingActor | INFO | doc_actor.py:96 | [project1-dense-D05:DocProcessingActor] DocProcessingActor: Starting context initialization...
+2026-05-01 22:34:36 | DocProcessingActor | INFO | doc_actor.py:107 | [project1-dense-D05:DocProcessingActor] Building document index...
+2026-05-01 22:34:36 | sentence_transformers.base.model | INFO | model.py:962 | No modules.json found for cross-encoder/ms-marco-MiniLM-L6-v2, initializing a new CrossEncoder model.
+2026-05-01 22:34:40 | DocProcessingActor | INFO | doc_actor.py:109 | [project1-dense-D05:DocProcessingActor] Document index built successfully
+2026-05-01 22:34:40 | DocProcessingActor | INFO | doc_actor.py:134 | [project1-dense-D05:DocProcessingActor] Serializing FAISS index for cross-actor sharing...
+2026-05-01 22:34:40 | DocProcessingActor | INFO | doc_actor.py:144 | [project1-dense-D05:DocProcessingActor] FAISS index serialized: 1013632 bytes
+2026-05-01 22:34:40 | DocProcessingActor | INFO | doc_actor.py:189 | [project1-dense-D05:DocProcessingActor] DocProcessingActor: Context components ready for sharing
+2026-05-01 22:34:54 | QueryProcessingActor-0 | INFO | query_actor.py:165 | [project1-dense-D05:QueryProcessingActor-0] Initializing new inference engine (config hash: d763a152)
+2026-05-01 22:34:55 | QueryProcessingActor-0 | INFO | query_actor.py:198 | [project1-dense-D05:QueryProcessingActor-0] Recreated embedding function: OpenAIEmbeddings
+2026-05-01 22:34:55 | QueryProcessingActor-0 | INFO | query_actor.py:211 | [project1-dense-D05:QueryProcessingActor-0] Using CPU-based FAISS for retrieval (avoids GPU memory conflicts)
+2026-05-01 22:34:55 | QueryProcessingActor-0 | INFO | query_actor.py:215 | [project1-dense-D05:QueryProcessingActor-0] Deserializing FAISS index for this actor...
+2026-05-01 22:34:55 | QueryProcessingActor-0 | INFO | query_actor.py:230 | [project1-dense-D05:QueryProcessingActor-0] Created independent FAISS vector store for this actor
+2026-05-01 22:34:55 | QueryProcessingActor-0 | INFO | query_actor.py:260 | [project1-dense-D05:QueryProcessingActor-0] Recreated retriever with search_type=mmr
+2026-05-01 22:34:55 | sentence_transformers.base.model | INFO | model.py:962 | No modules.json found for cross-encoder/ms-marco-MiniLM-L6-v2, initializing a new CrossEncoder model.
+2026-05-01 22:34:56 | QueryProcessingActor-0 | INFO | query_actor.py:277 | [project1-dense-D05:QueryProcessingActor-0] Recreated RAG spec with retrieval mode
+2026-05-01 22:35:15 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-dense-D05:QueryProcessingActor-0] Reusing existing inference engine (config hash: d763a152)
+2026-05-01 22:35:15 | QueryProcessingActor-0 | INFO | query_actor.py:198 | [project1-dense-D05:QueryProcessingActor-0] Recreated embedding function: OpenAIEmbeddings
+2026-05-01 22:35:15 | QueryProcessingActor-0 | INFO | query_actor.py:211 | [project1-dense-D05:QueryProcessingActor-0] Using CPU-based FAISS for retrieval (avoids GPU memory conflicts)
+2026-05-01 22:35:15 | QueryProcessingActor-0 | INFO | query_actor.py:215 | [project1-dense-D05:QueryProcessingActor-0] Deserializing FAISS index for this actor...
+2026-05-01 22:35:15 | QueryProcessingActor-0 | INFO | query_actor.py:230 | [project1-dense-D05:QueryProcessingActor-0] Created independent FAISS vector store for this actor
+2026-05-01 22:35:15 | QueryProcessingActor-0 | INFO | query_actor.py:260 | [project1-dense-D05:QueryProcessingActor-0] Recreated retriever with search_type=mmr
+2026-05-01 22:35:15 | sentence_transformers.base.model | INFO | model.py:962 | No modules.json found for cross-encoder/ms-marco-MiniLM-L6-v2, initializing a new CrossEncoder model.
+2026-05-01 22:35:16 | QueryProcessingActor-0 | INFO | query_actor.py:277 | [project1-dense-D05:QueryProcessingActor-0] Recreated RAG spec with retrieval mode
+2026-05-01 22:35:34 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-dense-D05:QueryProcessingActor-0] Reusing existing inference engine (config hash: d763a152)
+2026-05-01 22:35:34 | QueryProcessingActor-0 | INFO | query_actor.py:198 | [project1-dense-D05:QueryProcessingActor-0] Recreated embedding function: OpenAIEmbeddings
+2026-05-01 22:35:34 | QueryProcessingActor-0 | INFO | query_actor.py:211 | [project1-dense-D05:QueryProcessingActor-0] Using CPU-based FAISS for retrieval (avoids GPU memory conflicts)
+2026-05-01 22:35:34 | QueryProcessingActor-0 | INFO | query_actor.py:215 | [project1-dense-D05:QueryProcessingActor-0] Deserializing FAISS index for this actor...
+2026-05-01 22:35:34 | QueryProcessingActor-0 | INFO | query_actor.py:230 | [project1-dense-D05:QueryProcessingActor-0] Created independent FAISS vector store for this actor
+2026-05-01 22:35:34 | QueryProcessingActor-0 | INFO | query_actor.py:260 | [project1-dense-D05:QueryProcessingActor-0] Recreated retriever with search_type=mmr
+2026-05-01 22:35:34 | sentence_transformers.base.model | INFO | model.py:962 | No modules.json found for cross-encoder/ms-marco-MiniLM-L6-v2, initializing a new CrossEncoder model.
+2026-05-01 22:35:35 | QueryProcessingActor-0 | INFO | query_actor.py:277 | [project1-dense-D05:QueryProcessingActor-0] Recreated RAG spec with retrieval mode
+2026-05-01 22:35:52 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-dense-D05:QueryProcessingActor-0] Reusing existing inference engine (config hash: d763a152)
+2026-05-01 22:35:52 | QueryProcessingActor-0 | INFO | query_actor.py:198 | [project1-dense-D05:QueryProcessingActor-0] Recreated embedding function: OpenAIEmbeddings
+2026-05-01 22:35:52 | QueryProcessingActor-0 | INFO | query_actor.py:211 | [project1-dense-D05:QueryProcessingActor-0] Using CPU-based FAISS for retrieval (avoids GPU memory conflicts)
+2026-05-01 22:35:52 | QueryProcessingActor-0 | INFO | query_actor.py:215 | [project1-dense-D05:QueryProcessingActor-0] Deserializing FAISS index for this actor...
+2026-05-01 22:35:52 | QueryProcessingActor-0 | INFO | query_actor.py:230 | [project1-dense-D05:QueryProcessingActor-0] Created independent FAISS vector store for this actor
+2026-05-01 22:35:52 | QueryProcessingActor-0 | INFO | query_actor.py:260 | [project1-dense-D05:QueryProcessingActor-0] Recreated retriever with search_type=mmr
+2026-05-01 22:35:52 | sentence_transformers.base.model | INFO | model.py:962 | No modules.json found for cross-encoder/ms-marco-MiniLM-L6-v2, initializing a new CrossEncoder model.
+2026-05-01 22:35:53 | QueryProcessingActor-0 | INFO | query_actor.py:277 | [project1-dense-D05:QueryProcessingActor-0] Recreated RAG spec with retrieval mode

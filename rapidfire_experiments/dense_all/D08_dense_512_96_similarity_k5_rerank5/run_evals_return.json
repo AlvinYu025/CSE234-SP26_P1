@@ -1632,27 +1632,15 @@
         "value_range": [
           0,
           1
-        ],
-        "lower_bound": 0.33142857142857146,
-        "upper_bound": 0.33142857142857146,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        ]
       },
       "Precision_at_5": {
-        "value": 0.20800000000000005,
+        "value": 0.20800000000000002,
         "is_algebraic": true,
         "value_range": [
           0,
           1
-        ],
-        "lower_bound": 0.20800000000000005,
-        "upper_bound": 0.20800000000000005,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        ]
       },
       "Recall_at_5": {
         "value": 0.88,
@@ -1660,13 +1648,7 @@
         "value_range": [
           0,
           1
-        ],
-        "lower_bound": 0.88,
-        "upper_bound": 0.88,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        ]
       },
       "Retrieval Score": {
         "value": 0.47314285714285714,
@@ -1674,93 +1656,51 @@
         "value_range": [
           0,
           1
-        ],
-        "lower_bound": 0.47314285714285714,
-        "upper_bound": 0.47314285714285714,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        ]
       },
       "Correctness_pass_rate": {
-        "value": 0.0,
+        "value": 0.96,
         "is_algebraic": true,
         "value_range": [
           0,
           1
-        ],
-        "lower_bound": 0.0,
-        "upper_bound": 0.0,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        ]
       },
       "Faithfulness_pass_rate": {
-        "value": 0.0,
+        "value": 0.96,
         "is_algebraic": true,
         "value_range": [
           0,
           1
-        ],
-        "lower_bound": 0.0,
-        "upper_bound": 0.0,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        ]
       },
       "Completeness_normalized": {
-        "value": 0.0,
+        "value": 0.8959999999999999,
         "is_algebraic": true,
         "value_range": [
           0,
           1
-        ],
-        "lower_bound": 0.0,
-        "upper_bound": 0.0,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        ]
       },
       "Generation_Score_3_released": {
-        "value": 0.0,
+        "value": 0.9386666666666666,
         "is_algebraic": true,
         "value_range": [
           0,
           1
-        ],
-        "lower_bound": 0.0,
-        "upper_bound": 0.0,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        ]
       },
       "Judge Failures": {
-        "value": 25.0,
-        "is_distributive": true,
-        "lower_bound": 25.0,
-        "upper_bound": 25.0,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        "value": 0.0,
+        "is_distributive": true
       },
       "Partial_Overall_Score": {
-        "value": 0.23657142857142857,
+        "value": 0.7059047619047619,
         "is_algebraic": true,
         "value_range": [
           0,
           1
-        ],
-        "lower_bound": 0.23657142857142857,
-        "upper_bound": 0.23657142857142857,
-        "margin_of_error": 0.0,
-        "confidence_interval": 0.0,
-        "confidence_level": 0.95,
-        "ci_method": "normal"
+        ]
       },
       "MeanEstimatedContextTokens": {
         "value": 1033.44,

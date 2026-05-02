@@ -1,0 +1,280 @@
+Registry store URI not provided. Using backend store URI.
+[MLflow] Security middleware enabled with default settings (localhost-only). To allow connections from other hosts, use --host 0.0.0.0 and configure --allowed-hosts and --cors-allowed-origins.
+2026/05/01 23:47:53 INFO:     Uvicorn running on http://127.0.0.1:8852 (Press CTRL+C to quit)
+2026/05/01 23:47:53 INFO:     Started parent process [63118]
+2026/05/01 23:47:58 INFO:     Started server process [63123]
+2026/05/01 23:47:58 INFO:     Waiting for application startup.
+2026/05/01 23:47:58 INFO:     Application startup complete.
+2026/05/01 23:47:58 INFO:     Started server process [63121]
+2026/05/01 23:47:58 INFO:     Waiting for application startup.
+2026/05/01 23:47:58 INFO:     Application startup complete.
+2026/05/01 23:47:58 INFO:     Started server process [63124]
+2026/05/01 23:47:58 INFO:     Waiting for application startup.
+2026/05/01 23:47:58 INFO:     Application startup complete.
+2026/05/01 23:47:58 INFO:     Started server process [63122]
+2026/05/01 23:47:58 INFO:     Waiting for application startup.
+2026/05/01 23:47:58 INFO:     Application startup complete.
+2026/05/01 23:47:59 INFO:     127.0.0.1:42448 - "GET /health HTTP/1.1" 200 OK
+2026/05/01 23:48:03 INFO mlflow.server.jobs.utils: Registered online_scoring_scheduler periodic task (runs every 1 minute)
+2026/05/01 23:48:10 INFO:     127.0.0.1:58036 - "POST /api/2.0/mlflow/experiments/create HTTP/1.1" 200 OK
+2026/05/01 23:48:10 INFO:     127.0.0.1:58036 - "GET /api/2.0/mlflow/experiments/get-by-name?experiment_name=project1-tfidf-T07 HTTP/1.1" 200 OK
+2026/05/01 23:48:11 INFO:     127.0.0.1:58036 - "POST /api/2.0/mlflow/runs/create HTTP/1.1" 200 OK
+2026/05/01 23:48:11 INFO:     127.0.0.1:58036 - "POST /api/2.0/mlflow/runs/log-parameter HTTP/1.1" 200 OK
+2026/05/01 23:48:23 INFO:     127.0.0.1:54308 - "GET /api/2.0/mlflow/experiments/get-by-name?experiment_name=project1-tfidf-T07 HTTP/1.1" 200 OK
+2026/05/01 23:48:23 INFO:     127.0.0.1:54314 - "GET /api/2.0/mlflow/experiments/get-by-name?experiment_name=project1-tfidf-T07 HTTP/1.1" 200 OK
+2026/05/01 23:48:24 INFO:     127.0.0.1:54328 - "GET /api/3.0/mlflow/server-info HTTP/1.1" 200 OK
+2026/05/01 23:48:24 INFO:     127.0.0.1:54338 - "GET /api/3.0/mlflow/server-info HTTP/1.1" 200 OK
+2026/05/01 23:48:24 INFO:     127.0.0.1:54350 - "GET /version HTTP/1.1" 200 OK
+2026/05/01 23:48:24 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:25 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:25 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:26 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:26 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:26 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:26 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:28 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:28 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:28 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:28 INFO:     127.0.0.1:54314 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:31 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:32 INFO:     127.0.0.1:54314 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:35 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:35 INFO:     127.0.0.1:54314 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:40 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:40 INFO:     127.0.0.1:54314 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:44 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:44 INFO:     127.0.0.1:54314 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:48 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:49 INFO:     127.0.0.1:54314 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:53 INFO:     127.0.0.1:54314 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:53 INFO:     127.0.0.1:54314 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:48:59 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42076 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:00 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:01 INFO:     127.0.0.1:42092 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:02 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:03 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:05 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:06 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:06 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:06 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:06 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:06 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:06 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:06 INFO:     127.0.0.1:42076 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:11 INFO:     127.0.0.1:42076 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:11 INFO:     127.0.0.1:42076 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:21 INFO:     127.0.0.1:50782 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:21 INFO:     127.0.0.1:50782 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:25 INFO:     127.0.0.1:50782 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:26 INFO:     127.0.0.1:50782 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:29 INFO:     127.0.0.1:50782 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:29 INFO:     127.0.0.1:50782 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:34 INFO:     127.0.0.1:36440 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:34 INFO:     127.0.0.1:36440 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:40 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:40 INFO:     127.0.0.1:59264 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:40 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:40 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:40 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:40 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:40 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:40 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:40 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:41 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:42 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:42 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:42 INFO:     127.0.0.1:59276 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:49:42 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:43 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:43 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:44 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:45 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:46 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:46 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:46 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:46 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:46 INFO:     127.0.0.1:59264 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:50 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:50 INFO:     127.0.0.1:59264 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:55 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:55 INFO:     127.0.0.1:59264 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:58 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:49:58 INFO:     127.0.0.1:59264 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:02 INFO:     127.0.0.1:59264 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:02 INFO:     127.0.0.1:59264 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:08 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:08 INFO:     127.0.0.1:37422 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:13 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:13 INFO:     127.0.0.1:37422 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:13 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:13 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:13 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:13 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:14 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:15 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:15 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:15 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:15 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:15 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:15 INFO:     127.0.0.1:47508 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:15 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:17 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:17 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:17 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:17 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:18 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:18 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:18 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:19 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:19 INFO:     127.0.0.1:37422 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:23 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:23 INFO:     127.0.0.1:37422 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:26 INFO:     127.0.0.1:37422 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:27 INFO:     127.0.0.1:37422 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:33 INFO:     127.0.0.1:53362 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:33 INFO:     127.0.0.1:53362 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:38 INFO:     127.0.0.1:53362 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:38 INFO:     127.0.0.1:53362 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:41 INFO:     127.0.0.1:53362 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:41 INFO:     127.0.0.1:53362 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35210 - "POST /v1/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35210 - "POST /api/3.0/mlflow/traces HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:47 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:48 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:49 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/log-metric HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "GET /api/2.0/mlflow/runs/get?run_uuid=d9c0e11a96884e10b97d24e778c0affc&run_id=d9c0e11a96884e10b97d24e778c0affc HTTP/1.1" 200 OK
+2026/05/01 23:50:50 INFO:     127.0.0.1:35224 - "POST /api/2.0/mlflow/runs/update HTTP/1.1" 200 OK
+2026/05/01 23:50:53 INFO:     Received SIGTERM, exiting.
+2026/05/01 23:50:53 INFO:     Terminated child process [63121]
+2026/05/01 23:50:53 INFO:     Terminated child process [63122]
+2026/05/01 23:50:53 INFO:     Terminated child process [63123]
+2026/05/01 23:50:53 INFO:     Terminated child process [63124]
+2026/05/01 23:50:53 INFO:     Waiting for child process [63121]
+2026/05/01 23:50:53 INFO:     Shutting down
+2026/05/01 23:50:53 INFO:     Shutting down
+2026/05/01 23:50:53 INFO:     Shutting down
+2026/05/01 23:50:53 INFO:     Shutting down
+2026/05/01 23:50:53 INFO:     Waiting for application shutdown.
+2026/05/01 23:50:53 INFO:     Application shutdown complete.
+2026/05/01 23:50:53 INFO:     Finished server process [63122]
+2026/05/01 23:50:53 INFO:     Waiting for application shutdown.
+2026/05/01 23:50:53 INFO:     Application shutdown complete.
+2026/05/01 23:50:53 INFO:     Finished server process [63121]
+2026/05/01 23:50:53 INFO:     Waiting for child process [63122]
+2026/05/01 23:50:53 INFO:     Waiting for child process [63123]
+2026/05/01 23:50:53 INFO:     Waiting for application shutdown.
+2026/05/01 23:50:53 INFO:     Application shutdown complete.
+2026/05/01 23:50:53 INFO:     Finished server process [63123]
+2026/05/01 23:50:53 INFO:     Waiting for application shutdown.
+2026/05/01 23:50:53 INFO:     Application shutdown complete.
+2026/05/01 23:50:53 INFO:     Finished server process [63124]
+2026/05/01 23:50:53 INFO:     Waiting for child process [63124]
+2026/05/01 23:50:53 INFO:     Stopping parent process [63118]
