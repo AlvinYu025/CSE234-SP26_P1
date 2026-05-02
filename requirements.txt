@@ -1,0 +1,23 @@
+numpy
+scikit-learn
+openai
+
+# Required for the RapidFire AI experimentation script.
+# The course docs recommend Python 3.12+ for rapidfireai.
+rapidfireai
+ray[default]
+ipython
+mlflow
+datasets
+langchain
+langchain-community
+langchain-openai
+langchain-text-splitters
+langchain-classic
+faiss-cpu
+pinecone
+langchain-postgres
+langchain-pinecone
+sentence-transformers
+transformers<5.0.0
+huggingface-hub<1.0.0

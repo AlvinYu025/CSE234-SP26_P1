@@ -23,7 +23,7 @@ from project1_eval import f1_at_k, precision_at_k, recall_at_k, to_spans  # noqa
 ROOT = Path(__file__).resolve().parent
 VALIDATION = ROOT / "validation-set-golden-qa-pairs.json"
 EXPERIMENTS_DIR = ROOT / "experiments"
-LOG_PATH = ROOT / "logs" / "rapidfire.log"
+LOG_PATH = ROOT / "logs" / "local_experiments.log"
 
 
 EXPERIMENT_CONFIGS: list[dict[str, Any]] = [

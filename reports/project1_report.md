@@ -1,205 +1,92 @@
-# CSE/DSC 234 Project 1 Curated Report
+# CSE/DSC 234 Project 1 Report
 
-## Context
+Before creating the final curated run, I used the released validation set for exploratory tuning. The final curated experiment then used the stronger settings from that exploration as the starting point, while keeping `data/golden_qa.json` separate from the validation/dev set.
 
-The first round of experiments was exploratory and used the provided validation set to tune retrieval and generation settings. After that, I created a separate manually curated golden QA set from the RapidFire documentation. I then reused several stronger or methodologically different settings from the validation-stage archive and evaluated them on the curated set.
+## 1. Data Creation Methodology
 
-The curated-set results below should be read as a second evaluation pass on my own manually curated data, not as hidden-test results.
-
-## Objective
-
-The project implements a single-turn RAG question answering system over the RapidFire AI documentation corpus. For the curated-data run, the concrete command was:
-
-```bash
-python3 main.py --input data/golden_qa.json --output outputs/curated_golden_answers.json
-```
-
-Each output item contains:
+The submitted golden data file is `data/golden_qa.json`. It contains 25 manually curated Q&A pairs over the RapidFire AI documentation corpus. The file follows the same schema as the released validation set:
 
 - `question_id`
-- `answer`
-- `sources`
-- `retrieved_context`
+- `question`
+- `reference_answer`
+- `source_evidence`
 
-The `sources` field uses file names and line ranges, for example:
+The questions cover factual lookup, conceptual explanation, procedural usage, API/schema behavior, and comparative reasoning. Each answer was checked against the raw `.rst` documentation line spans listed in `source_evidence`. The source audit notes are kept in `data/golden_qa_source_audit.md`.
 
-```json
-{"file": "configs.rst", "lines": [9, 13]}
-```
+The released validation set is treated only as a validation/dev set for tuning and evaluation, not as the submitted golden data.
 
-## Current Data Structure
+## 2. Final Pipeline Architecture
 
-- `sourcedocs.zip`: original RapidFire documentation corpus.
-- `sourcedocs/`: extracted `.rst` documentation files used by the retriever.
-- `validation-set-golden-qa-pairs.json`: provided validation/dev set used only for exploratory tuning and validation-stage metrics.
-- `data/golden_qa.json`: current curated golden QA deliverable with 25 manually curated Q&A pairs.
-- `data/golden_qa_source_audit.md`: one-to-one source audit for the 25 curated Q&A pairs.
-- `archive/validation_dev_tuning_artifacts/`: archived validation-stage experiments, outputs, metrics, and logs.
-- `archive/data/golden_qa_40_before_diversity_filter.json`: earlier 40-item curated draft before the diversity filter.
-- `outputs/curated_golden_*`: final/c09 run artifacts on the 25 curated Q&A pairs.
-- `outputs/curated_setting_runs/`: four additional archived settings rerun on the 25 curated Q&A pairs.
-- `logs/curated_golden_run.log` and `logs/additional_curated_settings.log`: run summaries and observations.
-
-## Implementation
-
-The main pipeline is implemented in `main.py`.
-
-Main steps:
-
-1. Load RapidFire documentation from `sourcedocs/`.
-2. Split `.rst` files into line-aware chunks.
-3. Build a TF-IDF retrieval index.
-4. Retrieve candidate chunks with cosine similarity or MMR, depending on the setting.
-5. Apply optional lexical/title/API-symbol reranking.
-6. Build a source-aware context under the token budget.
-7. Generate an answer using the configured chat backend, with an extractive fallback if generation is unavailable.
-
-## Curated Data
-
-The current curated set contains 25 Q&A pairs. I reduced it from an earlier 40-item draft to improve diversity and reduce overlap. The final set covers 10 documentation files:
-
-- `configs.rst`
-- `experiment.rst`
-- `ragspecs.rst`
-- `promptothers.rst`
-- `evalsfunctions.rst`
-- `fitfunctions.rst`
-- `models.rst`
-- `trainers.rst`
-- `generators.rst`
-- `onlineagg.rst`
-
-The questions cover factual, conceptual, procedural, schema/API behavior, and comparative types. Each answer is grounded in raw `.rst` source line ranges listed in `data/golden_qa.json` and checked in `data/golden_qa_source_audit.md`.
-
-## Commands Used
-
-I first converted the curated QA file into the evaluator-compatible schema:
+The final runnable pipeline is implemented in `main.py`. The two concrete commands used for the final rerun were:
 
 ```bash
-python3 - <<'PY'
-import json
-from pathlib import Path
-
-root = Path(".")
-curated = json.loads((root / "data/golden_qa.json").read_text())
-reference = [
-    {
-        "question_id": item["question_id"],
-        "question": item["question"],
-        "reference_answer": item["gold_answer"],
-        "source_evidence": item["sources"],
-    }
-    for item in curated
-]
-(root / "outputs/curated_golden_eval_reference.json").write_text(
-    json.dumps(reference, indent=2) + "\n"
-)
-PY
-```
-
-The main curated run used the archived best validation-stage setting, copied from:
-
-```text
-archive/validation_dev_tuning_artifacts/outputs/final_config.json
-```
-
-Answer generation:
-
-```bash
+python3 main.py --input validation-set-golden-qa-pairs.json --output outputs/validation_answers.json
 python3 main.py --input data/golden_qa.json --output outputs/curated_golden_answers.json
 ```
 
-Retrieval evaluation:
+The final pipeline loads the RapidFire documentation from `sourcedocs/`, splits the `.rst` files into line-aware chunks, builds an in-memory TF-IDF index, retrieves candidate chunks, applies lexical/title/API-symbol reranking, assembles source-aware context within the 2,000-token budget, and generates an answer with an OpenAI-compatible chat model when credentials are available. If no model API is available, it uses an extractive fallback so the script still runs end to end.
 
-```bash
-python3 Metrics/evaluate_retrieval.py --output outputs/curated_golden_answers.json --validation outputs/curated_golden_eval_reference.json --k 5 > outputs/curated_golden_retrieval_metrics.json
-```
+Each output item contains `question_id`, `answer`, `sources`, and `retrieved_context`, matching the project statement.
 
-Generation evaluation:
+## 3. Experimentation Methodology
 
-```bash
-python3 Metrics/run_judge.py --output outputs/curated_golden_answers.json --validation outputs/curated_golden_eval_reference.json --base-url https://tritonai-api.ucsd.edu/v1 --model claude-sonnet-4-6 > outputs/curated_golden_generation_metrics.json
-```
+The RapidFire AI experimentation layer is implemented in `rapidfire_experiments.py`. It follows the tutorial notebook structure:
 
-I also reran four additional archived settings. The answer-generation commands were:
+- `RFLangChainRagSpec` defines document loading, chunking, OpenAI-compatible embeddings, FAISS vector store retrieval, search configuration, reranking, and document serialization.
+- `RFGridSearch` expands multi-config knobs.
+- `Experiment(..., mode="evals")` and `run_evals(...)` run the comparisons.
 
-```bash
-python3 main.py --config outputs/curated_setting_runs/configs/c01_similarity_180_30_k3.json --input data/golden_qa.json --output outputs/curated_setting_runs/answers/c01_similarity_180_30_k3_answers.json
-python3 main.py --config outputs/curated_setting_runs/configs/c04_similarity_320_70_k5_lexical.json --input data/golden_qa.json --output outputs/curated_setting_runs/answers/c04_similarity_320_70_k5_lexical_answers.json
-python3 main.py --config outputs/curated_setting_runs/configs/c07_mmr_260_55_fetch20_lexical.json --input data/golden_qa.json --output outputs/curated_setting_runs/answers/c07_mmr_260_55_fetch20_lexical_answers.json
-python3 main.py --config outputs/curated_setting_runs/configs/c08_similarity_char_260_55_k5.json --input data/golden_qa.json --output outputs/curated_setting_runs/answers/c08_similarity_char_260_55_k5_answers.json
-```
+The intended RapidFire grid has 12 configurations:
 
-The retrieval evaluation commands were:
-
-```bash
-python3 Metrics/evaluate_retrieval.py --output outputs/curated_setting_runs/answers/c01_similarity_180_30_k3_answers.json --validation outputs/curated_golden_eval_reference.json --k 5 > outputs/curated_setting_runs/metrics/c01_similarity_180_30_k3_retrieval_metrics.json
-python3 Metrics/evaluate_retrieval.py --output outputs/curated_setting_runs/answers/c04_similarity_320_70_k5_lexical_answers.json --validation outputs/curated_golden_eval_reference.json --k 5 > outputs/curated_setting_runs/metrics/c04_similarity_320_70_k5_lexical_retrieval_metrics.json
-python3 Metrics/evaluate_retrieval.py --output outputs/curated_setting_runs/answers/c07_mmr_260_55_fetch20_lexical_answers.json --validation outputs/curated_golden_eval_reference.json --k 5 > outputs/curated_setting_runs/metrics/c07_mmr_260_55_fetch20_lexical_retrieval_metrics.json
-python3 Metrics/evaluate_retrieval.py --output outputs/curated_setting_runs/answers/c08_similarity_char_260_55_k5_answers.json --validation outputs/curated_golden_eval_reference.json --k 5 > outputs/curated_setting_runs/metrics/c08_similarity_char_260_55_k5_retrieval_metrics.json
-```
-
-The generation judge commands were:
-
-```bash
-python3 Metrics/run_judge.py --output outputs/curated_setting_runs/answers/c01_similarity_180_30_k3_answers.json --validation outputs/curated_golden_eval_reference.json --base-url https://tritonai-api.ucsd.edu/v1 --model claude-sonnet-4-6 > outputs/curated_setting_runs/metrics/c01_similarity_180_30_k3_generation_metrics.json
-python3 Metrics/run_judge.py --output outputs/curated_setting_runs/answers/c04_similarity_320_70_k5_lexical_answers.json --validation outputs/curated_golden_eval_reference.json --base-url https://tritonai-api.ucsd.edu/v1 --model claude-sonnet-4-6 > outputs/curated_setting_runs/metrics/c04_similarity_320_70_k5_lexical_generation_metrics.json
-python3 Metrics/run_judge.py --output outputs/curated_setting_runs/answers/c07_mmr_260_55_fetch20_lexical_answers.json --validation outputs/curated_golden_eval_reference.json --base-url https://tritonai-api.ucsd.edu/v1 --model claude-sonnet-4-6 > outputs/curated_setting_runs/metrics/c07_mmr_260_55_fetch20_lexical_generation_metrics.json
-python3 Metrics/run_judge.py --output outputs/curated_setting_runs/answers/c08_similarity_char_260_55_k5_answers.json --validation outputs/curated_golden_eval_reference.json --base-url https://tritonai-api.ucsd.edu/v1 --model claude-sonnet-4-6 > outputs/curated_setting_runs/metrics/c08_similarity_char_260_55_k5_generation_metrics.json
-```
-
-## Methods Tried
-
-The first curated run reused `c09_title_related_420_80_k1`, which had been the best validation-stage setting. It uses word TF-IDF retrieval, similarity search, `top_k=1`, title/API-symbol lexical reranking, related-source expansion, and 160-line source expansion around the selected chunk.
-
-I then ran four additional settings from the archive to compare different retrieval styles:
-
-| Setting | Method |
+| Knob | Values |
 |---|---|
-| `c01_similarity_180_30_k3` | Small chunks, word TF-IDF similarity, top-3, no rerank |
-| `c04_similarity_320_70_k5_lexical` | Larger chunks, word TF-IDF similarity, top-5, lexical rerank |
-| `c07_mmr_260_55_fetch20_lexical` | MMR retrieval, wider fetch, lexical rerank |
-| `c08_similarity_char_260_55_k5` | Character n-gram TF-IDF with lexical rerank |
+| Chunking | `chunk_size=320, overlap=64`; `chunk_size=512, overlap=96` |
+| Search | similarity `k=5`; similarity `k=8`; MMR `k=8, fetch_k=20, lambda_mult=0.7` |
+| Reranker | cross-encoder top_n=3; cross-encoder top_n=5 |
+| Vector store | FAISS |
+| Embeddings | TritonAI/OpenAI-compatible embedding model |
+| Generator | TritonAI/OpenAI-compatible chat model |
 
-## Curated Results
+This gives 2 x 3 x 2 = 12 meaningfully distinct RapidFire configurations, satisfying the requirement to demonstrate at least 8 configs.
 
-Overall is computed as:
+The RapidFire run command was:
 
-```text
-Overall = (Retrieval Score + Partial Generation Score) / 2
+```bash
+python3 rapidfire_experiments.py --input data/golden_qa.json --experiments-path rapidfire_experiments --experiment-name project1-rapidfire-rag-mlflow --num-shards 4 --num-actors 4
 ```
 
-| Setting | Retrieval Score | F1@5 | P@5 | R@5 | Correctness | Faithfulness | Completeness | Partial Gen Score | Overall |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `c09_title_related_420_80_k1` | 0.8400 | 0.8400 | 0.8400 | 0.8400 | 0.8000 | 1.0000 | 3.8000 | 0.8533 | 0.8467 |
-| `c01_similarity_180_30_k3` | 0.6360 | 0.5480 | 0.4000 | 0.9600 | 0.9200 | 0.9600 | 4.4400 | 0.9227 | 0.7793 |
-| `c04_similarity_320_70_k5_lexical` | 0.5404 | 0.4213 | 0.2800 | 0.9200 | 0.8800 | 0.9600 | 4.4000 | 0.9067 | 0.7236 |
-| `c07_mmr_260_55_fetch20_lexical` | 0.5127 | 0.3360 | 0.2020 | 1.0000 | 0.9600 | 0.9600 | 4.5200 | 0.9413 | 0.7270 |
-| `c08_similarity_char_260_55_k5` | 0.6031 | 0.4814 | 0.3280 | 1.0000 | 1.0000 | 1.0000 | 4.8000 | 0.9867 | 0.7949 |
+The run artifacts are:
 
-## Analysis
+- `logs/rapidfire.log`
+- `rapidfire_experiments/run_evals_return.json`
+- `rapidfire_experiments/mlflow_metrics_summary.csv`
+- `rapidfire_experiments/mlflow_runs_full.csv`
 
-The best overall setting on the curated set was still `c09_title_related_420_80_k1`, with an overall score of 0.8467. Its retrieval score was much higher than the four additional settings because it was designed to return a focused core chunk and expand nearby source lines.
+## 4. Results and Analysis
 
-The strongest generation-only result came from `c08_similarity_char_260_55_k5`, with a Partial Generation Score of 0.9867. This setting had lower retrieval precision but very high recall, and the generated answers were judged highly correct and complete.
+RapidFire evaluated 12 RAG configurations on the 25 curated golden questions. The best run by file-level F1 was pipeline 7:
 
-The curated set is different from the original validation set. It contains more narrow API-definition questions, which exposed several retrieval misses for `c09` on questions about `configs.rst`, `promptothers.rst`, and `fitfunctions.rst`. The run log records these cases in `logs/curated_golden_run.log`.
+| Pipeline | Chunk size | Overlap | Search | k | File precision | File recall | File F1 | Answer nonempty |
+|---:|---:|---:|---|---:|---:|---:|---:|---:|
+| 7 | 512 | 96 | similarity | 5 | 0.7067 | 1.0000 | 0.8000 | 1.0000 |
+| 9 | 512 | 96 | similarity | 8 | 0.7000 | 1.0000 | 0.7933 | 1.0000 |
+| 1 | 320 | 64 | similarity | 5 | 0.6667 | 1.0000 | 0.7733 | 1.0000 |
+| 3 | 320 | 64 | similarity | 8 | 0.6600 | 1.0000 | 0.7667 | 1.0000 |
+| 11 | 512 | 96 | MMR | 8 | 0.6533 | 1.0000 | 0.7600 | 1.0000 |
 
-## Artifacts
+Similarity search performed better than MMR on this curated set. The larger 512-token chunk with 96 overlap gave the best top run, while increasing `k` from 5 to 8 slightly reduced precision in the best chunking setup. This suggests that the documentation questions usually needed one or a few focused chunks, and adding more retrieved material increased extra source files without improving recall.
 
-- `data/golden_qa.json`
-- `data/golden_qa_source_audit.md`
-- `outputs/curated_golden_answers.json`
-- `outputs/curated_golden_retrieval_metrics.json`
-- `outputs/curated_golden_generation_metrics.json`
-- `outputs/curated_setting_runs/summary_metrics.json`
-- `logs/curated_golden_run.log`
-- `logs/additional_curated_settings.log`
+The final `main.py` setting is `c09_title_related_420_80_k1`: 420-token chunks, 80-token overlap, similarity retrieval, top-1 primary chunk, title/lexical reranking, expanded source spans, and related-source expansion. This is intentionally conservative for submission: it keeps the output context under the 2,000-token budget while keeping source spans broad enough for the released evaluator's line-overlap retrieval metric.
 
-## Notes
+Final rerun metrics:
 
-The provided validation set was used for exploratory tuning and archived separately. The curated results in this report are based on the 25 manually curated Q&A pairs in `data/golden_qa.json`.
+| Dataset | Retrieval F1@5 | Retrieval score | Correctness | Faithfulness | Completeness | Partial generation score |
+|---|---:|---:|---:|---:|---:|---:|
+| Released validation/dev set | 1.0000 | 1.0000 | 0.6444 | 0.9556 | 2.33 / 5 | 0.6889 |
+| Curated golden set | 0.8400 | 0.8400 | 0.6000 | 0.9600 | 2.28 / 5 | 0.6720 |
 
-## AI Usage Disclaimer
+The validation judge run had 2 judge-call failures after retries; the JSON report was still written to `outputs/validation_generation_metrics.json`. The curated judge run completed with 0 judge failures.
 
-GPT was used to help organize the commands, summarize the metric outputs, polish the writing flow, and provide a concise overview of the project structure. The reported commands, data files, outputs, and metrics come from the project files listed in this report.
+## 5. AI Tools Statement
+
+GPT was used to help organize commands, revise the report structure, summarize project requirements, and check consistency between the implementation and the project statement. The implementation choices, data files, commands, and reported metrics should be verified from the project files and generated run artifacts.

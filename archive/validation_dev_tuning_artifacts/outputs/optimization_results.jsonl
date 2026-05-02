@@ -1,3 +1,0 @@
-{"version": "v1_final_gptoss", "retrieval": 0.6225573192239859, "generation": 0.8474074074074074, "overall": 0.7349823633156967, "notes": "Final c01 retrieval config with api-gpt-oss-120b generation."}
-{"version": "v2_c04_gptoss", "retrieval": 0.604291593180482, "generation": 0.8637037037037038, "overall": 0.7339976484420929, "notes": "Higher-recall c04 config with api-gpt-oss-120b generation."}
-{"version": "v3_prompt_gptoss", "retrieval": 0.6225573192239859, "generation": 0.8785185185185185, "overall": 0.7505379188712522, "notes": "Prompt-only optimization on final c01 retrieval: more complete grounded answers."}

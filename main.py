@@ -21,6 +21,7 @@ import re
 import subprocess
 import sys
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -32,6 +33,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 ROOT = Path(__file__).resolve().parent
 SOURCE_DIR = ROOT / "sourcedocs"
 SOURCE_ZIP = ROOT / "sourcedocs.zip"
+DEFAULT_SETTING_NAME = "c09_title_related_420_80_k1"
 DEFAULT_CONFIG: dict[str, Any] = {
     "chunk_tokens": 420,
     "chunk_overlap": 80,
@@ -615,22 +617,93 @@ def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def format_config_value(value: Any) -> str:
+    if isinstance(value, tuple):
+        value = list(value)
+    if isinstance(value, (list, dict)):
+        return json.dumps(value, separators=(",", ":"))
+    return str(value)
+
+
+def append_main_run_log(
+    input_path: Path,
+    output_path: Path,
+    config_path: Path | None,
+    setting_name: str,
+    config: dict[str, Any],
+    answer_count: int,
+) -> None:
+    log_path = ROOT / "logs" / "main_runs.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    command = f"python3 main.py --input {input_path} --output {output_path}"
+    if config_path is not None:
+        command += f" --config {config_path}"
+
+    config_keys = [
+        "chunk_tokens",
+        "chunk_overlap",
+        "retriever",
+        "top_k",
+        "fetch_k",
+        "rerank",
+        "rerank_top_n",
+        "ngram_range",
+        "analyzer",
+        "max_context_tokens",
+        "source_expand_lines",
+        "related_sources",
+        "max_related_sources",
+    ]
+    config_line = ", ".join(f"{key}={format_config_value(config.get(key))}" for key in config_keys)
+    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    entry = "\n".join(
+        [
+            f"Run: {timestamp}",
+            f"- setting: {setting_name}",
+            f"- command: {command}",
+            f"- input: {input_path}",
+            f"- output: {output_path}",
+            f"- answers_written: {answer_count}",
+            f"- config: {config_line}",
+            "",
+        ]
+    )
+    with log_path.open("a", encoding="utf-8") as handle:
+        handle.write(entry)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run deterministic RAG over RapidFire AI docs.")
     parser.add_argument("--input", required=True, help="Input questions JSON")
     parser.add_argument("--output", required=True, help="Output answers JSON")
     parser.add_argument("--config", help="Optional JSON config override")
+    parser.add_argument("--no-log", action="store_true", help="Do not append this run to logs/main_runs.log")
     args = parser.parse_args()
 
     set_determinism()
     config = DEFAULT_CONFIG.copy()
+    config_path = Path(args.config) if args.config else None
+    setting_name = DEFAULT_SETTING_NAME
     if args.config:
-        override = json.loads(Path(args.config).read_text(encoding="utf-8"))
+        override = json.loads(config_path.read_text(encoding="utf-8"))
+        setting_name = str(override.pop("setting_name", config_path.stem))
         config.update(override)
     pipeline = RagPipeline(config)
     questions = read_questions(Path(args.input))
     answers = [pipeline.answer_question(q["question_id"], q["question"]) for q in questions]
     write_json(Path(args.output), answers)
+    if not args.no_log:
+        try:
+            append_main_run_log(
+                input_path=Path(args.input),
+                output_path=Path(args.output),
+                config_path=config_path,
+                setting_name=setting_name,
+                config=config,
+                answer_count=len(answers),
+            )
+        except Exception as exc:
+            print(f"[warn] main run log write failed: {exc}", file=sys.stderr)
     return 0
 
 
