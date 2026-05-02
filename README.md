@@ -162,7 +162,7 @@ python3 rapidfire_experiments.py --mode dense-all \
 # Run a single TF-IDF config
 python3 rapidfire_experiments.py --mode tfidf-single --tfidf-config-id T13 \
     --input data/validation-set-golden-qa-pairs.json \
-    --experiments-path rapidfire_experiments/tfidf_T13
+    --experiments-path rapidfire_experiments/tfidf_T05
 
 # Run all 13 TF-IDF configs
 python3 rapidfire_experiments.py --mode tfidf-all \

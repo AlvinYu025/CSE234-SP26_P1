@@ -381,29 +381,6 @@ TFIDF_CONFIGS: dict[str, dict[str, Any]] = {
         "source_expand_lines": 5,
         "context_expand_lines": 20,
     },
-
-    # # Wider expansion stress tests. Interpret carefully; do not choose solely
-    # # because they inflate overlap-based retrieval.
-    # "T14": {
-    #     "name": "tfidf_420_80_k1_title_related_expand20_stress",
-    #     "chunk_tokens": 420,
-    #     "chunk_overlap": 80,
-    #     "top_k": 1,
-    #     "use_title_boost": True,
-    #     "related_sources": True,
-    #     "source_expand_lines": 20,
-    #     "context_expand_lines": 20,
-    # },
-    # "T15": {
-    #     "name": "tfidf_420_80_k1_title_related_expand50_stress",
-    #     "chunk_tokens": 420,
-    #     "chunk_overlap": 80,
-    #     "top_k": 1,
-    #     "use_title_boost": True,
-    #     "related_sources": True,
-    #     "source_expand_lines": 50,
-    #     "context_expand_lines": 20,
-    # },
 }
 
 

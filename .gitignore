@@ -12,3 +12,5 @@ __MACOSX/
 api-key.txt
 *.pem
 *.key
+
+rapidfireai/mlflow.db
