@@ -101,6 +101,15 @@ SOURCE_ZIP = ROOT / "sourcedocs.zip"
 METRICS_DIR = ROOT / "Metrics"
 DEFAULT_INPUT = ROOT / "data" / "validation-set-golden-qa-pairs.json"
 DEFAULT_EXPERIMENTS_PATH = ROOT / "rapidfire_experiments_validation"
+RF_HOME = ROOT / "rapidfireai"
+
+# RapidFire reads these environment variables when its package modules import.
+# Set them before importing rapidfireai so generated logs/db files stay inside
+# this project directory instead of the package default ~/rapidfireai.
+os.environ.setdefault("RF_HOME", str(RF_HOME))
+os.environ.setdefault("RF_LOG_PATH", str(RF_HOME / "logs"))
+os.environ.setdefault("RF_DB_PATH", str(RF_HOME / "db"))
+os.environ.setdefault("RF_EXPERIMENT_PATH", str(RF_HOME / "rapidfire_experiments"))
 
 # Add Metrics/ to both sys.path (driver) and PYTHONPATH (Ray workers).
 # sys.path covers the current process; PYTHONPATH is inherited by every
@@ -1249,7 +1258,7 @@ def start_mlflow_if_needed(experiments_path: Path) -> subprocess.Popen[str] | No
 
     host = os.environ.get("RF_MLFLOW_HOST", "127.0.0.1")
     port = os.environ.get("RF_MLFLOW_PORT", "8852")
-    rf_home = ROOT / "rapidfireai_validation"
+    rf_home = RF_HOME
     artifact_root = rf_home / "mlflow_artifacts"
     artifact_root.mkdir(parents=True, exist_ok=True)
     experiments_path.mkdir(parents=True, exist_ok=True)
@@ -1275,7 +1284,7 @@ def start_mlflow_if_needed(experiments_path: Path) -> subprocess.Popen[str] | No
     )
     process._rapidfire_log_file = log_file  # type: ignore[attr-defined]
 
-    for _ in range(30):
+    for _ in range(120):
         if mlflow_is_healthy():
             return process
         if process.poll() is not None:

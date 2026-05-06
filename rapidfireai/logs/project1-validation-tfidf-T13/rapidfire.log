@@ -1,0 +1,42 @@
+2026-05-06 03:42:38 | Experiment | INFO | experiment.py:165 | [project1-validation-tfidf-rerun-T13:Experiment] Experiment project1-validation-tfidf-rerun-T13 created with Experiment ID: 29 at /home/fey006/Project1/rapidfire_experiments_validation/T13_tfidf_420_80_k5_title_related_expand5/project1-validation-tfidf-rerun-T13
+2026-05-06 03:42:48 | Experiment | INFO | metric_rfmetric_manager.py:55 | [project1-validation-tfidf-rerun-T13:Experiment] Initialized MLflowMetricLogger: rf_mlflow
+2026-05-06 03:42:48 | Experiment | INFO | metric_rfmetric_manager.py:119 | [project1-validation-tfidf-rerun-T13:Experiment] Creating MLflow experiment: project1-validation-tfidf-rerun-T13
+2026-05-06 03:42:48 | Experiment | INFO | experiment.py:210 | [project1-validation-tfidf-rerun-T13:Experiment] Initialized MetricLogger experiment: 29
+2026-05-06 03:42:48 | Experiment | INFO | experiment.py:230 | [project1-validation-tfidf-rerun-T13:Experiment] Starting new dispatcher/api server at 127.0.0.1:8851.
+2026-05-06 03:42:48 | Experiment | INFO | dispatcher.py:1121 | [project1-validation-tfidf-rerun-T13:Experiment] Started interactive control dispatcher on http://127.0.0.1:8851
+2026-05-06 03:42:48 | Experiment | INFO | dispatcher.py:1122 | [project1-validation-tfidf-rerun-T13:Experiment] Use dispatcher API to dynamically stop/resume/delete/clone pipelines
+2026-05-06 03:42:48 | Experiment | WARNING | experiment.py:381 | [project1-validation-tfidf-rerun-T13:Experiment] No GPUs available. Be sure to use external APIs for inference.
+2026-05-06 03:42:48 | Experiment | INFO | experiment.py:383 | [project1-validation-tfidf-rerun-T13:Experiment] Running multi-config experiment with 4 shard(s), (0.0 GPUs per actor, 4.0 CPUs per actor, 2 actors)
+2026-05-06 03:42:48 | Experiment | INFO | experiment.py:392 | [project1-validation-tfidf-rerun-T13:Experiment] Reset states of existing pipelines/contexts/tasks (marked as failed)
+2026-05-06 03:42:49 | Controller | INFO | controller.py:895 | [project1-validation-tfidf-rerun-T13:Controller] Dataset sharded into 4 shard(s). Shard sizes: [12, 11, 11, 11]
+2026-05-06 03:42:49 | Controller | INFO | controller.py:900 | [project1-validation-tfidf-rerun-T13:Controller] Received 1 pipeline configuration(s)
+2026-05-06 03:42:49 | Controller | INFO | controller.py:306 | [project1-validation-tfidf-rerun-T13:Controller] No RAG contexts found in pipeline configs
+2026-05-06 03:42:49 | Controller | INFO | controller.py:920 | [project1-validation-tfidf-rerun-T13:Controller] Created 2 query processing actors (generic pool)
+2026-05-06 03:42:49 | Experiment | INFO | metric_rfmetric_manager.py:141 | [project1-validation-tfidf-rerun-T13:Experiment] Created MLflow run: 265f3c66f67f4e1db4aa833bb479d13e, 1
+2026-05-06 03:42:49 | Controller | INFO | controller.py:931 | [project1-validation-tfidf-rerun-T13:Controller] Initialized scheduler with 1 pipelines, 2 actors, 4 shards
+2026-05-06 03:42:49 | Controller | INFO | controller.py:1118 | [project1-validation-tfidf-rerun-T13:Controller] Created experiment-wide rate limiter actor for 1 OpenAI pipeline(s) with per-model limits (api-gpt-oss-120b: 120 RPM, 1000000 TPM)
+2026-05-06 03:42:49 | Controller | INFO | controller.py:1124 | [project1-validation-tfidf-rerun-T13:Controller] Starting multi-pipeline inference scheduling...
+2026-05-06 03:42:50 | matplotlib.font_manager | INFO | font_manager.py:1639 | generated new fontManager
+2026-05-06 03:42:50 | Controller | INFO | controller.py:1422 | [project1-validation-tfidf-rerun-T13:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 0 (2 batches)
+2026-05-06 03:43:00 | QueryProcessingActor-0 | INFO | query_actor.py:165 | [project1-validation-tfidf-rerun-T13:QueryProcessingActor-0] Initializing new inference engine (config hash: 8afed37c)
+2026-05-06 03:44:10 | Controller | INFO | controller.py:1299 | [project1-validation-tfidf-rerun-T13:Controller] Pipeline 1 completed shard 0 (2 batches, 68.24s)
+2026-05-06 03:44:10 | Controller | INFO | controller.py:1422 | [project1-validation-tfidf-rerun-T13:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 1 (2 batches)
+2026-05-06 03:44:10 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-validation-tfidf-rerun-T13:QueryProcessingActor-0] Reusing existing inference engine (config hash: 8afed37c)
+2026-05-06 03:45:20 | Controller | INFO | controller.py:1299 | [project1-validation-tfidf-rerun-T13:Controller] Pipeline 1 completed shard 1 (2 batches, 69.25s)
+2026-05-06 03:45:20 | Controller | INFO | controller.py:1422 | [project1-validation-tfidf-rerun-T13:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 2 (2 batches)
+2026-05-06 03:45:20 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-validation-tfidf-rerun-T13:QueryProcessingActor-0] Reusing existing inference engine (config hash: 8afed37c)
+2026-05-06 03:46:33 | Controller | INFO | controller.py:1299 | [project1-validation-tfidf-rerun-T13:Controller] Pipeline 1 completed shard 2 (2 batches, 70.77s)
+2026-05-06 03:46:33 | Controller | INFO | controller.py:1422 | [project1-validation-tfidf-rerun-T13:Controller] Scheduling pipeline 1 (Pipeline 1) on actor 0 for shard 3 (2 batches)
+2026-05-06 03:46:33 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-validation-tfidf-rerun-T13:QueryProcessingActor-0] Reusing existing inference engine (config hash: 8afed37c)
+2026-05-06 03:47:36 | Controller | INFO | controller.py:1192 | [project1-validation-tfidf-rerun-T13:Controller] Pipeline 1 completed all 4 shards
+2026-05-06 03:47:38 | Controller | INFO | controller.py:1299 | [project1-validation-tfidf-rerun-T13:Controller] Pipeline 1 completed shard 3 (2 batches, 63.23s)
+2026-05-06 03:47:38 | Controller | INFO | controller.py:1386 | [project1-validation-tfidf-rerun-T13:Controller] All pipelines completed all shards!
+2026-05-06 03:47:38 | Controller | INFO | controller.py:695 | [project1-validation-tfidf-rerun-T13:Controller] Computing final metrics for all pipelines...
+2026-05-06 03:47:39 | Experiment | INFO | metric_rfmetric_manager.py:190 | [project1-validation-tfidf-rerun-T13:Experiment] Ending run: 265f3c66f67f4e1db4aa833bb479d13e, 1 in rf_mlflow
+2026-05-06 03:47:39 | Experiment | WARNING | metric_mlflow_manager.py:101 | [project1-validation-tfidf-rerun-T13:Experiment] Run 265f3c66f67f4e1db4aa833bb479d13e is not the active run, no local context to clear
+2026-05-06 03:47:39 | Controller | INFO | controller.py:853 | [project1-validation-tfidf-rerun-T13:Controller] Pipeline 1 (Pipeline 1) completed successfully
+2026-05-06 03:47:39 | ExperimentUtils | INFO | experiment_utils.py:180 | [project1-validation-tfidf-rerun-T13:ExperimentUtils] Reset experiment states - marked ongoing pipelines, contexts, and tasks as failed
+2026-05-06 03:47:39 | ExperimentUtils | INFO | experiment_utils.py:188 | [project1-validation-tfidf-rerun-T13:ExperimentUtils] Experiment marked as cancelled. Ongoing pipelines, contexts, and tasks have been marked as failed.
+2026-05-06 03:47:39 | ExperimentUtils | INFO | experiment_utils.py:154 | [project1-validation-tfidf-rerun-T13:ExperimentUtils] Experiment project1-validation-tfidf-rerun-T13 ended
+2026-05-06 03:47:42 | Experiment | INFO | experiment.py:574 | [project1-validation-tfidf-rerun-T13:Experiment] All actors shut down
+2026-05-06 03:47:42 | Experiment | INFO | experiment.py:575 | [project1-validation-tfidf-rerun-T13:Experiment] Dispatcher will automatically shut down (daemon thread)

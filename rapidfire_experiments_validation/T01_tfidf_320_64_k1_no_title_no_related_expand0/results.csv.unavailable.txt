@@ -1,0 +1,1 @@
+get_results unavailable for this RapidFire run: get_results() is only available in 'fit' mode

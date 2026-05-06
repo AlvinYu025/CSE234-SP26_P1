@@ -1,0 +1,4 @@
+2026-05-05 20:57:30 | QueryProcessingActor-0 | INFO | query_actor.py:165 | [project1-validation-tfidf-T02:QueryProcessingActor-0] Initializing new inference engine (config hash: 43b330ee)
+2026-05-05 20:58:43 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-validation-tfidf-T02:QueryProcessingActor-0] Reusing existing inference engine (config hash: 43b330ee)
+2026-05-05 20:59:57 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-validation-tfidf-T02:QueryProcessingActor-0] Reusing existing inference engine (config hash: 43b330ee)
+2026-05-05 21:01:09 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-validation-tfidf-T02:QueryProcessingActor-0] Reusing existing inference engine (config hash: 43b330ee)

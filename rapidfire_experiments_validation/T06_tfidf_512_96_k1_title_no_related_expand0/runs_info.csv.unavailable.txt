@@ -1,0 +1,1 @@
+get_runs_info unavailable for this RapidFire run: get_runs_info() is only available in 'fit' mode
