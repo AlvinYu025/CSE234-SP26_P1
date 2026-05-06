@@ -4,8 +4,8 @@
 
 Question-answering system over the RapidFire AI documentation corpus.
 The final pipeline is `main.py` (deterministic TF-IDF RAG).
-`rapidfire_experiments.py` is the multi-config experiment driver used to
-explore and compare configurations before selecting the final one.
+`rapidfire_experiments_golden.py` and `rapidfire_experiments_validation.py`
+are the multi-config experiment drivers used to compare configurations.
 
 ---
 
@@ -100,7 +100,7 @@ fields: `question_id`, `answer`, `sources`, `retrieved_context`.
 
 ---
 
-## Experiments — `rapidfire_experiments.py`
+## Experiments
 
 ### What it does
 
@@ -146,28 +146,33 @@ export RAG_MODEL="api-gpt-oss-120b"
 ### Commands
 
 ```bash
-# List all available configs
-python3 rapidfire_experiments.py --mode list-configs
+# Golden-set experiments write to rapidfire_experiments_golden/ by default.
+python3 rapidfire_experiments_golden.py --mode list-configs
 
 # Run a single dense config
-python3 rapidfire_experiments.py --mode dense-single --dense-config-id D07 \
-    --input data/validation-set-golden-qa-pairs.json \
-    --experiments-path rapidfire_experiments/dense_D07
+python3 rapidfire_experiments_golden.py --mode dense-single --dense-config-id D07 \
+    --input data/golden_qa.json \
+    --experiments-path rapidfire_experiments_golden/dense_D07
 
 # Run all 12 dense configs
-python3 rapidfire_experiments.py --mode dense-all \
-    --input data/validation-set-golden-qa-pairs.json \
-    --experiments-path rapidfire_experiments/dense_all
+python3 rapidfire_experiments_golden.py --mode dense-all \
+    --input data/golden_qa.json \
+    --experiments-path rapidfire_experiments_golden/dense_all
 
 # Run a single TF-IDF config
-python3 rapidfire_experiments.py --mode tfidf-single --tfidf-config-id T13 \
-    --input data/validation-set-golden-qa-pairs.json \
-    --experiments-path rapidfire_experiments/tfidf_T05
+python3 rapidfire_experiments_golden.py --mode tfidf-single --tfidf-config-id T13 \
+    --input data/golden_qa.json \
+    --experiments-path rapidfire_experiments_golden/tfidf_T13
 
 # Run all 13 TF-IDF configs
-python3 rapidfire_experiments.py --mode tfidf-all \
+python3 rapidfire_experiments_golden.py --mode tfidf-all \
+    --input data/golden_qa.json \
+    --experiments-path rapidfire_experiments_golden/tfidf_all
+
+# Released validation/dev-set experiments write to rapidfire_experiments_validation/ by default.
+python3 rapidfire_experiments_validation.py --mode tfidf-all \
     --input data/validation-set-golden-qa-pairs.json \
-    --experiments-path rapidfire_experiments/tfidf_all
+    --experiments-path rapidfire_experiments_validation/tfidf_all
 ```
 
 ### Re-running judge scoring on existing runs
@@ -177,16 +182,16 @@ during the original run), patch all results in-place:
 
 ```bash
 python3 rejudge_dense.py \
-    --experiments-path rapidfire_experiments/dense_all
+    --experiments-path rapidfire_experiments_golden/dense_all
 ```
 
 This overwrites each `run_evals_return.json` with correct generation
-metrics and writes a summary to `rapidfire_experiments/dense_all/judge_results.csv`.
+metrics and writes a summary to `rapidfire_experiments_golden/dense_all/judge_results.csv`.
 
 ### Experiment artifacts
 
 ```
-rapidfire_experiments/
+rapidfire_experiments_golden/
   dense_all/
     D01_.../
       run_evals_return.json   # per-question results + summary metrics
@@ -204,7 +209,7 @@ rapidfire_experiments/
 
 ## Final Configuration Selection
 
-Experiments were run on `data/validation-set-golden-qa-pairs.json`.
+Experiments in `rapidfire_experiments_golden/` were run on `data/golden_qa.json`.
 **T05** (`tfidf_420_80_k1_title_no_related_expand0`) was selected for
 `main.py` based on retrieval score and generation quality across configs.
 

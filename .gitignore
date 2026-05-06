@@ -13,4 +13,5 @@ api-key.txt
 *.pem
 *.key
 
-rapidfireai/mlflow.db
+rapidfireai_golden/mlflow.db
+rapidfireai_validation/mlflow.db

@@ -38,32 +38,32 @@ Typical usage:
   export RAG_MODEL="api-gpt-oss-120b"
 
   # List configs
-  python3 rapidfire_experiments.py --mode list-configs
+  python3 rapidfire_experiments_golden.py --mode list-configs
 
   # Run one dense config
-  python3 rapidfire_experiments.py --mode dense-single --dense-config-id D07 \
+  python3 rapidfire_experiments_golden.py --mode dense-single --dense-config-id D07 \
       --input data/golden_qa.json \
-      --experiments-path rapidfire_experiments/dense_D07
+      --experiments-path rapidfire_experiments_golden/dense_D07
 
   # Run all dense configs, each in its own folder
-  python3 rapidfire_experiments.py --mode dense-all \
+  python3 rapidfire_experiments_golden.py --mode dense-all \
       --input data/golden_qa.json \
-      --experiments-path rapidfire_experiments/dense_all
+      --experiments-path rapidfire_experiments_golden/dense_all
 
   # Run one TF-IDF config
-  python3 rapidfire_experiments.py --mode tfidf-single --tfidf-config-id T11 \
+  python3 rapidfire_experiments_golden.py --mode tfidf-single --tfidf-config-id T11 \
       --input data/golden_qa.json \
-      --experiments-path rapidfire_experiments/tfidf_T11
+      --experiments-path rapidfire_experiments_golden/tfidf_T11
 
   # Run all TF-IDF configs
-  python3 rapidfire_experiments.py --mode tfidf-all \
+  python3 rapidfire_experiments_golden.py --mode tfidf-all \
       --input data/golden_qa.json \
-      --experiments-path rapidfire_experiments/tfidf_all
+      --experiments-path rapidfire_experiments_golden/tfidf_all
 
   # Run every config
-  python3 rapidfire_experiments.py --mode all \
+  python3 rapidfire_experiments_golden.py --mode all \
       --input data/golden_qa.json \
-      --experiments-path rapidfire_experiments/all
+      --experiments-path rapidfire_experiments_golden/all
 
 Notes:
 - Dense configs and TF-IDF configs are both executed with RapidFire's
@@ -99,8 +99,8 @@ ROOT = Path(__file__).resolve().parent
 SOURCE_DIR = ROOT / "sourcedocs"
 SOURCE_ZIP = ROOT / "sourcedocs.zip"
 METRICS_DIR = ROOT / "Metrics"
-DEFAULT_INPUT = ROOT / "data" / "validation-set-golden-qa-pairs.json"
-DEFAULT_EXPERIMENTS_PATH = ROOT / "rapidfire_experiments"
+DEFAULT_INPUT = ROOT / "data" / "golden_qa.json"
+DEFAULT_EXPERIMENTS_PATH = ROOT / "rapidfire_experiments_golden"
 
 # Add Metrics/ to both sys.path (driver) and PYTHONPATH (Ray workers).
 # sys.path covers the current process; PYTHONPATH is inherited by every
@@ -1249,7 +1249,7 @@ def start_mlflow_if_needed(experiments_path: Path) -> subprocess.Popen[str] | No
 
     host = os.environ.get("RF_MLFLOW_HOST", "127.0.0.1")
     port = os.environ.get("RF_MLFLOW_PORT", "8852")
-    rf_home = Path.home() / "rapidfireai"
+    rf_home = ROOT / "rapidfireai_golden"
     artifact_root = rf_home / "mlflow_artifacts"
     artifact_root.mkdir(parents=True, exist_ok=True)
     experiments_path.mkdir(parents=True, exist_ok=True)

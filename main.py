@@ -30,6 +30,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 ROOT = Path(__file__).resolve().parent
 SOURCE_DIR = ROOT / "sourcedocs"
 SOURCE_ZIP = ROOT / "sourcedocs.zip"
+TRITONAI_BASE_URL = "https://tritonai-api.ucsd.edu/v1"
 
 # T05 config
 CHUNK_TOKENS = 420
@@ -83,6 +84,16 @@ def set_determinism(seed: int = 42) -> None:
 
 def estimate_tokens(text: str) -> int:
     return int(math.ceil(len(text.split()) * 1.3))
+
+
+def get_api_key() -> str | None:
+    key = os.environ.get("OPENAI_API_KEY")
+    if key:
+        return key
+    key_file = Path.home() / "api-key.txt"
+    if key_file.exists():
+        return key_file.read_text(encoding="utf-8").strip()
+    return None
 
 
 def ensure_corpus() -> None:
@@ -371,9 +382,9 @@ class RagPipeline:
         return "\n\n".join(parts), sources
 
     def generate_answer(self, question: str, context: str) -> str:
-        api_key = os.environ.get("OPENAI_API_KEY")
+        api_key = get_api_key()
         model = os.environ.get("RAG_MODEL") or os.environ.get("OPENAI_MODEL") or "api-gpt-oss-120b"
-        base_url = os.environ.get("OPENAI_BASE_URL") or os.environ.get("TRITONAI_BASE_URL")
+        base_url = os.environ.get("OPENAI_BASE_URL") or os.environ.get("TRITONAI_BASE_URL") or TRITONAI_BASE_URL
         if api_key:
             try:
                 from openai import OpenAI

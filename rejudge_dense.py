@@ -8,7 +8,7 @@ Usage:
     export OPENAI_API_KEY="$(cat ~/api-key.txt)"
     export JUDGE_BASE_URL="https://tritonai-api.ucsd.edu/v1"
     export JUDGE_MODEL="claude-sonnet-4-6"
-    python3 rejudge_dense.py [--experiments-path rapidfire_experiments/dense_all]
+    python3 rejudge_dense.py [--experiments-path rapidfire_experiments_golden/dense_all]
 """
 
 from __future__ import annotations
@@ -133,7 +133,7 @@ def rejudge_config(result_path: Path, dry_run: bool = False) -> dict:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--experiments-path", default="rapidfire_experiments/dense_all")
+    parser.add_argument("--experiments-path", default="rapidfire_experiments_golden/dense_all")
     parser.add_argument("--configs", nargs="*", help="e.g. D01 D03 (default: all)")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
