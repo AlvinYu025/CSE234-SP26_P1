@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """RAG pipeline for CSE/DSC 234 Project 1.
 
-TF-IDF retrieval with config T05 (chunk=420/80, top_k=1, title boost,
-no related sources, source_expand=0, context_expand=20). Deterministic.
+TF-IDF retrieval with config T10 (chunk=420/80, top_k=1, title boost,
+related sources, source_expand=5, context_expand=20). Deterministic.
 
 Usage:
-    python3 main.py --input questions.json --output answers.json
+    python3 main.py \
+        --input questions.json \
+        --output answers.json \
+        --corpus-dir sourcedocs \
+        --apikey-txt ~/api-key.txt \
+        --generation-model api-gpt-oss-120b
 """
 
 from __future__ import annotations
@@ -28,18 +33,19 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 ROOT = Path(__file__).resolve().parent
-SOURCE_DIR = ROOT / "sourcedocs"
+DEFAULT_SOURCE_DIR = ROOT / "sourcedocs"
+SOURCE_DIR = DEFAULT_SOURCE_DIR
 SOURCE_ZIP = ROOT / "sourcedocs.zip"
 TRITONAI_BASE_URL = "https://tritonai-api.ucsd.edu/v1"
 
-# T05 config
+# T10 config
 CHUNK_TOKENS = 420
 CHUNK_OVERLAP = 80
 TOP_K = 1
-SOURCE_EXPAND_LINES = 0
+SOURCE_EXPAND_LINES = 5
 CONTEXT_EXPAND_LINES = 20
 MAX_RELATED_SOURCES = 5
-RELATED_SOURCES = False
+RELATED_SOURCES = True
 MAX_CONTEXT_TOKENS = 1850
 MAX_ANSWER_SENTENCES = 5
 
@@ -86,19 +92,41 @@ def estimate_tokens(text: str) -> int:
     return int(math.ceil(len(text.split()) * 1.3))
 
 
-def get_api_key() -> str | None:
+def load_api_key(api_key_txt: Path | None) -> str | None:
+    if api_key_txt is not None:
+        key_file = api_key_txt.expanduser()
+        if key_file.exists():
+            key = key_file.read_text(encoding="utf-8").strip()
+            if key:
+                return key
+            raise ValueError(f"API key file is empty: {key_file}")
+        if str(api_key_txt) not in {"~/api-key.txt", str(Path.home() / "api-key.txt")}:
+            raise FileNotFoundError(f"API key file not found: {key_file}")
+
     key = os.environ.get("OPENAI_API_KEY")
     if key:
-        return key
-    key_file = Path.home() / "api-key.txt"
-    if key_file.exists():
-        return key_file.read_text(encoding="utf-8").strip()
+        return key.strip()
     return None
+
+
+def configure_corpus(corpus_dir: Path) -> None:
+    global SOURCE_DIR
+    candidate = corpus_dir.expanduser()
+    if any(candidate.glob("*.rst")):
+        SOURCE_DIR = candidate
+        return
+    nested = candidate / "sourcedocs"
+    if nested.exists() and any(nested.glob("*.rst")):
+        SOURCE_DIR = nested
+        return
+    SOURCE_DIR = candidate
 
 
 def ensure_corpus() -> None:
     if SOURCE_DIR.exists() and any(SOURCE_DIR.glob("*.rst")):
         return
+    if SOURCE_DIR != DEFAULT_SOURCE_DIR:
+        raise FileNotFoundError(f"No .rst files found under corpus dir: {SOURCE_DIR}")
     if not SOURCE_ZIP.exists():
         raise FileNotFoundError("Missing sourcedocs/ and sourcedocs.zip")
     subprocess.run(["unzip", "-q", "-o", str(SOURCE_ZIP), "-d", str(ROOT)], check=True)
@@ -214,7 +242,15 @@ def build_chunks(docs: list[dict[str, Any]]) -> list[Chunk]:
 
 
 class RagPipeline:
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        api_key: str | None = None,
+        generation_model: str = "api-gpt-oss-120b",
+        base_url: str = TRITONAI_BASE_URL,
+    ) -> None:
+        self.api_key = api_key
+        self.generation_model = generation_model
+        self.base_url = base_url
         self.docs = load_documents()
         self.doc_lines = {doc["file"]: doc["lines"] for doc in self.docs}
         self.line_counts = {doc["file"]: len(doc["lines"]) for doc in self.docs}
@@ -382,15 +418,12 @@ class RagPipeline:
         return "\n\n".join(parts), sources
 
     def generate_answer(self, question: str, context: str) -> str:
-        api_key = get_api_key()
-        model = os.environ.get("RAG_MODEL") or os.environ.get("OPENAI_MODEL") or "api-gpt-oss-120b"
-        base_url = os.environ.get("OPENAI_BASE_URL") or os.environ.get("TRITONAI_BASE_URL") or TRITONAI_BASE_URL
-        if api_key:
+        if self.api_key:
             try:
                 from openai import OpenAI
-                client = OpenAI(api_key=api_key, base_url=base_url)
+                client = OpenAI(api_key=self.api_key, base_url=self.base_url)
                 response = client.chat.completions.create(
-                    model=model,
+                    model=self.generation_model,
                     temperature=0.0,
                     messages=[
                         {"role": "system", "content": SYSTEM_PROMPT},
@@ -468,10 +501,36 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run deterministic TF-IDF RAG over RapidFire AI docs.")
     parser.add_argument("--input", required=True, help="Input questions JSON")
     parser.add_argument("--output", required=True, help="Output answers JSON")
+    parser.add_argument(
+        "--corpus-dir",
+        default=str(DEFAULT_SOURCE_DIR),
+        help="Root directory containing the RapidFire .rst documentation corpus",
+    )
+    parser.add_argument(
+        "--apikey-txt",
+        default="~/api-key.txt",
+        help="Path to the TritonAI/OpenAI-compatible gateway API key text file",
+    )
+    parser.add_argument(
+        "--generation-model",
+        default="api-gpt-oss-120b",
+        help="Gateway model id used for answer generation",
+    )
+    parser.add_argument(
+        "--base-url",
+        default=TRITONAI_BASE_URL,
+        help=argparse.SUPPRESS,
+    )
     args = parser.parse_args()
 
     set_determinism()
-    pipeline = RagPipeline()
+    configure_corpus(Path(args.corpus_dir))
+    api_key = load_api_key(Path(args.apikey_txt) if args.apikey_txt else None)
+    pipeline = RagPipeline(
+        api_key=api_key,
+        generation_model=args.generation_model,
+        base_url=args.base_url,
+    )
     questions = read_questions(Path(args.input))
     answers = [pipeline.answer_question(q["question_id"], q["question"]) for q in questions]
 

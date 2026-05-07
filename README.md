@@ -50,7 +50,7 @@ are the multi-config experiment drivers used to compare configurations.
 
 ### What it does
 
-Deterministic TF-IDF RAG using config **T05**:
+Deterministic TF-IDF RAG using config **T10**:
 
 | Parameter | Value |
 |---|---|
@@ -58,8 +58,8 @@ Deterministic TF-IDF RAG using config **T05**:
 | `chunk_overlap` | 80 |
 | `top_k` | 1 |
 | Title boost | enabled |
-| Related sources | disabled |
-| `source_expand_lines` | 0 |
+| Related sources | enabled |
+| `source_expand_lines` | 5 |
 | `context_expand_lines` | 20 |
 | Max context tokens | 1850 |
 
@@ -78,19 +78,21 @@ openai
 ### Run
 
 ```bash
-export OPENAI_API_KEY="$(cat ~/api-key.txt)"
-export OPENAI_BASE_URL="https://tritonai-api.ucsd.edu/v1"
-export RAG_MODEL="api-gpt-oss-120b"
-
 # Generate validation answers (submission file)
 python3 main.py \
   --input data/validation-set-golden-qa-pairs.json \
-  --output outputs/validation_answers.json
+  --output outputs/validation_answers.json \
+  --corpus-dir sourcedocs \
+  --apikey-txt ~/api-key.txt \
+  --generation-model api-gpt-oss-120b
 
 # Generate answers for the curated golden set
 python3 main.py \
   --input data/golden_qa.json \
-  --output outputs/golden_answers.json
+  --output outputs/golden_answers.json \
+  --corpus-dir sourcedocs \
+  --apikey-txt ~/api-key.txt \
+  --generation-model api-gpt-oss-120b
 ```
 
 ### Output location
@@ -133,15 +135,11 @@ Install in a Python 3.12 environment:
 pip install -r requirements.txt
 ```
 
-### Environment variables
+### API key
 
-```bash
-export OPENAI_API_KEY="$(cat ~/api-key.txt)"
-export OPENAI_BASE_URL="https://tritonai-api.ucsd.edu/v1"
-export JUDGE_BASE_URL="https://tritonai-api.ucsd.edu/v1"
-export JUDGE_MODEL="claude-sonnet-4-6"
-export RAG_MODEL="api-gpt-oss-120b"
-```
+The scripts read the gateway key from `--apikey-txt` and configure the
+OpenAI-compatible gateway internally. They do not require manually exporting
+`OPENAI_API_KEY` before running.
 
 ### Commands
 
@@ -152,27 +150,32 @@ python3 rapidfire_experiments_golden.py --mode list-configs
 # Run a single dense config
 python3 rapidfire_experiments_golden.py --mode dense-single --dense-config-id D07 \
     --input data/golden_qa.json \
-    --experiments-path rapidfire_experiments_golden/dense_D07
+    --experiments-path rapidfire_experiments_golden/dense_D07 \
+    --apikey-txt ~/api-key.txt
 
 # Run all 12 dense configs
 python3 rapidfire_experiments_golden.py --mode dense-all \
     --input data/golden_qa.json \
-    --experiments-path rapidfire_experiments_golden/dense_all
+    --experiments-path rapidfire_experiments_golden/dense_all \
+    --apikey-txt ~/api-key.txt
 
 # Run a single TF-IDF config
 python3 rapidfire_experiments_golden.py --mode tfidf-single --tfidf-config-id T13 \
     --input data/golden_qa.json \
-    --experiments-path rapidfire_experiments_golden/tfidf_T13
+    --experiments-path rapidfire_experiments_golden/tfidf_T13 \
+    --apikey-txt ~/api-key.txt
 
 # Run all 13 TF-IDF configs
 python3 rapidfire_experiments_golden.py --mode tfidf-all \
     --input data/golden_qa.json \
-    --experiments-path rapidfire_experiments_golden/tfidf_all
+    --experiments-path rapidfire_experiments_golden/tfidf_all \
+    --apikey-txt ~/api-key.txt
 
 # Released validation/dev-set experiments write to rapidfire_experiments_validation/ by default.
 python3 rapidfire_experiments_validation.py --mode tfidf-all \
     --input data/validation-set-golden-qa-pairs.json \
-    --experiments-path rapidfire_experiments_validation/tfidf_all
+    --experiments-path rapidfire_experiments_validation/tfidf_all \
+    --apikey-txt ~/api-key.txt
 ```
 
 ### Re-running judge scoring on existing runs
@@ -210,7 +213,7 @@ rapidfire_experiments_golden/
 ## Final Configuration Selection
 
 Experiments in `rapidfire_experiments_golden/` were run on `data/golden_qa.json`.
-**T05** (`tfidf_420_80_k1_title_no_related_expand0`) was selected for
+**T10** (`tfidf_420_80_k1_title_related_expand5`) was selected for
 `main.py` based on retrieval score and generation quality across configs.
 
 Key design choices:
@@ -218,8 +221,10 @@ Key design choices:
 - **TF-IDF over dense embeddings** — deterministic, no GPU required,
   competitive retrieval F1 on this documentation corpus
 - **Title + symbol boost** — improves ranking for API-name and class-name queries
-- **top_k=1, no related sources** — focuses on the single best-matching chunk,
-  keeping sources precise and context concise
-- **source_expand_lines=0** — reports exact chunk spans, no padding
+- **top_k=1 with related sources** — starts from the best-matching chunk and
+  adds targeted related documentation for tutorial, vector-store, glossary, and
+  comparison-style questions
+- **source_expand_lines=5** — reports a conservative source window around each
+  matched chunk, which improved overlap without returning broad spans
 - **context_expand_lines=20** — expands context window by 20 lines around the
   chunk for richer generation input without inflating reported sources

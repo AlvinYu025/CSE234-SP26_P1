@@ -31,39 +31,38 @@ Metrics:
 
 Typical usage:
 
-  export OPENAI_API_KEY="$(cat ~/api-key.txt)"
-  export OPENAI_BASE_URL="https://tritonai-api.ucsd.edu/v1"
-  export JUDGE_BASE_URL="https://tritonai-api.ucsd.edu/v1"
-  export JUDGE_MODEL="claude-sonnet-4-6"
-  export RAG_MODEL="api-gpt-oss-120b"
-
   # List configs
   python3 rapidfire_experiments_validation.py --mode list-configs
 
   # Run one dense config
   python3 rapidfire_experiments_validation.py --mode dense-single --dense-config-id D07 \
       --input data/validation-set-golden-qa-pairs.json \
-      --experiments-path rapidfire_experiments_validation/dense_D07
+      --experiments-path rapidfire_experiments_validation/dense_D07 \
+      --apikey-txt ~/api-key.txt
 
   # Run all dense configs, each in its own folder
   python3 rapidfire_experiments_validation.py --mode dense-all \
       --input data/validation-set-golden-qa-pairs.json \
-      --experiments-path rapidfire_experiments_validation/dense_all
+      --experiments-path rapidfire_experiments_validation/dense_all \
+      --apikey-txt ~/api-key.txt
 
   # Run one TF-IDF config
   python3 rapidfire_experiments_validation.py --mode tfidf-single --tfidf-config-id T11 \
       --input data/validation-set-golden-qa-pairs.json \
-      --experiments-path rapidfire_experiments_validation/tfidf_T11
+      --experiments-path rapidfire_experiments_validation/tfidf_T11 \
+      --apikey-txt ~/api-key.txt
 
   # Run all TF-IDF configs
   python3 rapidfire_experiments_validation.py --mode tfidf-all \
       --input data/validation-set-golden-qa-pairs.json \
-      --experiments-path rapidfire_experiments_validation/tfidf_all
+      --experiments-path rapidfire_experiments_validation/tfidf_all \
+      --apikey-txt ~/api-key.txt
 
   # Run every config
   python3 rapidfire_experiments_validation.py --mode all \
       --input data/validation-set-golden-qa-pairs.json \
-      --experiments-path rapidfire_experiments_validation/all
+      --experiments-path rapidfire_experiments_validation/all \
+      --apikey-txt ~/api-key.txt
 
 Notes:
 - Dense configs and TF-IDF configs are both executed with RapidFire's
@@ -102,6 +101,10 @@ METRICS_DIR = ROOT / "Metrics"
 DEFAULT_INPUT = ROOT / "data" / "validation-set-golden-qa-pairs.json"
 DEFAULT_EXPERIMENTS_PATH = ROOT / "rapidfire_experiments_validation"
 RF_HOME = ROOT / "rapidfireai"
+DEFAULT_API_KEY_TXT = Path.home() / "api-key.txt"
+DEFAULT_BASE_URL = "https://tritonai-api.ucsd.edu/v1"
+DEFAULT_MODEL = "api-gpt-oss-120b"
+DEFAULT_JUDGE_MODEL = "claude-sonnet-4-6"
 
 # RapidFire reads these environment variables when its package modules import.
 # Set them before importing rapidfireai so generated logs/db files stay inside
@@ -134,12 +137,11 @@ from rapidfire_integration_example import (  # noqa: E402
 )
 
 
-# Ensure judge uses TritonAI endpoint (same gateway as RAG_MODEL).
-# Can be overridden by exporting these vars before running.
+# Ensure judge uses TritonAI endpoint (same gateway as the generation model).
 if not os.environ.get("JUDGE_BASE_URL"):
-    os.environ["JUDGE_BASE_URL"] = "https://tritonai-api.ucsd.edu/v1"
+    os.environ["JUDGE_BASE_URL"] = DEFAULT_BASE_URL
 if not os.environ.get("JUDGE_MODEL"):
-    os.environ["JUDGE_MODEL"] = "claude-sonnet-4-6"
+    os.environ["JUDGE_MODEL"] = DEFAULT_JUDGE_MODEL
 
 INSTRUCTIONS = (
     "You answer questions about the RapidFire AI documentation. Use only the "
@@ -410,6 +412,33 @@ def estimate_tokens(text: str) -> int:
     return int(math.ceil(len(text.split()) * 1.3))
 
 
+def load_api_key(api_key_txt: str | Path) -> str:
+    key_file = Path(api_key_txt).expanduser()
+    if key_file.exists():
+        key = key_file.read_text(encoding="utf-8").strip()
+        if key:
+            return key
+        raise ValueError(f"API key file is empty: {key_file}")
+
+    env_key = os.environ.get("OPENAI_API_KEY")
+    if env_key:
+        return env_key.strip()
+
+    raise FileNotFoundError(
+        f"API key file not found: {key_file}. Pass --apikey-txt <path_to_txt>."
+    )
+
+
+def configure_gateway(api_key_txt: str | Path, base_url: str, model: str, judge_model: str) -> str:
+    api_key = load_api_key(api_key_txt)
+    os.environ["OPENAI_API_KEY"] = api_key
+    os.environ["OPENAI_BASE_URL"] = base_url
+    os.environ["RAG_MODEL"] = model
+    os.environ["JUDGE_BASE_URL"] = base_url
+    os.environ["JUDGE_MODEL"] = judge_model
+    return api_key
+
+
 def ensure_corpus() -> None:
     if SOURCE_DIR.exists() and any(SOURCE_DIR.glob("*.rst")):
         return
@@ -521,6 +550,31 @@ def safe_to_spans(items: Any) -> list[tuple[str, int, int]]:
         return to_spans(items)
     except Exception:
         return []
+
+
+def redact_api_keys(value: Any) -> Any:
+    if isinstance(value, dict):
+        redacted: dict[Any, Any] = {}
+        for key, child in value.items():
+            key_text = str(key).lower()
+            if key_text in {"api_key", "openai_api_key"}:
+                redacted[key] = "<redacted>"
+            else:
+                redacted[key] = redact_api_keys(child)
+        return redacted
+    if isinstance(value, list):
+        return [redact_api_keys(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(redact_api_keys(item) for item in value)
+    if isinstance(value, str) and value.startswith("sk-"):
+        return "<redacted>"
+    return value
+
+
+def write_redacted_json(path: Path, value: Any) -> None:
+    text = json.dumps(redact_api_keys(value), indent=2, default=str)
+    text = re.sub(r"sk-[A-Za-z0-9_-]{20,}", "<redacted>", text)
+    path.write_text(text + "\n", encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
@@ -1475,10 +1529,7 @@ def run_rapidfire_config_group(
             num_actors=num_actors,
             seed=seed,
         )
-        (experiments_path / "run_evals_return.json").write_text(
-            json.dumps(results, indent=2, default=str) + "\n",
-            encoding="utf-8",
-        )
+        write_redacted_json(experiments_path / "run_evals_return.json", results)
         try_write_experiment_frame(experiment, "get_runs_info", experiments_path / "runs_info.csv")
         try_write_experiment_frame(experiment, "get_results", experiments_path / "results.csv")
     finally:
@@ -1531,8 +1582,10 @@ def main() -> int:
     parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Golden/validation QA JSON")
     parser.add_argument("--experiments-path", default=str(DEFAULT_EXPERIMENTS_PATH))
     parser.add_argument("--experiment-name", default="project1-rag")
-    parser.add_argument("--base-url", default=os.environ.get("OPENAI_BASE_URL", "https://tritonai-api.ucsd.edu/v1"))
-    parser.add_argument("--model", default=os.environ.get("RAG_MODEL", "api-gpt-oss-120b"))
+    parser.add_argument("--apikey-txt", default=str(DEFAULT_API_KEY_TXT), help="Path to the gateway API key text file")
+    parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
+    parser.add_argument("--model", default=DEFAULT_MODEL, help="Gateway model id for answer generation")
+    parser.add_argument("--judge-model", default=DEFAULT_JUDGE_MODEL)
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--num-shards", type=int, default=4)
     parser.add_argument("--num-actors", type=int, default=4)
@@ -1545,10 +1598,8 @@ def main() -> int:
         list_configs()
         return 0
 
+    api_key = configure_gateway(args.apikey_txt, args.base_url, args.model, args.judge_model)
     deps = require_rapidfire_dependencies()
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if not api_key:
-        raise RuntimeError("Set OPENAI_API_KEY before running RapidFire experiments.")
 
     ensure_corpus()
     dataset = deps["Dataset"].from_list(load_qa(Path(args.input)))
