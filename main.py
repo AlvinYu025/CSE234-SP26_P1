@@ -20,7 +20,6 @@ from __future__ import annotations
 import argparse
 import json
 import math
-import os
 import random
 import re
 import subprocess
@@ -34,6 +33,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
+# ---------------------
+# Final RAG setup: TC02 TF-IDF with real prompt-token checks.
+# ---------------------
 ROOT = Path(__file__).resolve().parent
 DEFAULT_SOURCE_DIR = ROOT / "sourcedocs"
 SOURCE_DIR = DEFAULT_SOURCE_DIR
@@ -72,6 +74,9 @@ QUERY_STOPWORDS = {
 }
 
 
+# ---------------------
+# Source record, similar to RapidFire document metadata.
+# ---------------------
 @dataclass(frozen=True)
 class Chunk:
     chunk_id: str
@@ -81,24 +86,23 @@ class Chunk:
     section: str
     text: str
 
-    def source(self, expand_lines: int = 0, max_line: int | None = None) -> dict[str, Any]:
-        start = max(1, self.start_line - expand_lines)
-        end = self.end_line + expand_lines
-        if max_line is not None:
-            end = min(max_line, end)
+    def sourceForRange(self, start: int, end: int) -> dict[str, Any]:
         return {"file": self.file, "lines": [start, end]}
 
 
-def set_determinism(seed: int = 42) -> None:
+# ---------------------
+# Runtime helpers.
+# ---------------------
+def setDeterminism(seed: int = 42) -> None:
     random.seed(seed)
     np.random.seed(seed)
 
 
-def estimate_tokens(text: str) -> int:
+def estimateTokens(text: str) -> int:
     return int(math.ceil(len(text.split()) * 1.3))
 
 
-def split_context_units(text: str) -> list[str]:
+def splitContextUnits(text: str) -> list[str]:
     text = text.strip()
     if not text:
         return []
@@ -120,7 +124,7 @@ def split_context_units(text: str) -> list[str]:
     return units
 
 
-def make_messages(question: str, context: str) -> list[dict[str, str]]:
+def makeMessages(question: str, context: str) -> list[dict[str, str]]:
     return [
         {"role": "system", "content": SYSTEM_PROMPT},
         {
@@ -130,7 +134,7 @@ def make_messages(question: str, context: str) -> list[dict[str, str]]:
     ]
 
 
-def load_api_key(api_key_txt: Path | None) -> str | None:
+def loadApiKey(api_key_txt: Path | None) -> str | None:
     if api_key_txt is not None:
         key_file = api_key_txt.expanduser()
         if key_file.exists():
@@ -140,14 +144,10 @@ def load_api_key(api_key_txt: Path | None) -> str | None:
             raise ValueError(f"API key file is empty: {key_file}")
         if str(api_key_txt) not in {"~/api-key.txt", str(Path.home() / "api-key.txt")}:
             raise FileNotFoundError(f"API key file not found: {key_file}")
-
-    key = os.environ.get("OPENAI_API_KEY")
-    if key:
-        return key.strip()
     return None
 
 
-def configure_corpus(corpus_dir: Path) -> None:
+def configureCorpus(corpus_dir: Path) -> None:
     global SOURCE_DIR
     candidate = corpus_dir.expanduser()
     if any(candidate.glob("*.rst")):
@@ -160,7 +160,7 @@ def configure_corpus(corpus_dir: Path) -> None:
     SOURCE_DIR = candidate
 
 
-def configure_expand_lines(expand_lines: int | None) -> None:
+def configureExpandLines(expand_lines: int | None) -> None:
     global SOURCE_EXPAND_LINES, CONTEXT_EXPAND_LINES
     if expand_lines is None:
         return
@@ -170,7 +170,11 @@ def configure_expand_lines(expand_lines: int | None) -> None:
     CONTEXT_EXPAND_LINES = expand_lines
 
 
-def ensure_corpus() -> None:
+# ---------------------
+# RapidFire AI component: Document loader.
+# Uses direct .rst loading instead of DirectoryLoader/TextLoader.
+# ---------------------
+def ensureCorpus() -> None:
     if SOURCE_DIR.exists() and any(SOURCE_DIR.glob("*.rst")):
         return
     if SOURCE_DIR != DEFAULT_SOURCE_DIR:
@@ -180,7 +184,7 @@ def ensure_corpus() -> None:
     subprocess.run(["unzip", "-q", "-o", str(SOURCE_ZIP), "-d", str(ROOT)], check=True)
 
 
-def clean_rst(text: str) -> str:
+def cleanRst(text: str) -> str:
     text = re.sub(r"^\s*\.\. image::.*$", "", text, flags=re.MULTILINE)
     text = re.sub(r":(?:class|func|code|doc|param|type|py:[^:`]+):`([^`]+)`", r"\1", text)
     text = re.sub(r"``([^`]+)``", r"\1", text)
@@ -195,7 +199,7 @@ def singularize(term: str) -> str:
     return term
 
 
-def lexical_terms(text: str) -> set[str]:
+def lexicalTerms(text: str) -> set[str]:
     return {
         singularize(term)
         for term in re.findall(r"[a-z0-9_+-]+", text.lower())
@@ -203,7 +207,7 @@ def lexical_terms(text: str) -> set[str]:
     }
 
 
-def query_symbols(question: str) -> set[str]:
+def querySymbols(question: str) -> set[str]:
     return {
         symbol.lower()
         for symbol in re.findall(
@@ -214,7 +218,7 @@ def query_symbols(question: str) -> set[str]:
     }
 
 
-def first_document_title(lines: list[str], fallback: str) -> str:
+def firstDocumentTitle(lines: list[str], fallback: str) -> str:
     for i, line in enumerate(lines[:-1]):
         title = line.strip()
         underline = lines[i + 1].strip()
@@ -223,7 +227,7 @@ def first_document_title(lines: list[str], fallback: str) -> str:
     return fallback
 
 
-def section_for_line(lines: list[str], idx: int, current: str) -> str:
+def sectionForLine(lines: list[str], idx: int, current: str) -> str:
     line = lines[idx].strip()
     if idx + 1 < len(lines):
         underline = lines[idx + 1].strip()
@@ -232,8 +236,8 @@ def section_for_line(lines: list[str], idx: int, current: str) -> str:
     return current
 
 
-def load_documents() -> list[dict[str, Any]]:
-    ensure_corpus()
+def loadDocuments() -> list[dict[str, Any]]:
+    ensureCorpus()
     docs: list[dict[str, Any]] = []
     for path in sorted(SOURCE_DIR.glob("*.rst")):
         raw_text = path.read_text(encoding="utf-8", errors="replace")
@@ -243,7 +247,11 @@ def load_documents() -> list[dict[str, Any]]:
     return docs
 
 
-def build_chunks(docs: list[dict[str, Any]]) -> list[Chunk]:
+# ---------------------
+# RapidFire AI component: Text splitter.
+# Uses a line-aware chunker instead of RecursiveCharacterTextSplitter.
+# ---------------------
+def buildChunks(docs: list[dict[str, Any]]) -> list[Chunk]:
     chunks: list[Chunk] = []
     for doc in docs:
         filename = doc["file"]
@@ -251,7 +259,7 @@ def build_chunks(docs: list[dict[str, Any]]) -> list[Chunk]:
         section = filename
         units: list[tuple[int, str, str]] = []
         for i, line in enumerate(lines):
-            section = section_for_line(lines, i, section)
+            section = sectionForLine(lines, i, section)
             stripped = line.rstrip()
             if stripped:
                 units.append((i + 1, stripped, section))
@@ -268,7 +276,7 @@ def build_chunks(docs: list[dict[str, Any]]) -> list[Chunk]:
             block = units[start:end]
             if not block:
                 break
-            text = clean_rst("\n".join(item[1] for item in block))
+            text = cleanRst("\n".join(item[1] for item in block))
             if text:
                 chunks.append(Chunk(
                     chunk_id=f"{filename}:{block[0][0]}-{block[-1][0]}",
@@ -289,6 +297,9 @@ def build_chunks(docs: list[dict[str, Any]]) -> list[Chunk]:
     return chunks
 
 
+# ---------------------
+# RAG pipeline coordinator.
+# ---------------------
 class RagPipeline:
     def __init__(
         self,
@@ -307,20 +318,25 @@ class RagPipeline:
                 self.client = OpenAI(api_key=self.api_key, base_url=self.base_url)
             except Exception as exc:
                 print(f"[warn] OpenAI client setup failed; using fallback paths: {exc}", file=sys.stderr)
-        self.docs = load_documents()
+        self.docs = loadDocuments()
         self.doc_lines = {doc["file"]: doc["lines"] for doc in self.docs}
         self.line_counts = {doc["file"]: len(doc["lines"]) for doc in self.docs}
         self.doc_titles = {
-            doc["file"]: first_document_title(doc["lines"], Path(doc["file"]).stem)
+            doc["file"]: firstDocumentTitle(doc["lines"], Path(doc["file"]).stem)
             for doc in self.docs
         }
-        self.chunks = build_chunks(self.docs)
+        self.chunks = buildChunks(self.docs)
         self.title_terms = {
-            chunk.chunk_id: lexical_terms(
+            chunk.chunk_id: lexicalTerms(
                 f"{chunk.section} {Path(chunk.file).stem} {self.doc_titles.get(chunk.file, '')}"
             )
             for chunk in self.chunks
         }
+
+        # ---------------------
+        # RapidFire AI components: Embedding setup and vector store setup.
+        # Dense FAISS runs are replaced here by sklearn TF-IDF.
+        # ---------------------
         self.vectorizer = TfidfVectorizer(
             lowercase=True,
             strip_accents="unicode",
@@ -334,16 +350,24 @@ class RagPipeline:
             f"{c.file} {c.section}\n{c.text}" for c in self.chunks
         )
 
-    def _query_scores(self, question: str) -> Any:
+    # ---------------------
+    # RapidFire AI component: Search setup and retriever.
+    # Similarity search runs over TF-IDF instead of dense embeddings.
+    # ---------------------
+    def scoreQuestion(self, question: str) -> Any:
         qv = self.vectorizer.transform([question])
         return cosine_similarity(qv, self.matrix).ravel()
 
-    def _title_boost(self, question: str, chunk: Chunk) -> float:
-        q_terms = lexical_terms(question)
+    # ---------------------
+    # RapidFire AI component: Reranker setup.
+    # Title and API-symbol matches boost the first TF-IDF score.
+    # ---------------------
+    def boostByTitle(self, question: str, chunk: Chunk) -> float:
+        q_terms = lexicalTerms(question)
         if not q_terms:
             return 0.0
         boost = 0.0
-        symbols = query_symbols(question)
+        symbols = querySymbols(question)
         if symbols:
             haystack = f"{chunk.file} {chunk.section} {chunk.text}".lower()
             boost += 0.02 * sum(1 for s in symbols if s in haystack)
@@ -354,7 +378,7 @@ class RagPipeline:
             boost += 0.12 * title_overlap / len(q_terms)
         return boost
 
-    def _chunk_covering_line(self, filename: str, line: int) -> Chunk | None:
+    def chunkCoveringLine(self, filename: str, line: int) -> Chunk | None:
         candidates = [
             c for c in self.chunks
             if c.file == filename and c.start_line <= line <= c.end_line
@@ -366,7 +390,11 @@ class RagPipeline:
             return None
         return sorted(same_file, key=lambda c: (abs(c.start_line - line), c.chunk_id))[0]
 
-    def _select_related(self, question: str, ranked: list[tuple[Chunk, float]]) -> list[tuple[Chunk, float]]:
+    # ---------------------
+    # RapidFire AI component: Retrieval post-processing and related context.
+    # Adds a few related docs for tutorial, vector-store, and comparison questions.
+    # ---------------------
+    def selectRelatedChunks(self, question: str, ranked: list[tuple[Chunk, float]]) -> list[tuple[Chunk, float]]:
         if not ranked:
             return []
         if not RELATED_SOURCES:
@@ -390,12 +418,12 @@ class RagPipeline:
                     break
             if "rag" in q_lower or "context engineering" in q_lower:
                 for fn in ("rag_fiqa.rst", "rag_gsm8k.rst", "rag_scifact.rst"):
-                    child = self._chunk_covering_line(fn, 8)
+                    child = self.chunkCoveringLine(fn, 8)
                     if child is not None:
                         add(child, ranked[0][1])
             elif "fine" in q_lower or "post-training" in q_lower or "post training" in q_lower:
                 for fn in ("sft.rst", "dpo.rst", "grpo.rst"):
-                    child = self._chunk_covering_line(fn, 8)
+                    child = self.chunkCoveringLine(fn, 8)
                     if child is not None:
                         add(child, ranked[0][1])
 
@@ -419,15 +447,19 @@ class RagPipeline:
         return selected[:MAX_RELATED_SOURCES]
 
     def retrieve(self, question: str) -> list[tuple[Chunk, float]]:
-        scores = self._query_scores(question)
+        scores = self.scoreQuestion(question)
         ranked = [
-            (self.chunks[i], float(scores[i]) + self._title_boost(question, self.chunks[i]))
+            (self.chunks[i], float(scores[i]) + self.boostByTitle(question, self.chunks[i]))
             for i in range(len(scores))
         ]
         ranked.sort(key=lambda item: (-item[1], item[0].chunk_id))
-        return self._select_related(question, ranked)
+        return self.selectRelatedChunks(question, ranked)
 
-    def _context_text(self, chunk: Chunk) -> tuple[int, int, str]:
+    # ---------------------
+    # RapidFire AI component: Preprocessing and context serialization.
+    # Converts retrieved chunks into the context text sent to the generator.
+    # ---------------------
+    def formatContextForChunk(self, chunk: Chunk) -> tuple[int, int, str]:
         start = max(1, chunk.start_line - CONTEXT_EXPAND_LINES)
         end = min(self.line_counts.get(chunk.file, chunk.end_line), chunk.end_line + CONTEXT_EXPAND_LINES)
         lines = self.doc_lines.get(chunk.file)
@@ -441,21 +473,25 @@ class RagPipeline:
             parts.append(f"Following context lines {chunk.end_line + 1}-{end}:\n{after}")
         if before:
             parts.append(f"Preceding context lines {start}-{chunk.start_line - 1}:\n{before}")
-        return start, end, clean_rst("\n\n".join(parts))
+        return start, end, cleanRst("\n\n".join(parts))
 
-    def _prompt_tokens(self, question: str, context: str) -> int:
+    # ---------------------
+    # Prompt-token budget guard.
+    # Uses the model's real prompt-token count when the API is available.
+    # ---------------------
+    def countPromptTokens(self, question: str, context: str) -> int:
         key = f"{self.generation_model}\0{question}\0{context}"
         if key in self.token_cache:
             return self.token_cache[key]
         if self.client is None:
-            content = make_messages(question, context)[0]["content"] + "\n" + make_messages(question, context)[1]["content"]
-            return estimate_tokens(content)
+            content = makeMessages(question, context)[0]["content"] + "\n" + makeMessages(question, context)[1]["content"]
+            return estimateTokens(content)
         try:
             response = self.client.chat.completions.create(
                 model=self.generation_model,
                 temperature=0.0,
                 max_tokens=1,
-                messages=make_messages(question, context),
+                messages=makeMessages(question, context),
             )
             if response.usage is not None and response.usage.prompt_tokens is not None:
                 tokens = int(response.usage.prompt_tokens)
@@ -463,21 +499,25 @@ class RagPipeline:
                 return tokens
         except Exception as exc:
             print(f"[warn] prompt token preflight failed; using local estimate: {exc}", file=sys.stderr)
-        content = make_messages(question, context)[0]["content"] + "\n" + make_messages(question, context)[1]["content"]
-        return estimate_tokens(content)
+        content = makeMessages(question, context)[0]["content"] + "\n" + makeMessages(question, context)[1]["content"]
+        return estimateTokens(content)
 
     @staticmethod
-    def _join_context_parts(parts: list[str]) -> str:
+    def joinContextParts(parts: list[str]) -> str:
         return "\n\n".join(part for part in parts if part.strip())
 
-    def _trim_part_to_budget(
+    # ---------------------
+    # Token-capped context packing.
+    # Trims the final context block when the prompt is too long.
+    # ---------------------
+    def trimContextToBudget(
         self,
         question: str,
         prefix_parts: list[str],
         label: str,
         ctx_text: str,
     ) -> str | None:
-        units = split_context_units(ctx_text)
+        units = splitContextUnits(ctx_text)
         low, high = 0, len(units)
         best: str | None = None
         while low <= high:
@@ -486,15 +526,15 @@ class RagPipeline:
                 candidate_part = label
             else:
                 candidate_part = f"{label}\n" + "\n\n".join(units[:mid])
-            candidate_context = self._join_context_parts(prefix_parts + [candidate_part])
-            if self._prompt_tokens(question, candidate_context) <= PROMPT_TOKEN_CAP and mid > 0:
+            candidate_context = self.joinContextParts(prefix_parts + [candidate_part])
+            if self.countPromptTokens(question, candidate_context) <= PROMPT_TOKEN_CAP and mid > 0:
                 best = candidate_part
                 low = mid + 1
             else:
                 high = mid - 1
         return best
 
-    def build_context(
+    def buildContext(
         self,
         question: str,
         retrieved: list[tuple[Chunk, float]],
@@ -503,55 +543,65 @@ class RagPipeline:
         sources: list[dict[str, Any]] = []
 
         for rank, (chunk, score) in enumerate(retrieved, start=1):
-            ctx_start, ctx_end, ctx_text = self._context_text(chunk)
+            ctx_start, ctx_end, ctx_text = self.formatContextForChunk(chunk)
             label = (
                 f"[S{rank}] file={chunk.file} lines={ctx_start}-{ctx_end} "
                 f"section={chunk.section} score={score:.4f}"
             )
             candidate = f"{label}\n{ctx_text}"
-            candidate_context = self._join_context_parts(parts + [candidate])
+            candidate_context = self.joinContextParts(parts + [candidate])
 
-            if self._prompt_tokens(question, candidate_context) > PROMPT_TOKEN_CAP:
-                trimmed = self._trim_part_to_budget(question, parts, label, ctx_text)
+            if self.countPromptTokens(question, candidate_context) > PROMPT_TOKEN_CAP:
+                trimmed = self.trimContextToBudget(question, parts, label, ctx_text)
                 if trimmed is not None:
                     parts.append(trimmed)
-                    sources.append(chunk.source(expand_lines=SOURCE_EXPAND_LINES,
-                                                 max_line=self.line_counts.get(chunk.file)))
+                    sources.append(chunk.sourceForRange(ctx_start, ctx_end))
                 break
 
             parts.append(candidate)
-            sources.append(chunk.source(expand_lines=SOURCE_EXPAND_LINES,
-                                         max_line=self.line_counts.get(chunk.file)))
+            sources.append(chunk.sourceForRange(ctx_start, ctx_end))
 
-        return self._join_context_parts(parts), sources
+        return self.joinContextParts(parts), sources
 
-    def generate_answer(self, question: str, context: str) -> str:
+    # ---------------------
+    # RapidFire AI component: Generator model setup.
+    # Calls the gateway model passed through --generation-model.
+    # ---------------------
+    def generateAnswer(self, question: str, context: str) -> str:
         if self.client is not None:
             try:
                 response = self.client.chat.completions.create(
                     model=self.generation_model,
                     temperature=0.0,
-                    messages=make_messages(question, context),
+                    messages=makeMessages(question, context),
                 )
                 text = response.choices[0].message.content
                 if text:
                     return text.strip()
             except Exception as exc:
                 print(f"[warn] LLM call failed; using extractive fallback: {exc}", file=sys.stderr)
-        return _extractive_answer(question, context)
+        return extractiveAnswer(question, context)
 
-    def answer_question(self, question_id: int | str, question: str) -> dict[str, Any]:
+    # ---------------------
+    # RapidFire AI component: Postprocessing and submission record.
+    # Builds the final answer record.
+    # ---------------------
+    def answerQuestion(self, question_id: int | str, question: str) -> dict[str, Any]:
         retrieved = self.retrieve(question)
-        context, sources = self.build_context(question, retrieved)
+        context, sources = self.buildContext(question, retrieved)
         return {
             "question_id": question_id,
-            "answer": self.generate_answer(question, context),
+            "answer": self.generateAnswer(question, context),
             "sources": sources,
             "retrieved_context": context,
         }
 
 
-def _extractive_answer(question: str, context: str) -> str:
+# ---------------------
+# Fallback generation.
+# Used only if the API call fails.
+# ---------------------
+def extractiveAnswer(question: str, context: str) -> str:
     if not context.strip():
         return "The documentation does not provide enough information."
     q_terms = set(re.findall(r"[A-Za-z][A-Za-z0-9_+-]{2,}", question.lower()))
@@ -577,7 +627,11 @@ def _extractive_answer(question: str, context: str) -> str:
     return re.sub(r"\[S\d+\][^\n]*", "", " ".join(chosen)).strip()
 
 
-def read_questions(path: Path) -> list[dict[str, Any]]:
+# ---------------------
+# CLI input/output.
+# Parses the required project flags and writes the prediction JSON.
+# ---------------------
+def readQuestions(path: Path) -> list[dict[str, Any]]:
     data = json.loads(path.read_text(encoding="utf-8"))
     items = data if isinstance(data, list) else data.get("questions", [])
     if not items:
@@ -624,17 +678,17 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    set_determinism()
-    configure_corpus(Path(args.corpus_dir))
-    configure_expand_lines(args.expand_lines)
-    api_key = load_api_key(Path(args.apikey_txt) if args.apikey_txt else None)
+    setDeterminism()
+    configureCorpus(Path(args.corpus_dir))
+    configureExpandLines(args.expand_lines)
+    api_key = loadApiKey(Path(args.apikey_txt) if args.apikey_txt else None)
     pipeline = RagPipeline(
         api_key=api_key,
         generation_model=args.generation_model,
         base_url=args.base_url,
     )
-    questions = read_questions(Path(args.input))
-    answers = [pipeline.answer_question(q["question_id"], q["question"]) for q in questions]
+    questions = readQuestions(Path(args.input))
+    answers = [pipeline.answerQuestion(q["question_id"], q["question"]) for q in questions]
 
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
