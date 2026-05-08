@@ -1,0 +1,10 @@
+{
+  "config_id": "TC10",
+  "chunk_tokens": 256,
+  "chunk_overlap": 48,
+  "max_related_sources": 5,
+  "pack_strategy": "staged",
+  "token_cap": 1900,
+  "source_expand_lines": 3,
+  "context_expand_lines": 3
+}

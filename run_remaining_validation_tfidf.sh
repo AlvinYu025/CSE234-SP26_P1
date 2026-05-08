@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd /home/fey006/Project1
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "${SCRIPT_DIR}"
 
 source /opt/conda/etc/profile.d/conda.sh
 conda activate rapidfire
 
-export OPENAI_API_KEY="$(cat /home/fey006/api-key.txt)"
+APIKEY_TXT="${APIKEY_TXT:-${HOME}/api-key.txt}"
+export OPENAI_API_KEY="$(cat "${APIKEY_TXT}")"
 export OPENAI_BASE_URL="https://tritonai-api.ucsd.edu/v1"
 export JUDGE_BASE_URL="https://tritonai-api.ucsd.edu/v1"
 export JUDGE_MODEL="claude-sonnet-4-6"

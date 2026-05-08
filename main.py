@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """RAG pipeline for CSE/DSC 234 Project 1.
 
-TF-IDF retrieval with config T10 (chunk=420/80, top_k=1, title boost,
-related sources, source_expand=5, context_expand=20). Deterministic.
+TF-IDF retrieval with token-capped config TC02 (chunk=420/80, top_k=1,
+title boost, related sources, source_expand=3, context_expand=3,
+prompt_token_cap=1900). Deterministic. The optional --expand-lines flag is used
+for local ablation runs and sets both source/context expansion windows.
 
 Usage:
     python3 main.py \
@@ -38,15 +40,15 @@ SOURCE_DIR = DEFAULT_SOURCE_DIR
 SOURCE_ZIP = ROOT / "sourcedocs.zip"
 TRITONAI_BASE_URL = "https://tritonai-api.ucsd.edu/v1"
 
-# T10 config
+# TC02 config
 CHUNK_TOKENS = 420
 CHUNK_OVERLAP = 80
 TOP_K = 1
-SOURCE_EXPAND_LINES = 5
-CONTEXT_EXPAND_LINES = 20
+SOURCE_EXPAND_LINES = 3
+CONTEXT_EXPAND_LINES = 3
 MAX_RELATED_SOURCES = 5
 RELATED_SOURCES = True
-MAX_CONTEXT_TOKENS = 1850
+PROMPT_TOKEN_CAP = 1900
 MAX_ANSWER_SENTENCES = 5
 
 SYSTEM_PROMPT = (
@@ -54,6 +56,10 @@ SYSTEM_PROMPT = (
     "provided context. If the context does not support the answer, say that the "
     "documentation does not provide enough information. Keep the answer concise "
     "but include important API names, defaults, constraints, and contrasts when present."
+)
+USER_SUFFIX = (
+    "Answer using only the context. If the question asks for a list, comparison, "
+    "API behavior, default, or constraint, include all supported details from the context."
 )
 
 QUERY_STOPWORDS = {
@@ -92,6 +98,38 @@ def estimate_tokens(text: str) -> int:
     return int(math.ceil(len(text.split()) * 1.3))
 
 
+def split_context_units(text: str) -> list[str]:
+    text = text.strip()
+    if not text:
+        return []
+    units: list[str] = []
+    paragraphs = [p.strip() for p in re.split(r"\n{2,}", text) if p.strip()]
+    for paragraph in paragraphs:
+        if len(paragraph.split()) <= 70:
+            units.append(paragraph)
+            continue
+        sentences = [
+            s.strip()
+            for s in re.split(r"(?<=[.!?])\s+(?=[A-Z0-9`\"'])", re.sub(r"\s+", " ", paragraph))
+            if s.strip()
+        ]
+        if len(sentences) <= 1:
+            units.extend(line.strip() for line in paragraph.splitlines() if line.strip())
+        else:
+            units.extend(sentences)
+    return units
+
+
+def make_messages(question: str, context: str) -> list[dict[str, str]]:
+    return [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {
+            "role": "user",
+            "content": f"Context:\n{context}\n\nQuestion:\n{question}\n\n{USER_SUFFIX}",
+        },
+    ]
+
+
 def load_api_key(api_key_txt: Path | None) -> str | None:
     if api_key_txt is not None:
         key_file = api_key_txt.expanduser()
@@ -120,6 +158,16 @@ def configure_corpus(corpus_dir: Path) -> None:
         SOURCE_DIR = nested
         return
     SOURCE_DIR = candidate
+
+
+def configure_expand_lines(expand_lines: int | None) -> None:
+    global SOURCE_EXPAND_LINES, CONTEXT_EXPAND_LINES
+    if expand_lines is None:
+        return
+    if expand_lines < 0:
+        raise ValueError("--expand-lines must be non-negative")
+    SOURCE_EXPAND_LINES = expand_lines
+    CONTEXT_EXPAND_LINES = expand_lines
 
 
 def ensure_corpus() -> None:
@@ -251,6 +299,14 @@ class RagPipeline:
         self.api_key = api_key
         self.generation_model = generation_model
         self.base_url = base_url
+        self.client = None
+        self.token_cache: dict[str, int] = {}
+        if self.api_key:
+            try:
+                from openai import OpenAI
+                self.client = OpenAI(api_key=self.api_key, base_url=self.base_url)
+            except Exception as exc:
+                print(f"[warn] OpenAI client setup failed; using fallback paths: {exc}", file=sys.stderr)
         self.docs = load_documents()
         self.doc_lines = {doc["file"]: doc["lines"] for doc in self.docs}
         self.line_counts = {doc["file"]: len(doc["lines"]) for doc in self.docs}
@@ -387,8 +443,62 @@ class RagPipeline:
             parts.append(f"Preceding context lines {start}-{chunk.start_line - 1}:\n{before}")
         return start, end, clean_rst("\n\n".join(parts))
 
-    def build_context(self, retrieved: list[tuple[Chunk, float]]) -> tuple[str, list[dict[str, Any]]]:
-        used = estimate_tokens(SYSTEM_PROMPT)
+    def _prompt_tokens(self, question: str, context: str) -> int:
+        key = f"{self.generation_model}\0{question}\0{context}"
+        if key in self.token_cache:
+            return self.token_cache[key]
+        if self.client is None:
+            content = make_messages(question, context)[0]["content"] + "\n" + make_messages(question, context)[1]["content"]
+            return estimate_tokens(content)
+        try:
+            response = self.client.chat.completions.create(
+                model=self.generation_model,
+                temperature=0.0,
+                max_tokens=1,
+                messages=make_messages(question, context),
+            )
+            if response.usage is not None and response.usage.prompt_tokens is not None:
+                tokens = int(response.usage.prompt_tokens)
+                self.token_cache[key] = tokens
+                return tokens
+        except Exception as exc:
+            print(f"[warn] prompt token preflight failed; using local estimate: {exc}", file=sys.stderr)
+        content = make_messages(question, context)[0]["content"] + "\n" + make_messages(question, context)[1]["content"]
+        return estimate_tokens(content)
+
+    @staticmethod
+    def _join_context_parts(parts: list[str]) -> str:
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def _trim_part_to_budget(
+        self,
+        question: str,
+        prefix_parts: list[str],
+        label: str,
+        ctx_text: str,
+    ) -> str | None:
+        units = split_context_units(ctx_text)
+        low, high = 0, len(units)
+        best: str | None = None
+        while low <= high:
+            mid = (low + high) // 2
+            if mid <= 0:
+                candidate_part = label
+            else:
+                candidate_part = f"{label}\n" + "\n\n".join(units[:mid])
+            candidate_context = self._join_context_parts(prefix_parts + [candidate_part])
+            if self._prompt_tokens(question, candidate_context) <= PROMPT_TOKEN_CAP and mid > 0:
+                best = candidate_part
+                low = mid + 1
+            else:
+                high = mid - 1
+        return best
+
+    def build_context(
+        self,
+        question: str,
+        retrieved: list[tuple[Chunk, float]],
+    ) -> tuple[str, list[dict[str, Any]]]:
         parts: list[str] = []
         sources: list[dict[str, Any]] = []
 
@@ -399,13 +509,12 @@ class RagPipeline:
                 f"section={chunk.section} score={score:.4f}"
             )
             candidate = f"{label}\n{ctx_text}"
-            cost = estimate_tokens(candidate)
+            candidate_context = self._join_context_parts(parts + [candidate])
 
-            if used + cost > MAX_CONTEXT_TOKENS:
-                remaining_words = max(0, int((MAX_CONTEXT_TOKENS - used) / 1.3) - 8)
-                if remaining_words > 40:
-                    candidate = f"{label}\n{' '.join(ctx_text.split()[:remaining_words])}"
-                    parts.append(candidate)
+            if self._prompt_tokens(question, candidate_context) > PROMPT_TOKEN_CAP:
+                trimmed = self._trim_part_to_budget(question, parts, label, ctx_text)
+                if trimmed is not None:
+                    parts.append(trimmed)
                     sources.append(chunk.source(expand_lines=SOURCE_EXPAND_LINES,
                                                  max_line=self.line_counts.get(chunk.file)))
                 break
@@ -413,30 +522,16 @@ class RagPipeline:
             parts.append(candidate)
             sources.append(chunk.source(expand_lines=SOURCE_EXPAND_LINES,
                                          max_line=self.line_counts.get(chunk.file)))
-            used += cost
 
-        return "\n\n".join(parts), sources
+        return self._join_context_parts(parts), sources
 
     def generate_answer(self, question: str, context: str) -> str:
-        if self.api_key:
+        if self.client is not None:
             try:
-                from openai import OpenAI
-                client = OpenAI(api_key=self.api_key, base_url=self.base_url)
-                response = client.chat.completions.create(
+                response = self.client.chat.completions.create(
                     model=self.generation_model,
                     temperature=0.0,
-                    messages=[
-                        {"role": "system", "content": SYSTEM_PROMPT},
-                        {
-                            "role": "user",
-                            "content": (
-                                f"Context:\n{context}\n\n"
-                                f"Question:\n{question}\n\n"
-                                "Answer using only the context. If the question asks for a list, comparison, "
-                                "API behavior, default, or constraint, include all supported details from the context."
-                            ),
-                        },
-                    ],
+                    messages=make_messages(question, context),
                 )
                 text = response.choices[0].message.content
                 if text:
@@ -447,7 +542,7 @@ class RagPipeline:
 
     def answer_question(self, question_id: int | str, question: str) -> dict[str, Any]:
         retrieved = self.retrieve(question)
-        context, sources = self.build_context(retrieved)
+        context, sources = self.build_context(question, retrieved)
         return {
             "question_id": question_id,
             "answer": self.generate_answer(question, context),
@@ -517,6 +612,12 @@ def main() -> int:
         help="Gateway model id used for answer generation",
     )
     parser.add_argument(
+        "--expand-lines",
+        type=int,
+        default=None,
+        help="Optional ablation setting: set both source and context line expansion",
+    )
+    parser.add_argument(
         "--base-url",
         default=TRITONAI_BASE_URL,
         help=argparse.SUPPRESS,
@@ -525,6 +626,7 @@ def main() -> int:
 
     set_determinism()
     configure_corpus(Path(args.corpus_dir))
+    configure_expand_lines(args.expand_lines)
     api_key = load_api_key(Path(args.apikey_txt) if args.apikey_txt else None)
     pipeline = RagPipeline(
         api_key=api_key,

@@ -50,7 +50,7 @@ are the multi-config experiment drivers used to compare configurations.
 
 ### What it does
 
-Deterministic TF-IDF RAG using config **T10**:
+Deterministic TF-IDF RAG using config **TC02**:
 
 | Parameter | Value |
 |---|---|
@@ -59,13 +59,14 @@ Deterministic TF-IDF RAG using config **T10**:
 | `top_k` | 1 |
 | Title boost | enabled |
 | Related sources | enabled |
-| `source_expand_lines` | 5 |
-| `context_expand_lines` | 20 |
-| Max context tokens | 1850 |
+| `source_expand_lines` | 3 |
+| `context_expand_lines` | 3 |
+| Prompt token cap | 1900 real `api-gpt-oss-120b` prompt tokens |
 
 Steps: load `.rst` corpus → chunk → build TF-IDF index → retrieve top-k
-with title/symbol boost → select related sources → assemble context →
-generate answer via LLM (extractive fallback if API unavailable).
+with title/symbol boost → select related sources → assemble token-capped
+context using the generation model's `usage.prompt_tokens` → generate answer
+via LLM (extractive fallback if API unavailable).
 
 ### Dependencies
 
@@ -191,6 +192,45 @@ python3 rejudge_dense.py \
 This overwrites each `run_evals_return.json` with correct generation
 metrics and writes a summary to `rapidfire_experiments_golden/dense_all/judge_results.csv`.
 
+### Expand-line ablation
+
+The released validation set was used to compare the same TF-IDF retrieval
+setting while varying the shared `--expand-lines` value:
+
+| Setting | Expand | Retrieval | Generation | Overall mean |
+|---|---:|---:|---:|---:|
+| E01 | 1 | 0.9421 | 0.9378 | 0.9400 |
+| E02 | 2 | 0.9421 | 0.9244 | 0.9333 |
+| E03 | 3 | 0.9421 | 0.9422 | 0.9422 |
+| E04 | 4 | 0.9421 | 0.9230 | 0.9326 |
+
+Detailed outputs, metric files, and commands are in
+`rapidfire_experiments_validation/expand_ablation/`.
+
+### Token-budget context ablation
+
+Additional validation experiments measured real prompt tokens from the
+generation model API (`response.usage.prompt_tokens`) instead of relying on
+local estimates. The goal was to keep the full LLM prompt under the 2,000-token
+context budget.
+
+| Setting | Chunk | Related | Context packing | Cap | Retrieval | Generation | Overall mean | Max prompt tokens |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| TC01 | 420/80 | 5 | sequential | 1950 | 0.9389 | 0.9422 | 0.9406 | 1909 |
+| TC02 | 420/80 | 5 | sequential | 1900 | 0.9389 | 0.9496 | 0.9443 | 1858 |
+| TC03 | 384/64 | 5 | sequential | 1900 | 0.8199 | 0.8681 | 0.8440 | 1895 |
+| TC04 | 320/64 | 5 | sequential | 1900 | 0.8310 | 0.8711 | 0.8511 | 1891 |
+| TC05 | 256/48 | 5 | sequential | 1900 | 0.7755 | 0.8148 | 0.7951 | 1880 |
+| TC06 | 420/80 | 4 | sequential | 1900 | 0.9389 | 0.9304 | 0.9346 | 1858 |
+| TC07 | 420/80 | 3 | sequential | 1900 | 0.9351 | 0.9481 | 0.9416 | 1744 |
+| TC08 | 320/64 | 5 | balanced | 1900 | 0.8310 | 0.8726 | 0.8518 | 1891 |
+| TC09 | 320/64 | 5 | question-aware | 1900 | 0.8310 | 0.8326 | 0.8318 | 1900 |
+| TC10 | 256/48 | 5 | staged | 1900 | 0.7755 | 0.8074 | 0.7914 | 1892 |
+
+Best validation overall in this set was **TC02**. Detailed answer files, token
+usage, context debug files, and metric outputs are in
+`rapidfire_experiments_validation_token/`.
+
 ### Experiment artifacts
 
 ```
@@ -212,9 +252,12 @@ rapidfire_experiments_golden/
 
 ## Final Configuration Selection
 
-Experiments in `rapidfire_experiments_golden/` were run on `data/golden_qa.json`.
-**T10** (`tfidf_420_80_k1_title_related_expand5`) was selected for
-`main.py` based on retrieval score and generation quality across configs.
+Experiments in `rapidfire_experiments_golden/`, follow-up validation alignment
+tests, and token-budget ablations were used to select the final single
+configuration. **TC02** (`chunk420_overlap80_rel5_sequential_cap1900`) was
+selected for `main.py` because it had the best validation overall score in the
+token-budget ablation while keeping every measured prompt under 2,000 real
+generation-model prompt tokens.
 
 Key design choices:
 
@@ -224,7 +267,9 @@ Key design choices:
 - **top_k=1 with related sources** — starts from the best-matching chunk and
   adds targeted related documentation for tutorial, vector-store, glossary, and
   comparison-style questions
-- **source_expand_lines=5** — reports a conservative source window around each
-  matched chunk, which improved overlap without returning broad spans
-- **context_expand_lines=20** — expands context window by 20 lines around the
-  chunk for richer generation input without inflating reported sources
+- **source_expand_lines=3 and context_expand_lines=3** — uses the same
+  expanded evidence window for both reported source spans and generation
+  context, keeping retrieval reporting aligned with what the model sees
+- **prompt_token_cap=1900** — applies a real prompt-token preflight with the
+  generation model and trims the final context block at complete text units
+  when needed

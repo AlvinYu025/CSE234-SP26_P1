@@ -14,7 +14,11 @@ api-key.txt
 *.key
 
 rapidfireai_golden/mlflow.db
+rapidfireai_golden/db/
+rapidfireai_golden/mlflow_artifacts/
 rapidfireai_validation/mlflow.db
+rapidfireai_validation/db/
+rapidfireai_validation/mlflow_artifacts/
 rapidfireai/mlflow.db
 rapidfireai/db/
 rapidfireai/mlflow_artifacts/

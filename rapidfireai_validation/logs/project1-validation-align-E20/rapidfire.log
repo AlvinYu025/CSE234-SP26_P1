@@ -1,0 +1,4 @@
+2026-05-07 18:16:58 | QueryProcessingActor-0 | INFO | query_actor.py:165 | [project1-validation-align-E20:QueryProcessingActor-0] Initializing new inference engine (config hash: 4eba3f6a)
+2026-05-07 18:18:10 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-validation-align-E20:QueryProcessingActor-0] Reusing existing inference engine (config hash: 4eba3f6a)
+2026-05-07 18:19:22 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-validation-align-E20:QueryProcessingActor-0] Reusing existing inference engine (config hash: 4eba3f6a)
+2026-05-07 18:20:28 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-validation-align-E20:QueryProcessingActor-0] Reusing existing inference engine (config hash: 4eba3f6a)

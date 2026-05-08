@@ -1,0 +1,161 @@
+{
+  "description": "Validation-set ablation for source/context expand_lines using main.py. Retrieval ranking config is fixed; only source and context expansion vary.",
+  "input": "data/validation-set-golden-qa-pairs.json",
+  "corpus_dir": "sourcedocs",
+  "generation_model": "api-gpt-oss-120b",
+  "judge_model": "claude-sonnet-4-6",
+  "rows": [
+    {
+      "setting": "E01",
+      "expand_lines": 1,
+        "command": "python3 main.py --input data/validation-set-golden-qa-pairs.json --output rapidfire_experiments_validation/expand_ablation/E01/validation_answers.json --corpus-dir sourcedocs --apikey-txt ~/api-key.txt --generation-model api-gpt-oss-120b --expand-lines 1",
+      "answer_file": "rapidfire_experiments_validation/expand_ablation/E01/validation_answers.json",
+      "retrieval": {
+        "F1@5": 0.9419753086419752,
+        "Precision@5": 0.94,
+        "Recall@5": 0.9444444444444444,
+        "Retrieval Score": 0.9421399176954731
+      },
+      "generation": {
+        "Correctness": 0.9555555555555556,
+        "Faithfulness": 1.0,
+        "Completeness_raw_0_to_5": 4.288888888888889,
+        "Completeness_normalized": 0.8577777777777778,
+        "Partial Generation Score": 0.9377777777777778
+      },
+      "overall_mean_retrieval_generation": 0.9399588477366254,
+      "output_checks": {
+        "n_answers": 45,
+        "exact_fields": true,
+        "source_schema": true,
+        "empty_retrieved_context": 0,
+        "empty_sources": 0
+      },
+      "prompt_estimates": {
+        "max_word_count_times_1_3": 1709,
+        "max_chars_div_4": 2465,
+        "num_over_2000_by_word13": 0,
+        "num_over_2000_by_chars_div_4": 1,
+        "max_chars_div_4_item": {
+          "question_id": 38,
+          "char4_tokens": 2465,
+          "word13_tokens": 1709
+        }
+      }
+    },
+    {
+      "setting": "E02",
+      "expand_lines": 2,
+        "command": "python3 main.py --input data/validation-set-golden-qa-pairs.json --output rapidfire_experiments_validation/expand_ablation/E02/validation_answers.json --corpus-dir sourcedocs --apikey-txt ~/api-key.txt --generation-model api-gpt-oss-120b --expand-lines 2",
+      "answer_file": "rapidfire_experiments_validation/expand_ablation/E02/validation_answers.json",
+      "retrieval": {
+        "F1@5": 0.9419753086419752,
+        "Precision@5": 0.94,
+        "Recall@5": 0.9444444444444444,
+        "Retrieval Score": 0.9421399176954731
+      },
+      "generation": {
+        "Correctness": 0.9555555555555556,
+        "Faithfulness": 0.9777777777777777,
+        "Completeness_raw_0_to_5": 4.2,
+        "Completeness_normalized": 0.8400000000000001,
+        "Partial Generation Score": 0.9244444444444445
+      },
+      "overall_mean_retrieval_generation": 0.9332921810699588,
+      "output_checks": {
+        "n_answers": 45,
+        "exact_fields": true,
+        "source_schema": true,
+        "empty_retrieved_context": 0,
+        "empty_sources": 0
+      },
+      "prompt_estimates": {
+        "max_word_count_times_1_3": 1709,
+        "max_chars_div_4": 2465,
+        "num_over_2000_by_word13": 0,
+        "num_over_2000_by_chars_div_4": 1,
+        "max_chars_div_4_item": {
+          "question_id": 38,
+          "char4_tokens": 2465,
+          "word13_tokens": 1709
+        }
+      }
+    },
+    {
+      "setting": "E03",
+      "expand_lines": 3,
+        "command": "python3 main.py --input data/validation-set-golden-qa-pairs.json --output rapidfire_experiments_validation/expand_ablation/E03/validation_answers.json --corpus-dir sourcedocs --apikey-txt ~/api-key.txt --generation-model api-gpt-oss-120b --expand-lines 3",
+      "answer_file": "rapidfire_experiments_validation/expand_ablation/E03/validation_answers.json",
+      "retrieval": {
+        "F1@5": 0.9419753086419752,
+        "Precision@5": 0.94,
+        "Recall@5": 0.9444444444444444,
+        "Retrieval Score": 0.9421399176954731
+      },
+      "generation": {
+        "Correctness": 1.0,
+        "Faithfulness": 0.9777777777777777,
+        "Completeness_raw_0_to_5": 4.2444444444444445,
+        "Completeness_normalized": 0.8488888888888889,
+        "Partial Generation Score": 0.9422222222222222
+      },
+      "overall_mean_retrieval_generation": 0.9421810699588477,
+      "output_checks": {
+        "n_answers": 45,
+        "exact_fields": true,
+        "source_schema": true,
+        "empty_retrieved_context": 0,
+        "empty_sources": 0
+      },
+      "prompt_estimates": {
+        "max_word_count_times_1_3": 1709,
+        "max_chars_div_4": 2465,
+        "num_over_2000_by_word13": 0,
+        "num_over_2000_by_chars_div_4": 1,
+        "max_chars_div_4_item": {
+          "question_id": 38,
+          "char4_tokens": 2465,
+          "word13_tokens": 1709
+        }
+      }
+    },
+    {
+      "setting": "E04",
+      "expand_lines": 4,
+        "command": "python3 main.py --input data/validation-set-golden-qa-pairs.json --output rapidfire_experiments_validation/expand_ablation/E04/validation_answers.json --corpus-dir sourcedocs --apikey-txt ~/api-key.txt --generation-model api-gpt-oss-120b --expand-lines 4",
+      "answer_file": "rapidfire_experiments_validation/expand_ablation/E04/validation_answers.json",
+      "retrieval": {
+        "F1@5": 0.9419753086419752,
+        "Precision@5": 0.94,
+        "Recall@5": 0.9444444444444444,
+        "Retrieval Score": 0.9421399176954731
+      },
+      "generation": {
+        "Correctness": 0.9333333333333333,
+        "Faithfulness": 0.9777777777777777,
+        "Completeness_raw_0_to_5": 4.288888888888889,
+        "Completeness_normalized": 0.8577777777777778,
+        "Partial Generation Score": 0.9229629629629629
+      },
+      "overall_mean_retrieval_generation": 0.932551440329218,
+      "output_checks": {
+        "n_answers": 45,
+        "exact_fields": true,
+        "source_schema": true,
+        "empty_retrieved_context": 0,
+        "empty_sources": 0
+      },
+      "prompt_estimates": {
+        "max_word_count_times_1_3": 1709,
+        "max_chars_div_4": 2465,
+        "num_over_2000_by_word13": 0,
+        "num_over_2000_by_chars_div_4": 1,
+        "max_chars_div_4_item": {
+          "question_id": 38,
+          "char4_tokens": 2465,
+          "word13_tokens": 1709
+        }
+      }
+    }
+  ]
+}
