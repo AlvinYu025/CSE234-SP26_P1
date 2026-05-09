@@ -3,7 +3,7 @@
 - Complete configs: 25/25
 - Missing configs: none
 - Problem configs: none
-- Configs with API/judge warnings: T01(errors=20, judge=21), T02(errors=2, judge=0), T07(errors=0, judge=1)
+- Configs with API/judge warnings: T02(errors=2, judge=0), T07(errors=0, judge=1)
 
 ## Top Overall
 
@@ -38,7 +38,7 @@
 | D10 | 0.7056 | 0.5579 | 0.8533 | 0 | 0 | 45 | dense_512_96_similarity_k8_rerank5 |
 | D11 | 0.7447 | 0.6153 | 0.8741 | 0 | 0 | 45 | dense_512_96_mmr_k8_fetch20_lam07_rerank3 |
 | D12 | 0.7056 | 0.5579 | 0.8533 | 0 | 0 | 45 | dense_512_96_mmr_k8_fetch20_lam07_rerank5 |
-| T01 | 0.5700 | 0.7370 | 0.4030 | 21 | 20 | 45 | tfidf_320_64_k1_no_title_no_related_expand0 |
+| T01 | 0.7952 | 0.7370 | 0.8533 | 0 | 0 | 45 | tfidf_320_64_k1_no_title_no_related_expand0 |
 | T02 | 0.8321 | 0.8198 | 0.8444 | 0 | 2 | 45 | tfidf_420_80_k1_no_title_no_related_expand0 |
 | T03 | 0.8225 | 0.7975 | 0.8474 | 0 | 0 | 45 | tfidf_512_96_k1_no_title_no_related_expand0 |
 | T04 | 0.8359 | 0.8037 | 0.8681 | 0 | 0 | 45 | tfidf_320_64_k1_title_no_related_expand0 |
