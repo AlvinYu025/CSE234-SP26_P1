@@ -22,3 +22,10 @@ rapidfireai_validation/mlflow_artifacts/
 rapidfireai/mlflow.db
 rapidfireai/db/
 rapidfireai/mlflow_artifacts/
+
+rapidfire_experiments_golden/
+rapidfire_experiments_validation/
+rapidfire_experiments_validation_token/
+instruction/
+outputs/
+sourcedocs/images/
