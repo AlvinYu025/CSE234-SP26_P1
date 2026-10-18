@@ -100,6 +100,8 @@ python3 main.py \
 
 `outputs/validation_answers.json` — one answer object per question,
 fields: `question_id`, `answer`, `sources`, `retrieved_context`.
+The final saved submission is available at
+`submission/validation_answers.json`.
 
 ---
 
@@ -204,8 +206,8 @@ setting while varying the shared `--expand-lines` value:
 | E03 | 3 | 0.9421 | 0.9422 | 0.9422 |
 | E04 | 4 | 0.9421 | 0.9230 | 0.9326 |
 
-Detailed outputs, metric files, and commands are in
-`rapidfire_experiments_validation/expand_ablation/`.
+The table above preserves the recorded summary. Generated per-run files are
+excluded from the repository.
 
 ### Token-budget context ablation
 
@@ -227,26 +229,13 @@ context budget.
 | TC09 | 320/64 | 5 | question-aware | 1900 | 0.8310 | 0.8326 | 0.8318 | 1900 |
 | TC10 | 256/48 | 5 | staged | 1900 | 0.7755 | 0.8074 | 0.7914 | 1892 |
 
-Best validation overall in this set was **TC02**. Detailed answer files, token
-usage, context debug files, and metric outputs are in
-`rapidfire_experiments_validation_token/`.
+Best validation overall in this set was **TC02**. Detailed generated answer
+files, token traces, and debug outputs are excluded from the repository.
 
 ### Experiment artifacts
 
-```
-rapidfire_experiments_golden/
-  dense_all/
-    D01_.../
-      run_evals_return.json   # per-question results + summary metrics
-      validation_answers.json # submission-format answers
-    ...
-    judge_results.csv         # summary table across all dense configs
-  tfidf_all/
-    T01_.../
-      run_evals_return.json
-      validation_answers.json
-    ...
-```
+Experiment scripts are retained, while reproducible run directories and logs
+are ignored. The important aggregate results remain documented above.
 
 ---
 

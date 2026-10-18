@@ -1,4 +1,0 @@
-2026-05-02 00:04:10 | QueryProcessingActor-0 | INFO | query_actor.py:165 | [project1-tfidf-T12:QueryProcessingActor-0] Initializing new inference engine (config hash: 87d81920)
-2026-05-02 00:04:50 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-tfidf-T12:QueryProcessingActor-0] Reusing existing inference engine (config hash: 87d81920)
-2026-05-02 00:05:27 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-tfidf-T12:QueryProcessingActor-0] Reusing existing inference engine (config hash: 87d81920)
-2026-05-02 00:06:01 | QueryProcessingActor-0 | INFO | query_actor.py:169 | [project1-tfidf-T12:QueryProcessingActor-0] Reusing existing inference engine (config hash: 87d81920)
